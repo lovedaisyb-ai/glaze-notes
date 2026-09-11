@@ -83,14 +83,6 @@
     letter-spacing:.02em;
     margin:0;
   }
-  .mark span{
-    font-family:var(--sans);
-    font-size:12px;
-    font-weight:500;
-    color:var(--ink-soft);
-    margin-left:8px;
-    letter-spacing:.04em;
-  }
   .batch{
     display:flex;
     align-items:center;
@@ -138,6 +130,8 @@
     border:0;
     background:none;
     text-align:center;
+    text-decoration:none;
+    color:var(--ink);
     cursor:pointer;
     font-family:var(--sans);
   }
@@ -230,27 +224,52 @@
     font-variant-numeric:tabular-nums;
   }
 
-  /* ── 레시피 ───────────────────────────── */
-  .list{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-    padding-block:22px 72px;
+  /* ── 2면: 유약 정보 ─────────────────── */
+  .back{
+    -webkit-appearance:none;
+    appearance:none;
+    display:inline-block;
+    margin:30px 0 20px;
+    padding:0;
+    border:0;
+    background:none;
+    font-family:var(--sans);
+    font-size:14px;
+    color:var(--celadon-deep);
+    cursor:pointer;
   }
-  .card{
+  .back:hover{text-decoration:underline;}
+  .detail{
     display:grid;
-    grid-template-columns:132px 1fr;
-    gap:0 28px;
+    grid-template-columns:272px 1fr;
+    gap:0 36px;
     background:var(--porcelain);
     border:1px solid var(--line-soft);
     border-radius:2px;
-    padding:24px;
-    scroll-margin-top:80px;
+    padding:28px;
   }
-  .card.is-target{
-    border-color:var(--celadon-deep);
-    box-shadow:inset 3px 0 0 var(--celadon-deep);
+  .detail .card__swatch{min-height:362px;}
+  .detail .card__title{font-size:30px;}
+  .neighbors{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    margin:18px 0 72px;
+    font-size:14px;
   }
+  .neighbors button{
+    -webkit-appearance:none;
+    appearance:none;
+    padding:0;
+    border:0;
+    background:none;
+    font-family:var(--sans);
+    font-size:14px;
+    color:var(--celadon-deep);
+    cursor:pointer;
+    text-align:left;
+  }
+  .neighbors button:hover{text-decoration:underline;}
   .card__swatch{
     border:1px solid rgba(28,35,30,.18);
     border-radius:1px;
@@ -371,9 +390,128 @@
   .foot ul{margin:0;padding-left:18px;max-width:64ch;}
   .foot li{margin-bottom:5px;}
 
+  /* ── 3면: 유약의 기초 ────────────────── */
+  .guide-link{
+    -webkit-appearance:none;
+    appearance:none;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center;
+    gap:2px 16px;
+    width:100%;
+    margin-top:44px;
+    padding:18px 22px;
+    text-align:left;
+    background:#fff;
+    border:1px solid var(--celadon);
+    border-left:4px solid var(--celadon);
+    border-radius:2px;
+    cursor:pointer;
+    font-family:var(--sans);
+    transition:background .15s ease;
+  }
+  .guide-link:hover{background:#F5F8F5;}
+  .guide-link__t{
+    font-family:var(--serif);
+    font-size:17px;
+    color:var(--ink);
+  }
+  .guide-link__d{
+    grid-column:1;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .guide-link__a{
+    grid-row:1 / span 2;
+    grid-column:2;
+    font-size:18px;
+    color:var(--celadon-deep);
+  }
+
+  .basics{
+    background:var(--porcelain);
+    border:1px solid var(--line-soft);
+    border-radius:2px;
+    padding:30px 34px;
+  }
+  .basics__title{
+    font-family:var(--serif);
+    font-size:28px;
+    font-weight:700;
+    margin:0 0 4px;
+  }
+  .basics__body{max-width:66ch;}
+  .basics h3{
+    font-size:14.5px;
+    font-weight:600;
+    margin:22px 0 6px;
+    color:var(--ink);
+  }
+  .basics__body > h3:first-child{margin-top:14px;}
+  .basics h4{
+    font-size:13px;
+    font-weight:600;
+    margin:16px 0 4px;
+    color:var(--celadon-deep);
+  }
+  .basics table.mat{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:6px;
+  }
+  .basics table.mat th{
+    width:132px;
+    text-align:left;
+    vertical-align:top;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink);
+    padding:7px 12px 7px 0;
+    border-bottom:1px solid #E6E9E1;
+  }
+  .basics table.mat td{
+    vertical-align:top;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    padding:7px 0;
+    border-bottom:1px solid #E6E9E1;
+  }
+  @media (max-width:560px){
+    .basics{padding:22px 20px;}
+    .basics table.mat th,
+    .basics table.mat td{display:block;width:auto;border-bottom:none;padding:0;}
+    .basics table.mat th{padding-top:9px;}
+    .basics table.mat td{padding-bottom:9px;border-bottom:1px solid #E6E9E1;}
+  }
+  .basics p, .basics li{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    margin:0 0 7px;
+  }
+  .basics ul{margin:0 0 7px;padding-left:18px;}
+  .basics dl{margin:0 0 10px;}
+  .basics dt{
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin-top:9px;
+  }
+  .basics dd{
+    margin:2px 0 0;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  .basics__src{
+    margin-top:18px;
+    padding-top:12px;
+    border-top:1px solid var(--line-soft);
+    font-size:13px;
+  }
+  .back--bottom{margin:18px 0 72px;}
+
   /* ── 취급 주의 ───────────────────────── */
   .safety{
-    margin-top:48px;
+    margin-top:16px;
     background:#fff;
     border:1px solid var(--celadon-deep);
     border-left-width:4px;
@@ -402,6 +540,84 @@
     background:#FBF2EA;
     font-weight:600;
   }
+
+  /* ── 같은 조성 묶음 ─────────────────── */
+  .siblings{
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px solid var(--line-soft);
+  }
+  .siblings h3{
+    font-size:14px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .siblings__base{
+    margin:0 0 12px;
+    font-size:13px;
+    color:var(--ink-soft);
+    font-variant-numeric:tabular-nums;
+  }
+  .siblings__list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
+    gap:12px 10px;
+  }
+  .sib button{
+    -webkit-appearance:none;
+    appearance:none;
+    display:block;
+    width:100%;
+    padding:0;
+    border:0;
+    background:none;
+    font-family:var(--sans);
+    color:inherit;
+    text-align:left;
+    cursor:pointer;
+  }
+  .sib__art{
+    display:block;
+    position:relative;
+    aspect-ratio:3/4;
+    overflow:hidden;
+    border:1px solid rgba(28,35,30,.2);
+    border-radius:1px;
+    background:var(--line-soft);
+    transition:transform .18s ease;
+  }
+  .sib button:hover .sib__art{transform:translateY(-3px);}
+  .sib__art svg, .sib__art img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .sib__name{
+    display:block;
+    margin-top:6px;
+    font-size:11.5px;
+    line-height:1.3;
+    word-break:keep-all;
+  }
+  .sib__add{
+    display:block;
+    margin-top:2px;
+    font-size:11px;
+    line-height:1.3;
+    color:var(--celadon-deep);
+    word-break:keep-all;
+  }
+  .sib--now .sib__art{
+    outline:2px solid var(--celadon-deep);
+    outline-offset:1px;
+  }
+  .sib--now .sib__name{font-weight:600;}
 
   /* ── 메모 ───────────────────────────── */
   .notes{
@@ -467,6 +683,7 @@
     transition:background .15s ease;
   }
   .btn:hover{background:#2A483F;}
+  .btn--sm{padding:6px 13px;font-size:13px;}
   .notes__list{
     list-style:none;
     margin:16px 0 0;
@@ -516,14 +733,15 @@
   @media (max-width:820px){
     .tiles{grid-template-columns:repeat(10,1fr);gap:9px 5px;}
     .tile__name{font-size:9.5px;min-height:3.9em;}
-    .card{grid-template-columns:1fr;gap:18px;}
-    .card__swatch{min-height:110px;}
+    .detail{grid-template-columns:1fr;gap:18px;padding:22px;}
+    .detail .card__swatch{min-height:240px;}
+    .detail .card__title{font-size:25px;}
   }
   @media (max-width:520px){
     .wrap{padding-inline:18px;}
     .tiles{grid-template-columns:repeat(5,1fr);gap:9px 5px;}
     .tile__name{font-size:10.5px;margin-top:6px;min-height:4em;letter-spacing:-.01em;}
-    .card{padding:18px;}
+    .detail{padding:18px;}
     .card__title{font-size:21px;}
   }
 </style>
@@ -532,30 +750,24 @@
 
 <div class="bar">
   <div class="wrap bar__inner">
-    <p class="mark">유약 노트<span>釉藥</span></p>
+    <p class="mark">유약 노트</p>
     <div class="batch">
       <label for="batch">만들 양</label>
       <input id="batch" type="number" min="1" max="100000" step="10" value="1000" inputmode="numeric"
              aria-label="만들 양 (g). 각 레시피의 계량 값이 이 양에 맞춰 바뀝니다.">
       <span>g</span>
+      <button class="btn btn--sm" id="calc">계산하기</button>
     </div>
   </div>
 </div>
 
-<header class="hero wrap">
-  <h1>도자기 유약 레시피</h1>
-  <div class="tiles" id="tiles"></div>
-</header>
-
 <main class="wrap">
-  <section class="safety">
-    <h2>원료를 다룰 때</h2>
-    <ul>
-      <li>분말을 계량하고 체로 거를 때는 방진 마스크를 쓰고 환기되는 곳에서 합니다. 규석 분진은 오래 들이마시면 폐를 상하게 하고, 한번 상한 폐는 돌아오지 않습니다.</li>
-      <li>탄산바륨, 구리, 크롬, 코발트, 망간, 니켈이 든 유약은 <strong>식기 안쪽 면에 쓰지 않습니다.</strong> 산성 음식에 닿으면 성분이 녹아 나올 수 있습니다. 특히 망간은 소성 중에도 유독한 증기가 나오므로 가마 주변을 환기합니다.</li>
-      <li>씻지 않은 나무재와 볏짚재는 강알칼리라 맨손으로 만지면 피부가 상합니다. 라쿠는 벌겋게 단 기물을 집게로 꺼내는 작업이라 방열 장갑과 보안경, 물통이 곁에 있어야 합니다.</li>
-    </ul>
-  </section>
+
+  <!-- ── 1면: 시편 목록 ────────────────────────────── -->
+  <section id="view-list">
+    <header class="hero">
+      <h1>Ceramic Glaze Recipes</h1>
+    </header>
 
   <div class="filters">
     <div class="filters__group">
@@ -571,8 +783,125 @@
       <div id="f-range"></div>
     </div>
   </div>
-  <p class="count" id="count"></p>
-  <div class="list" id="list"></div>
+    <p class="count" id="count"></p>
+    <div class="tiles" id="tiles"></div>
+
+  <button class="guide-link" data-go="guide">
+      <span class="guide-link__t">유약의 기초</span>
+      <span class="guide-link__d">원료가 하는 일, 같은 조합이 다르게 나오는 이유, 시편 내는 법</span>
+      <span class="guide-link__a" aria-hidden="true">→</span>
+    </button>
+
+  <section class="safety">
+    <h2>원료를 다룰 때</h2>
+    <ul>
+      <li>분말을 계량하고 체로 거를 때는 방진 마스크를 쓰고 환기되는 곳에서 합니다. 규석 분진은 오래 들이마시면 폐를 상하게 하고, 한번 상한 폐는 돌아오지 않습니다.</li>
+      <li>탄산바륨, 구리, 크롬, 코발트, 망간, 니켈이 든 유약은 <strong>식기 안쪽 면에 쓰지 않습니다.</strong> 산성 음식에 닿으면 성분이 녹아 나올 수 있습니다. 특히 망간은 소성 중에도 유독한 증기가 나오므로 가마 주변을 환기합니다.</li>
+      <li>씻지 않은 나무재와 볏짚재는 강알칼리라 맨손으로 만지면 피부가 상합니다. 라쿠는 벌겋게 단 기물을 집게로 꺼내는 작업이라 방열 장갑과 보안경, 물통이 곁에 있어야 합니다.</li>
+    </ul>
+  </section>
+  </section>
+
+  <!-- ── 2면: 유약 정보 ────────────────────────────── -->
+  <section id="view-detail" hidden>
+    <button class="back" data-go="">← 목록으로</button>
+    <div id="detail"></div>
+  </section>
+
+  <!-- ── 3면: 유약의 기초 ──────────────────────────── -->
+  <section id="view-basics" hidden>
+    <button class="back" data-go="">← 목록으로</button>
+    <article class="basics">
+      <h2 class="basics__title">유약의 기초</h2>
+    <div class="basics__body">
+      <h3>유약은 세 갈래 원료로 이루어집니다</h3>
+      <p>이 페이지의 원료 구성 막대에 쓰인 색이 이 분류를 그대로 나눈 것입니다.</p>
+      <dl>
+        <dt>유리를 만드는 것 — 규석</dt>
+        <dd>유약을 유리로 굳히는 뼈대입니다. 혼자서는 1700℃가 넘어야 녹아서, 그대로는 쓸 수 없습니다.</dd>
+        <dt>녹여 주는 것 — 매용제</dt>
+        <dd>석회석, 장석, 재, 돌로마이트, 산화아연, 프릿이 여기 듭니다. 규석의 녹는점을 가마가 닿는 온도까지 끌어내립니다. 어떤 매용제를 쓰느냐가 표면 질감과 발색을 크게 바꿉니다.</dd>
+        <dt>붙잡아 주는 것 — 알루미나</dt>
+        <dd>카올린과 볼클레이가 담당합니다. 녹은 유약에 점도를 줘서 흘러내리지 않게 잡습니다. 모자라면 굽까지 흘러 가마 선반에 눌어붙고, 많으면 덜 녹아 표면이 거칠어집니다.</dd>
+      </dl>
+
+      <h3>원료별로 하는 일</h3>
+      <p>이 페이지의 레시피에 나오는 원료들입니다. 하나가 한 가지 일만 하지는 않습니다. 장석은 뼈대이면서 매용제이고, 재는 매용제이면서 규석을 함께 들여옵니다.</p>
+
+      <h4>장석질 — 뼈대이자 매용제</h4>
+      <table class="mat">
+        <tr><th>장석</th><td>고화도 유약 대부분의 바탕입니다. 규석과 알루미나와 알칼리를 한꺼번에 갖고 있어서, 장석만 단독으로도 높은 온도에서는 유리가 됩니다. 다른 원료는 이 바탕을 조정하는 셈입니다.</td></tr>
+        <tr><th>네펠린 사이아나이트</th><td>장석과 비슷하지만 알칼리가 더 많아 낮은 온도에서 녹습니다. 대신 수축이 커서 잘 갈라집니다. 빙렬유와 시노가 이 성질을 일부러 쓴 것입니다.</td></tr>
+        <tr><th>프릿</th><td>원료를 미리 한번 녹여 유리로 만든 뒤 다시 갈아 놓은 가루입니다. 저화도에서 쓸 수 있고, 물에 녹거나 몸에 해로운 성분을 유리 안에 가둬 안전하게 다룰 수 있습니다.</td></tr>
+      </table>
+
+      <h4>규석 — 유리를 만드는 성분</h4>
+      <table class="mat">
+        <tr><th>규석</th><td>유약을 유리로 굳히는 성분입니다. 늘리면 단단해지고 광택이 나지만, 너무 많으면 녹지 않아 표면이 거칠어집니다.</td></tr>
+      </table>
+
+      <h4>매용제 — 녹는점을 끌어내리는 것</h4>
+      <table class="mat">
+        <tr><th>석회석</th><td>고화도의 대표 매용제입니다. 맑고 단단한 유리를 만듭니다. 많이 넣으면 다 녹지 못하고 무광으로 굳습니다.</td></tr>
+        <tr><th>돌로마이트</th><td>칼슘과 마그네슘을 함께 들여옵니다. 마그네슘이 만드는 부드러운 무광이 특징입니다.</td></tr>
+        <tr><th>탄산바륨</th><td>강한 매용제이면서 발색을 바꿉니다. 진사의 붉은색을 돕는 것도 이 성분입니다. 독성이 있어 취급에 주의합니다.</td></tr>
+        <tr><th>산화아연</th><td>잘 녹이면서 결정이 자랄 자리를 만듭니다. 결정유의 핵심 원료입니다. 다만 크롬과 만나면 녹색을 갈색으로 돌려놓는 등 착색에 간섭합니다.</td></tr>
+        <tr><th>탄산소다</th><td>매우 강한 알칼리 매용제입니다. 물에 녹는 성질 때문에 시노에서 유약 표면으로 떠올라 탄소를 잡는 역할을 합니다.</td></tr>
+        <tr><th>나무재 · 볏짚재</th><td>칼슘과 칼륨 위주의 천연 매용제이고, 규석과 알루미나도 함께 들어 있습니다. 볏짚재는 규석 비중이 높아 뽀얀 유탁이 납니다.</td></tr>
+        <tr><th>골회</th><td>인산칼슘입니다. 유리 안에서 미세한 방울로 갈라져 빛을 흩어 놓습니다. 균요의 푸른 젖빛이 이렇게 나옵니다.</td></tr>
+      </table>
+
+      <h4>점토 — 흘러내림을 잡는 것</h4>
+      <table class="mat">
+        <tr><th>카올린</th><td>알루미나를 공급해 녹은 유약에 점도를 줍니다. 물에 푼 상태에서 다른 원료가 가라앉지 않게 붙잡아 주는 일도 합니다.</td></tr>
+        <tr><th>볼클레이</th><td>카올린보다 입자가 곱고 끈기가 강합니다. 마르기 전 유약이 기물에 잘 붙어 있게 합니다. 대신 수축이 커서 두껍게 바르면 갈라집니다.</td></tr>
+        <tr><th>목절점토</th><td>유기물이 섞인 점토로, 볼클레이와 비슷한 자리에 씁니다. 구하기 어려우면 볼클레이로 바꿔 써도 큰 차이가 없습니다.</td></tr>
+      </table>
+
+      <h4>착색제와 유탁제 — 색과 불투명을 만드는 것</h4>
+      <table class="mat">
+        <tr><th>산화철</th><td>가장 폭이 넓은 착색제입니다. 같은 철이 양과 소성 분위기에 따라 청자, 황갈, 흑유, 감색까지 갑니다.</td></tr>
+        <tr><th>산화구리</th><td>산화에서 녹색, 환원에서 붉은색. 가마 안에서 증기로 날아가 옆 기물에 옮겨 붙습니다.</td></tr>
+        <tr><th>산화코발트</th><td>가장 힘이 센 청색 착색제입니다. 1%만 넘겨도 검푸르게 죽습니다.</td></tr>
+        <tr><th>산화망간</th><td>갈보라색을 냅니다. 소성 중 유독한 증기가 나옵니다.</td></tr>
+        <tr><th>산화니켈</th><td>기본유의 성분에 따라 회청부터 겨자색까지 갈립니다. 결과를 미리 짐작하기 어려운 편입니다.</td></tr>
+        <tr><th>산화크롬</th><td>녹색을 냅니다. 주석과 만나면 분홍이 되고, 증기로 날아가 옆 기물까지 물들입니다.</td></tr>
+        <tr><th>루틸</th><td>티탄과 철이 섞인 천연 광물입니다. 색과 결정 줄무늬를 동시에 냅니다.</td></tr>
+        <tr><th>산화티탄</th><td>흰 결정을 키우고 유약을 뿌옇게 만듭니다. 루틸과 달리 누런빛은 나오지 않습니다.</td></tr>
+        <tr><th>산화주석</th><td>녹지 않고 유리 안에 남아 빛을 막습니다. 색이 아니라 흰 불투명을 만드는 유탁제입니다.</td></tr>
+        <tr><th>지르코늄 실리케이트</th><td>주석과 같은 일을 더 싼값에 합니다. 흰색이 조금 더 차갑고 건조합니다.</td></tr>
+      </table>
+
+      <p><strong>여기서 알려 드릴 수 없는 것.</strong> 프릿 번호별 정확한 조성은 제조사마다 다르고 저도 확실히 알지 못하니, 사시는 제품의 성분표를 확인하세요. 재의 성분은 나무 종류와 태운 조건에 따라 매번 달라서 애초에 숫자로 고정할 수 없습니다. 국내에 유통되는 원료의 상품명과 등급 차이도 제가 정확히 아는 부분이 아닙니다.</p>
+
+      <h3>같은 조합이 같은 결과를 주지는 않습니다</h3>
+      <p>레시피는 출발점일 뿐이고, 결과는 아래 조건이 함께 결정합니다.</p>
+      <ul>
+        <li><strong>소지</strong> — 유약과 소지의 수축률이 어긋나면 잔금이 가거나 유약이 벗겨집니다. 소지가 바뀌면 같은 유약도 다르게 앉습니다.</li>
+        <li><strong>시유 두께</strong> — 대부분의 유약에서 두께가 색을 바꿉니다. 청자는 두꺼워야 푸르고, 천목은 얇은 모서리에서 갈색이 납니다.</li>
+        <li><strong>소성 분위기</strong> — 산화는 산소가 넉넉한 상태, 환원은 산소가 모자라 불이 유약 속 금속에서 산소를 빼앗아 가는 상태입니다. 같은 철이 산화에서는 누렇게, 환원에서는 푸르게 가는 이유입니다.</li>
+        <li><strong>냉각 속도</strong> — 결정유와 철유 감색은 식는 동안 결정이 자라야 나옵니다. 빨리 식히면 아무것도 생기지 않습니다.</li>
+      </ul>
+
+      <h3>온도가 아니라 열량입니다</h3>
+      <p>소성은 최고 온도만으로 정해지지 않습니다. 같은 1250℃라도 천천히 오래 올린 가마가 더 익습니다. 그래서 현장에서는 온도계 숫자보다 콘이 쓰러지는 시점을 기준으로 삼습니다. 이 페이지의 온도 표기도 목표치일 뿐입니다.</p>
+
+      <h3>시편을 내는 방법</h3>
+      <ul>
+        <li>한 번에 하나만 바꿉니다. 산화물을 0.5%씩 늘려 가며 여러 장을 줄지어 구우면, 어느 지점에서 색이 바뀌는지 한눈에 보입니다.</li>
+        <li>시편은 세워서 굽습니다. 위는 얇고 아래는 두껍게 발라 두면 두께에 따른 차이를 한 장에서 볼 수 있습니다.</li>
+        <li>뒷면에 조합 번호를 새겨 둡니다. 구워 놓고 나면 어느 것이 무엇이었는지 반드시 헷갈립니다.</li>
+      </ul>
+
+      <h3>조합 순서</h3>
+      <p>계량 → 물에 풀기 → 80메시 체로 두 번 거르기 → 하루 재우기 → 비중 확인 → 시유. 체를 거르지 않으면 덩어리가 남아 시유 자국이 생기고, 재운 다음에야 점도가 자리를 잡습니다.</p>
+
+      <p class="basics__src">더 파고들고 싶다면 『나만의 유약 만들기』(이병하·김상곤, 한림원)가 기본 유약, 동·철 유약, 재 유약, 원료의 역할을 편별로 다룹니다. 위 내용은 그 책의 발췌가 아니라 일반적인 유약 원리를 정리한 것입니다.</p>
+    </div>
+    </article>
+    <button class="back back--bottom" data-go="">← 목록으로</button>
+  </section>
+
 </main>
 
 <footer class="foot wrap">
@@ -1000,12 +1329,18 @@ function svgArt(r){
 const artFor = r => photoTag(r) || svgArt(r);
 
 
-/* 시편 그리드 */
+/* 1면: 필터를 통과한 시편만 그립니다. 누르면 주소에 표시가 붙고
+   그것을 감지해 2면으로 넘어갑니다. */
 function renderTiles(){
-  $("#tiles").innerHTML = RECIPES.map(r => `
-    <button class="tile${photoClass(r)}"
-            data-goto="${r.id}"
-            aria-label="${r.name} 레시피로 이동">
+  const items = RECIPES.filter(match);
+  updateCount();
+  if (!items.length){
+    $("#tiles").innerHTML = "";
+    return;
+  }
+  $("#tiles").innerHTML = items.map(r => `
+    <button class="tile${photoClass(r)}" data-go="${r.id}"
+            aria-label="${r.name} 자세히 보기">
       <span class="tile__art">${artFor(r)}</span>
       <span class="tile__name">${r.name}</span>
     </button>`).join("");
@@ -1202,15 +1537,46 @@ function updateCount(){
     `레시피 ${n}개 · 표의 계량 g은 ${state.batch.toLocaleString("ko-KR")}g 만들 때 기준입니다`;
 }
 
-function renderList(){
-  const items = RECIPES.filter(match);
-  updateCount();
-  if (!items.length){
-    $("#list").innerHTML = `<p class="notes__empty">고른 조건에 맞는 레시피가 없습니다. 위 항목 중 하나를 전체로 되돌려 보세요.</p>`;
-    return;
-  }
-  $("#list").innerHTML = items.map(r => `
-    <article class="card" id="${r.id}">
+/* ── 같은 기본 조성 묶기 ───────────────────────────────────
+   원료 이름과 비율이 완전히 같은 레시피끼리 한 묶음으로 봅니다.
+   기본유는 그대로 두고 산화물만 바꿔 가며 비교할 때 쓰입니다.
+--------------------------------------------------------- */
+const baseSig = r => r.base.map(([n, p]) => n + ":" + p).sort().join("|");
+const GROUPS = RECIPES.reduce((m, r) => {
+  (m[baseSig(r)] = m[baseSig(r)] || []).push(r);
+  return m;
+}, {});
+
+const addText = r => r.add.length
+  ? r.add.map(([n, p]) => `${n} ${fmt(p)}%`).join(" + ")
+  : "첨가물 없음";
+
+function siblingBlock(r){
+  const group = GROUPS[baseSig(r)] || [];
+  if (group.length < 2) return "";
+  const baseLine = r.base.map(([n, p]) => `${n} ${fmt(p)}`).join(" · ");
+  return `
+    <section class="siblings">
+      <h3>기본 조성이 같은 유약</h3>
+      <p class="siblings__base">${baseLine}</p>
+      <ul class="siblings__list">
+        ${group.map(g => `
+          <li class="sib${g.id === r.id ? " sib--now" : ""}">
+            <button data-go="${g.id}">
+              <span class="sib__art">${artFor(g)}</span>
+              <span class="sib__name">${g.name}</span>
+              <span class="sib__add">${addText(g)}</span>
+            </button>
+          </li>`).join("")}
+      </ul>
+    </section>`;
+}
+
+/* 2면: 고른 유약 하나의 정보 */
+function renderDetail(r){
+  openNotes.add(r.id);                       /* 상세에서는 메모를 펼쳐 둡니다 */
+  $("#detail").innerHTML = `
+    <article class="detail" id="${r.id}">
       <figure class="card__media">
         <div class="card__swatch${photoClass(r)}">${artFor(r)}</div>
         ${photoOf(r.id) && PHOTOS[r.id].credit ? `<figcaption class="credit">${PHOTOS[r.id].credit}</figcaption>` : ""}
@@ -1227,59 +1593,110 @@ function renderList(){
         </div>
         ${compBar(r)}
         <table>
-          <caption>기본 조성 100에 착색제를 더해 씁니다</caption>
+          <caption>기본 조성 100에 착색제를 더해 씁니다 · ${state.batch.toLocaleString("ko-KR")}g 만들 때 기준</caption>
           <thead>
             <tr><th>원료</th><th class="num">비율</th><th class="num">계량 g</th></tr>
           </thead>
           <tbody>${rows(r)}</tbody>
         </table>
         <p class="card__note">${r.note}</p>
+        ${siblingBlock(r)}
         ${notesBlock(r)}
       </div>
-    </article>`).join("");
+    </article>
+    ${neighborNav(r)}`;
 }
 
-/* 이벤트 */
+/* 상세 화면 아래의 앞뒤 이동 */
+function neighborNav(r){
+  const items = RECIPES.filter(match);
+  const i = items.findIndex(x => x.id === r.id);
+  if (i < 0 || items.length < 2) return "";
+  const prev = items[(i - 1 + items.length) % items.length];
+  const next = items[(i + 1) % items.length];
+  return `<nav class="neighbors">
+    <button data-go="${prev.id}">← ${prev.name}</button>
+    <button data-go="${next.id}">${next.name} →</button>
+  </nav>`;
+}
+
+/* ── 화면 전환 ─────────────────────────────────────────────
+   1면(목록)과 2면(정보)을 오갑니다. 주소의 # 표시를 기준으로 삼되,
+   그 방식이 막히는 환경(미리보기 iframe 등)에서도 동작하도록
+   링크 클릭을 직접 받아서 처리합니다.
+--------------------------------------------------------- */
+let viewId = "";
+
+const idFromHash = () => {
+  try { return decodeURIComponent(String(location.hash || "").replace(/^#/, "")); }
+  catch (e) { return ""; }
+};
+
+const VIEWS = ["guide"];                       /* 레시피가 아닌 별도 화면 */
+
+function show(id){
+  viewId = (VIEWS.includes(id) || RECIPES.some(r => r.id === id)) ? id : "";
+  render();
+}
+
+function render(){
+  const r      = RECIPES.find(x => x.id === viewId);
+  const list   = document.getElementById("view-list");
+  const detail = document.getElementById("view-detail");
+  const basics = document.getElementById("view-basics");
+
+  list.hidden = detail.hidden = basics.hidden = true;
+
+  if (viewId === "guide"){
+    basics.hidden = false;
+  } else if (r){
+    renderDetail(r);
+    detail.hidden = false;
+  } else {
+    list.hidden = false;
+    renderTiles();
+  }
+  try { window.scrollTo(0, 0); } catch (e) {}
+}
+
+/* 화면 이동은 전부 버튼으로 합니다. 링크를 쓰면 iframe 안에서
+   외부 이동으로 가로채이는 환경이 있어, 아예 이동하지 않는
+   요소로 처리합니다. 주소는 바꿀 수 있을 때만 따라 바꿉니다. */
 document.addEventListener("click", e => {
-  const chip = e.target.closest(".chip");
-  if (chip){
-    state[chip.dataset.k] = chip.dataset.v;
-    renderChips();
-    renderList();
-    return;
-  }
-  const tile = e.target.closest("[data-goto]");
-  if (tile){
-    const id = tile.dataset.goto;
-    const r = RECIPES.find(x => x.id === id);
-    if (!match(r)){ state.atmos = "전체"; state.surface = "전체"; state.range = "전체"; renderChips(); renderList(); }
-    const el = document.getElementById(id);
-    if (el){
-      document.querySelectorAll(".card").forEach(c => c.classList.remove("is-target"));
-      el.classList.add("is-target");
-      el.scrollIntoView({ block:"start" });
-    }
-  }
+  const go = e.target.closest("[data-go]");
+  if (!go) return;
+  e.preventDefault();
+  const id = go.dataset.go;
+  try { history.pushState({ id }, "", id ? "#" + id : "#"); } catch (err) {}
+  show(id);
 });
 
-/* 조합량이 바뀔 때 목록 전체를 다시 그리면 작성 중이던 메모가 날아가므로
-   그램 값이 든 칸만 골라 바꿉니다. */
-function updateGrams(){
-  document.querySelectorAll("#list [data-pct]").forEach(td => {
+/* 뒤로 가기 */
+window.addEventListener("popstate", () => show(idFromHash()));
+window.addEventListener("hashchange", () => show(idFromHash()));
+
+/* ── 만들 양 반영 ──────────────────────────────────────────
+   화면을 통째로 다시 그리면 작성 중이던 메모가 날아가므로,
+   그램 값이 든 칸과 표 설명만 골라 바꿉니다. */
+function applyBatch(){
+  const v = parseFloat($("#batch").value);
+  state.batch = (!isNaN(v) && v > 0) ? v : 1000;
+  document.querySelectorAll("#detail [data-pct]").forEach(td => {
     td.textContent = fmt(state.batch * parseFloat(td.dataset.pct) / 100);
   });
+  const cap = $("#detail caption");
+  if (cap) cap.textContent =
+    `기본 조성 100에 착색제를 더해 씁니다 · ${state.batch.toLocaleString("ko-KR")}g 만들 때 기준`;
   updateCount();
 }
 
-$("#batch").addEventListener("input", e => {
-  const v = parseFloat(e.target.value);
-  state.batch = (!isNaN(v) && v > 0) ? v : 1000;
-  updateGrams();
+$("#calc").addEventListener("click", applyBatch);
+$("#batch").addEventListener("keydown", e => {
+  if (e.key === "Enter"){ e.preventDefault(); applyBatch(); }
 });
 
-renderTiles();
 renderChips();
-renderList();
+show(idFromHash());
 </script>
 </body>
 </html>
