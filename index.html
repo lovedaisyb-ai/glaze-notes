@@ -872,6 +872,18 @@ const fmt = n => {
   return (Number.isInteger(r) ? r : r.toFixed(1)).toString();
 };
 
+/* 이름 끝소리에 맞춰 을/를을 고릅니다. 받침이 있으면 "을", 없으면 "를".
+   "투명유 4·3·2·1"처럼 숫자로 끝나는 이름은 읽는 소리로 판단합니다. */
+const DIGIT_JONG = [true, true, false, true, false, false, true, true, true, false]; // 영 일 이 삼 사 오 육 칠 팔 구
+const objParticle = name => {
+  const ch = name.trim().slice(-1);
+  const code = ch.charCodeAt(0);
+  if (code >= 0xAC00 && code <= 0xD7A3) return (code - 0xAC00) % 28 ? "을" : "를";
+  if (ch >= "0" && ch <= "9") return DIGIT_JONG[+ch] ? "을" : "를";
+  return "을";
+};
+const firedLabel = name => `${name}${objParticle(name)} 시유해 구운 시편`;
+
 const photoOf = id => (PHOTOS[id] && PHOTOS[id].src) ? PHOTOS[id] : null;
 
 /* 사진이 있으면 img 태그를, 없으면 빈 문자열을 돌려줍니다.
@@ -879,7 +891,7 @@ const photoOf = id => (PHOTOS[id] && PHOTOS[id].src) ? PHOTOS[id] : null;
 function photoTag(r){
   const p = photoOf(r.id);
   if (!p) return "";
-  return `<img src="${p.src}" alt="${r.name}을 시유해 구운 시편" loading="lazy"
+  return `<img src="${p.src}" alt="${firedLabel(r.name)}" loading="lazy"
                onerror="this.remove();this.closest('.has-photo')?.classList.remove('has-photo')">`;
 }
 const photoClass = r => photoOf(r.id) ? " has-photo" : "";
@@ -951,7 +963,7 @@ function svgArt(r){
   }
 
   return `
-<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${r.name}을 시유해 구운 시편 그림">
+<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${firedLabel(r.name)} 그림">
   <defs>
     <linearGradient id="${uid}-glz" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="${r.c1}"/>
