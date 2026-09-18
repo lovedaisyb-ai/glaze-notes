@@ -7,19 +7,35 @@
 <meta name="description" content="청자유부터 결정유까지, 소성 조건과 원료 조성을 그램 단위로 확인하는 도자기 유약 레시피 모음.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
+  /* ── 디자인 토큰 ─────────────────────────────
+     색·글꼴·모서리 값을 모아 둡니다.
+     색을 바꿀 때는 여기만 고칩니다. */
   :root{
-    --bisque:#E7E9E1;
-    --porcelain:#F7F8F4;
-    --ink:#1C231E;
-    --ink-soft:#59645C;
+    --bg:#F3F4F1;
+    --surface:#FFFFFF;
+    --surface-2:#F8F9F7;
+    --ink:#14171A;
+    --ink-soft:#5B6268;
+    --ink-faint:#8C9298;
+    --line:#D9DCDF;
+    --line-soft:#E9EBEC;
+    --grid:rgba(20,23,26,.055);
+    --accent:#2743D6;          /* 코발트 */
+    --accent-ink:#FFFFFF;
+    --accent-soft:#EAEEFD;
+    --warn:#B8430E;            /* 산화철 */
+    --warn-soft:#FDF0E7;
+    --bar-bg:rgba(243,244,241,.86);
+
+    /* 시편·도표 그림에 쓰는 도자 색 (테마와 무관) */
     --celadon:#6E9483;
     --celadon-deep:#33564C;
     --iron:#8E5326;
-    --line:#CCD2C6;
-    --line-soft:#DDE1D7;
+    --porcelain:var(--surface);
+    --bisque:var(--bg);
 
     --cat-feldspar:#8FA6B8;
     --cat-silica:#B7C3C7;
@@ -28,9 +44,12 @@
     --cat-color:#5E7A6B;
 
     --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    --mono:"JetBrains Mono","Pretendard Variable",Pretendard,"Apple SD Gothic Neo",Menlo,Consolas,monospace;
     --serif:"Gowun Batang","Nanum Myeongjo",serif;
 
-    --wrap:1080px;
+    --r:6px;
+    --wrap:1120px;
+    color-scheme:light;
   }
 
   *{box-sizing:border-box;}
@@ -41,22 +60,28 @@
   }
   body{
     margin:0;
-    background:var(--bisque);
+    background:var(--bg);
     color:var(--ink);
     font-family:var(--sans);
     font-size:16px;
     line-height:1.6;
+    letter-spacing:-.005em;
     -webkit-font-smoothing:antialiased;
   }
-  :focus-visible{
-    outline:2px solid var(--celadon-deep);
-    outline-offset:3px;
-  }
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  ::selection{background:var(--accent);color:var(--accent-ink);}
   .wrap{
     width:100%;
     max-width:var(--wrap);
     margin-inline:auto;
-    padding-inline:24px;
+    padding-inline:28px;
+  }
+  /* 작은 대문자 라벨 (실험 기록지 느낌) */
+  .filters__label, .stain__atmos, caption, th, .count, .board__meta,
+  .note__meta, .post__meta, .stain__scale, .credit, .notes__scope{
+    font-family:var(--mono);
+    font-size:11.5px;
+    letter-spacing:.02em;
   }
 
   /* ── 상단 바 ───────────────────────────── */
@@ -64,102 +89,197 @@
     position:sticky;
     top:0;
     z-index:20;
-    background:rgba(231,233,225,.92);
-    backdrop-filter:blur(8px);
+    background:var(--bar-bg);
+    backdrop-filter:saturate(1.4) blur(12px);
+    -webkit-backdrop-filter:saturate(1.4) blur(12px);
     border-bottom:1px solid var(--line);
   }
   .bar__inner{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
-    min-height:60px;
+    gap:16px;
+    min-height:58px;
     flex-wrap:wrap;
-    padding-block:10px;
+    padding-block:9px;
   }
   .mark{
-    font-family:var(--serif);
-    font-size:19px;
-    letter-spacing:.02em;
-    margin:0;
-  }
-  .batch{
     display:flex;
     align-items:center;
-    gap:8px;
-    font-size:13.5px;
-    color:var(--ink-soft);
+    gap:10px;
+    margin:0;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:-.01em;
   }
-  .batch label{white-space:nowrap;}
-  .batch input{
-    width:92px;
-    padding:6px 9px;
-    font-family:var(--sans);
+  .mark__sub{
+    font-family:var(--mono);
     font-size:14px;
+    font-weight:600;
+    color:var(--ink);
+    letter-spacing:.1em;
+  }
+  .total__cell{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px 14px;
+  }
+  .batch{
+    display:inline-flex;
+    align-items:center;
+    gap:0;
+    font-size:13px;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    background:var(--surface);
+    padding:2px 2px 2px 10px;
+    font-weight:400;
+  }
+  .batch label{white-space:nowrap;margin-right:6px;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink-soft);}
+  .batch input{
+    width:78px;
+    padding:5px 6px;
+    font-family:var(--mono);
+    font-size:14px;
+    font-weight:600;
     font-variant-numeric:tabular-nums;
     color:var(--ink);
-    background:var(--porcelain);
-    border:1px solid var(--line);
-    border-radius:2px;
+    background:transparent;
+    border:0;
     text-align:right;
   }
-  .batch input:hover{border-color:var(--celadon);}
+  .batch input:focus{outline:none;}
+  .batch span{font-family:var(--mono);margin:0 10px 0 2px;}
+  .batch:focus-within{border-color:var(--accent);}
 
   /* ── 히어로 ───────────────────────────── */
-  .hero{padding-block:38px 26px;}
+  .hero{
+    position:relative;
+    padding:56px 0 34px;
+  }
+  .hero::before{            /* 모눈 */
+    content:"";
+    position:absolute;
+    inset:0 -28px;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:24px 24px;
+    -webkit-mask-image:linear-gradient(to bottom, #000 30%, transparent);
+            mask-image:linear-gradient(to bottom, #000 30%, transparent);
+    pointer-events:none;
+    z-index:-1;
+  }
   .hero h1{
-    font-family:var(--serif);
-    font-weight:700;
-    font-size:clamp(28px,4.4vw,42px);
-    line-height:1.18;
-    letter-spacing:-.01em;
+    font-family:var(--sans);
+    font-weight:750;
+    font-size:clamp(34px,5.6vw,60px);
+    line-height:1.02;
+    letter-spacing:-.035em;
     margin:0;
   }
+  .searchbar{margin-top:26px;max-width:460px;position:relative;}
+  .searchbar::before{
+    content:"⌕";
+    position:absolute;left:14px;top:50%;
+    transform:translateY(-52%);
+    font-size:18px;color:var(--ink-faint);
+    pointer-events:none;
+  }
+  .searchbar input{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    padding:12px 14px 12px 40px;
+    font-family:var(--sans);
+    font-size:14.5px;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .searchbar input:hover{border-color:var(--ink-faint);}
+  .searchbar input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft);}
+  .searchbar input::placeholder{color:var(--ink-faint);}
+  .searchbar input::-webkit-search-cancel-button{cursor:pointer;}
+
+  /* ── 시편 목록 ─────────────────────────── */
   .tiles{
     display:grid;
-    grid-template-columns:repeat(10,1fr);
-    gap:10px 6px;
-    margin-top:26px;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+    gap:0;
+    margin-top:14px;
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
   }
   .tile{
     -webkit-appearance:none;
     appearance:none;
     display:block;
     width:100%;
-    padding:0;
+    padding:10px 10px 12px;
     border:0;
-    background:none;
-    text-align:center;
-    text-decoration:none;
+    background:var(--surface);
+    box-shadow:inset -1px -1px 0 var(--line);
+    text-align:left;
     color:var(--ink);
     cursor:pointer;
     font-family:var(--sans);
+    transition:background .15s ease;
+  }
+  .tile:hover, .tile:focus-visible{background:var(--surface-2);}
+  .tile:focus-visible{outline-offset:-3px;}
+  .tile__top{
+    display:flex;
+    justify-content:flex-end;
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--ink-faint);
+    margin-bottom:8px;
+    letter-spacing:.03em;
   }
   .tile__art{
     display:block;
     position:relative;
-    aspect-ratio:3/4;
+    width:100%;
+    height:0;
+    padding-top:100%;          /* 정사각형 (aspect-ratio 대신: 사파리에서 높이가 0이 되는 문제 방지) */
     overflow:hidden;
-    border:1px solid rgba(28,35,30,.2);
-    border-radius:1px;
+    border-radius:3px;
     background:var(--line-soft);
-    transition:transform .18s ease, box-shadow .18s ease;
+    transition:transform .2s ease;
   }
-  .tile:hover .tile__art,
-  .tile:focus-visible .tile__art{
-    transform:translateY(-4px);
-    box-shadow:0 6px 0 -3px rgba(28,35,30,.16);
-  }
+  .tile:hover .tile__art{transform:scale(.97);}
   .tile__name{
     display:block;
-    margin-top:6px;
-    min-height:2.6em;
-    font-size:10.5px;
+    margin-top:10px;
+    font-size:14px;
+    font-weight:650;
     line-height:1.3;
     color:var(--ink);
     word-break:keep-all;
   }
-  /* 사진 또는 그림이 들어가는 자리 */
+  .tile__meta{
+    display:block;
+    margin-top:3px;
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--ink-soft);
+    letter-spacing:.02em;
+  }
+  .tile__meta i{
+    display:inline-block;
+    width:6px;height:6px;
+    border-radius:50%;
+    margin-right:5px;
+    vertical-align:1px;
+    background:var(--ink-faint);
+  }
+  .tile__meta i.is-red{background:var(--warn);}
+  .tile__meta i.is-ox{background:var(--accent);}
   .tile img, .card__swatch img,
   .tile svg, .card__swatch svg{
     position:absolute;
@@ -170,56 +290,53 @@
     display:block;
   }
   .card__media{margin:0;}
-  .credit{
-    font-size:11.5px;
-    line-height:1.45;
-    color:var(--ink-soft);
-    margin:7px 0 0;
-  }
+  .credit{color:var(--ink-soft);margin:7px 0 0;line-height:1.45;}
   .credit a{color:inherit;}
 
   /* ── 필터 ───────────────────────────── */
   .filters{
     display:flex;
     flex-wrap:wrap;
-    align-items:baseline;
-    gap:10px 18px;
-    padding-block:26px 8px;
-    border-top:1px solid var(--line);
-    margin-top:56px;
+    align-items:center;
+    gap:12px 28px;
+    padding:14px 16px;
+    margin-top:4px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r);
   }
-  .filters__group{
-    display:flex;
-    align-items:baseline;
-    gap:8px;
+  .filters__group{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .filters__group > div{
+    display:inline-flex;
     flex-wrap:wrap;
+    gap:0;
+    padding:2px;
+    background:var(--surface-2);
+    border:1px solid var(--line-soft);
+    border-radius:calc(var(--r) - 1px);
   }
-  .filters__label{
-    font-size:13px;
-    color:var(--ink-soft);
-  }
+  .filters__label{color:var(--ink-faint);text-transform:uppercase;}
   .chip{
     -webkit-appearance:none;
     appearance:none;
     font-family:var(--sans);
-    font-size:13.5px;
-    color:var(--ink);
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink-soft);
     background:transparent;
-    border:1px solid var(--line);
-    border-radius:999px;
-    padding:4px 13px;
+    border:0;
+    border-radius:4px;
+    padding:4px 11px;
     cursor:pointer;
-    transition:background .15s ease,border-color .15s ease,color .15s ease;
+    transition:background .15s ease,color .15s ease;
   }
-  .chip:hover{border-color:var(--celadon);}
+  .chip:hover{color:var(--ink);}
   .chip[aria-pressed="true"]{
-    background:var(--celadon-deep);
-    border-color:var(--celadon-deep);
-    color:#F2F5F0;
+    background:var(--ink);
+    color:var(--bg);
   }
   .count{
-    margin:14px 0 0;
-    font-size:13.5px;
+    margin:22px 0 0;
     color:var(--ink-soft);
     font-variant-numeric:tabular-nums;
   }
@@ -228,51 +345,70 @@
   .back{
     -webkit-appearance:none;
     appearance:none;
-    display:inline-block;
-    margin:30px 0 20px;
-    padding:0;
-    border:0;
-    background:none;
-    font-family:var(--sans);
-    font-size:14px;
-    color:var(--celadon-deep);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin:28px 0 18px;
+    padding:6px 12px 6px 10px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:var(--surface);
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-soft);
     cursor:pointer;
+    transition:border-color .15s ease,color .15s ease;
   }
-  .back:hover{text-decoration:underline;}
+  .back:hover{color:var(--ink);border-color:var(--ink-faint);}
   .detail{
     display:grid;
-    grid-template-columns:272px 1fr;
-    gap:0 36px;
-    background:var(--porcelain);
-    border:1px solid var(--line-soft);
-    border-radius:2px;
+    grid-template-columns:300px 1fr;
+    gap:0 40px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r);
     padding:28px;
   }
-  .detail .card__swatch{min-height:362px;}
-  .detail .card__title{font-size:30px;}
+  .detail .card__swatch{aspect-ratio:3/4;min-height:360px;}
+  .detail .card__title{font-size:34px;}
+  .spec{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    margin:12px 0 0;
+    border:1px solid var(--line);
+    border-radius:4px;
+    font-family:var(--mono);
+    font-size:11.5px;
+  }
+  .spec div{padding:8px 10px;border-top:1px solid var(--line-soft);}
+  .spec div:nth-child(-n+2){border-top:0;}
+  .spec div:nth-child(odd){border-right:1px solid var(--line-soft);}
+  .spec dt{color:var(--ink-faint);letter-spacing:.06em;}
+  .spec dd{margin:2px 0 0;color:var(--ink);font-weight:600;font-family:var(--sans);font-size:13.5px;}
   .neighbors{
     display:flex;
     justify-content:space-between;
     gap:16px;
-    margin:18px 0 72px;
-    font-size:14px;
+    margin:14px 0 72px;
   }
   .neighbors button{
     -webkit-appearance:none;
     appearance:none;
-    padding:0;
-    border:0;
-    background:none;
+    padding:10px 14px;
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    background:var(--surface);
     font-family:var(--sans);
-    font-size:14px;
-    color:var(--celadon-deep);
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--ink);
     cursor:pointer;
     text-align:left;
+    transition:border-color .15s ease;
   }
-  .neighbors button:hover{text-decoration:underline;}
+  .neighbors button:hover{border-color:var(--accent);}
   .card__swatch{
-    border:1px solid rgba(28,35,30,.18);
-    border-radius:1px;
+    border-radius:4px;
     min-height:172px;
     position:relative;
     overflow:hidden;
@@ -280,64 +416,67 @@
   }
   .card__head{
     display:flex;
-    align-items:baseline;
+    align-items:flex-end;
     justify-content:space-between;
-    gap:16px;
+    gap:14px;
     flex-wrap:wrap;
-    border-bottom:1px solid var(--line-soft);
-    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:16px;
   }
   .card__title{
-    font-family:var(--serif);
-    font-size:24px;
-    font-weight:700;
+    font-family:var(--sans);
+    font-size:26px;
+    font-weight:750;
+    letter-spacing:-.03em;
     margin:0;
-    line-height:1.25;
+    line-height:1.15;
   }
   .card__hanja{
     font-family:var(--serif);
-    font-size:15px;
+    font-size:16px;
     font-weight:400;
-    color:var(--ink-soft);
-    margin-left:9px;
+    letter-spacing:.1em;
+    color:var(--ink-faint);
+    margin-left:10px;
   }
   .tags{display:flex;gap:6px;flex-wrap:wrap;}
   .tag{
-    font-size:12.5px;
+    font-family:var(--mono);
+    font-size:11.5px;
     line-height:1.5;
-    padding:2px 9px;
-    border-radius:2px;
+    padding:3px 8px;
+    border-radius:3px;
     border:1px solid var(--line);
     color:var(--ink-soft);
-    background:#fff;
+    background:var(--surface-2);
     font-variant-numeric:tabular-nums;
   }
-  .tag--reduce{color:var(--iron);border-color:rgba(142,83,38,.4);}
-  .tag--oxide{color:var(--celadon-deep);border-color:rgba(51,86,76,.35);}
+  .tag--reduce{color:var(--warn);border-color:color-mix(in srgb, var(--warn) 40%, transparent);background:var(--warn-soft);}
+  .tag--oxide{color:var(--accent);border-color:color-mix(in srgb, var(--accent) 40%, transparent);background:var(--accent-soft);}
 
   .bar-comp{
     display:flex;
-    height:9px;
-    margin:16px 0 6px;
-    border-radius:1px;
+    gap:2px;
+    height:14px;
+    margin:20px 0 8px;
     overflow:hidden;
-    background:var(--line-soft);
   }
-  .bar-comp span{display:block;height:100%;}
+  .bar-comp span{display:block;height:100%;border-radius:2px;}
   .legend{
     display:flex;
     flex-wrap:wrap;
-    gap:4px 14px;
-    font-size:12px;
+    gap:4px 16px;
+    font-family:var(--mono);
+    font-size:11px;
     color:var(--ink-soft);
-    margin-bottom:14px;
+    margin-bottom:18px;
   }
   .legend i{
     display:inline-block;
     width:8px;height:8px;
-    border-radius:1px;
-    margin-right:5px;
-    vertical-align:baseline;
+    border-radius:2px;
+    margin-right:6px;
+    vertical-align:0;
   }
 
   table{
@@ -348,222 +487,429 @@
   }
   caption{
     text-align:left;
-    font-size:13px;
     color:var(--ink-soft);
-    padding-bottom:5px;
+    padding-bottom:8px;
   }
   th,td{
     text-align:left;
-    padding:5px 0;
-    border-bottom:1px solid #E6E9E1;
+    padding:8px 0;
+    border-bottom:1px solid var(--line-soft);
   }
-  th{font-weight:500;color:var(--ink-soft);font-size:13px;}
-  td.num,th.num{text-align:right;width:74px;}
-  tr.add td{color:var(--celadon-deep);}
+  th{font-weight:500;color:var(--ink-faint);text-transform:uppercase;border-bottom-color:var(--line);}
+  td.num,th.num{text-align:right;width:84px;}
+  td.num{font-family:var(--mono);font-size:14px;}
+  tr.add td{color:var(--accent);}
   tr.total td{
     border-bottom:none;
-    border-top:1px solid var(--line);
-    font-weight:600;
-    padding-top:7px;
+    border-top:1.5px solid var(--ink);
+    font-weight:700;
+    padding-top:10px;
   }
   .card__note{
-    margin:14px 0 0;
+    margin:18px 0 0;
+    padding:14px 16px;
+    background:var(--surface-2);
+    border-left:2px solid var(--accent);
+    border-radius:0 4px 4px 0;
     font-size:14.5px;
     color:var(--ink-soft);
-    max-width:62ch;
+    max-width:66ch;
   }
-  .card__note strong{color:var(--iron);font-weight:600;}
+  .card__note strong{color:var(--warn);font-weight:600;}
+  .card__src{
+    margin:12px 0 0;
+    max-width:66ch;
+    font-size:13px;
+    line-height:1.55;
+    color:var(--ink-soft);
+  }
+  .card__src-k{
+    display:inline-block;
+    margin-right:8px;
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.08em;
+    color:var(--ink-faint);
+  }
+  .card__src a{color:var(--accent);text-underline-offset:3px;word-break:break-word;}
+  .card__src-n{display:block;margin-top:4px;font-size:12px;color:var(--ink-faint);}
 
   /* ── 푸터 ───────────────────────────── */
   .foot{
     border-top:1px solid var(--line);
-    padding-block:32px 56px;
+    padding-block:32px 64px;
     font-size:14px;
     color:var(--ink-soft);
   }
-  .foot h2{
-    font-family:var(--serif);
-    font-size:17px;
-    margin:0 0 10px;
-    color:var(--ink);
-  }
-  .foot ul{margin:0;padding-left:18px;max-width:64ch;}
+  .foot ul{margin:0;padding-left:18px;max-width:70ch;}
   .foot li{margin-bottom:5px;}
+  .foot li::marker{color:var(--ink-faint);}
 
-  /* ── 3면: 유약의 기초 ────────────────── */
+  /* ── 안내 링크 ─────────────────────────── */
+  .guide-links{
+    counter-reset:gl;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    margin-top:48px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    overflow:hidden;
+  }
   .guide-link{
+    counter-increment:gl;
     -webkit-appearance:none;
     appearance:none;
-    display:grid;
-    grid-template-columns:1fr auto;
-    align-items:center;
-    gap:2px 16px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
     width:100%;
-    margin-top:44px;
-    padding:18px 22px;
+    margin:0;
+    padding:44px 20px 20px;
     text-align:left;
-    background:#fff;
-    border:1px solid var(--celadon);
-    border-left:4px solid var(--celadon);
-    border-radius:2px;
+    background:var(--surface);
+    border:0;
     cursor:pointer;
     font-family:var(--sans);
     transition:background .15s ease;
   }
-  .guide-link:hover{background:#F5F8F5;}
-  .guide-link__t{
-    font-family:var(--serif);
-    font-size:17px;
-    color:var(--ink);
+  .guide-link::before{
+    content:counter(gl, decimal-leading-zero);
+    position:absolute;
+    top:16px;left:20px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-faint);
   }
-  .guide-link__d{
-    grid-column:1;
-    font-size:13.5px;
-    color:var(--ink-soft);
-  }
+  .guide-link:hover{background:var(--surface-2);}
+  .guide-link__t{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.02em;}
+  .guide-link__d{font-size:13px;line-height:1.5;color:var(--ink-soft);}
   .guide-link__a{
-    grid-row:1 / span 2;
-    grid-column:2;
-    font-size:18px;
-    color:var(--celadon-deep);
+    position:absolute;
+    top:12px;right:16px;
+    font-size:16px;
+    color:var(--ink-faint);
+    transition:transform .15s ease,color .15s ease;
   }
+  .guide-link:hover .guide-link__a{color:var(--accent);transform:translate(2px,-2px) rotate(-45deg);}
 
   .basics{
-    background:var(--porcelain);
-    border:1px solid var(--line-soft);
-    border-radius:2px;
-    padding:30px 34px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    padding:36px 40px;
   }
   .basics__title{
-    font-family:var(--serif);
-    font-size:28px;
-    font-weight:700;
-    margin:0 0 4px;
+    font-family:var(--sans);
+    font-size:32px;
+    font-weight:750;
+    letter-spacing:-.03em;
+    margin:0 0 6px;
   }
-  .basics__body{max-width:66ch;}
+  .basics__body{max-width:70ch;}
   .basics h3{
-    font-size:14.5px;
-    font-weight:600;
-    margin:22px 0 6px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:15px;
+    font-weight:700;
+    margin:34px 0 10px;
     color:var(--ink);
   }
-  .basics__body > h3:first-child{margin-top:14px;}
+  .basics h3::after{content:"";flex:1;height:1px;background:var(--line);}
+  .basics__body > h3:first-child{margin-top:18px;}
   .basics h4{
-    font-size:13px;
-    font-weight:600;
-    margin:16px 0 4px;
-    color:var(--celadon-deep);
+    font-family:var(--mono);
+    font-size:11.5px;
+    font-weight:500;
+    letter-spacing:.06em;
+    margin:20px 0 6px;
+    color:var(--accent);
   }
-  .basics table.mat{
-    width:100%;
-    border-collapse:collapse;
-    margin-bottom:6px;
-  }
+  .basics table.mat{width:100%;border-collapse:collapse;margin-bottom:6px;}
   .basics table.mat th{
-    width:132px;
+    width:150px;
     text-align:left;
     vertical-align:top;
+    font-family:var(--sans);
     font-size:13.5px;
-    font-weight:600;
+    font-weight:650;
+    letter-spacing:0;
+    text-transform:none;
     color:var(--ink);
-    padding:7px 12px 7px 0;
-    border-bottom:1px solid #E6E9E1;
+    padding:9px 14px 9px 0;
+    border-bottom:1px solid var(--line-soft);
+    line-height:1.4;
+  }
+  .mat__ko{
+    display:inline-block;
+    margin-top:2px;
+    font-size:12px;
+    font-weight:400;
+    color:var(--ink-faint);
   }
   .basics table.mat td{
     vertical-align:top;
     font-size:13.5px;
     color:var(--ink-soft);
-    padding:7px 0;
-    border-bottom:1px solid #E6E9E1;
+    padding:9px 0;
+    border-bottom:1px solid var(--line-soft);
   }
+  .basics a{color:var(--accent);text-underline-offset:3px;}
   @media (max-width:560px){
-    .basics{padding:22px 20px;}
+    .basics{padding:24px 20px;}
     .basics table.mat th,
     .basics table.mat td{display:block;width:auto;border-bottom:none;padding:0;}
-    .basics table.mat th{padding-top:9px;}
-    .basics table.mat td{padding-bottom:9px;border-bottom:1px solid #E6E9E1;}
+    .basics table.mat th{padding-top:10px;}
+    .basics table.mat td{padding-bottom:10px;border-bottom:1px solid var(--line-soft);}
   }
-  .basics p, .basics li{
-    font-size:14.5px;
-    color:var(--ink-soft);
-    margin:0 0 7px;
-  }
+  .basics p, .basics li{font-size:14.5px;color:var(--ink-soft);margin:0 0 7px;}
   .basics ul{margin:0 0 7px;padding-left:18px;}
   .basics dl{margin:0 0 10px;}
-  .basics dt{
-    font-size:14.5px;
-    font-weight:600;
-    color:var(--ink);
-    margin-top:9px;
+  .basics dt{font-size:14.5px;font-weight:650;color:var(--ink);margin-top:10px;}
+  .basics dd{margin:2px 0 0;font-size:14.5px;color:var(--ink-soft);}
+
+  /* ── 삼각좌표 ─────────────────────────── */
+  .ternary{
+    margin:22px 0 26px;
+    padding:20px;
+    background-color:var(--surface-2);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:20px 20px;
+    border:1px solid var(--line-soft);
+    border-radius:4px;
   }
-  .basics dd{
-    margin:2px 0 0;
-    font-size:14.5px;
-    color:var(--ink-soft);
-  }
+  .ternary svg{width:100%;max-width:360px;height:auto;display:block;margin-inline:auto;}
+  .ternary__tri{fill:var(--surface);stroke:var(--ink);stroke-width:1.2;}
+  .ternary__mid{fill:none;stroke:var(--ink-faint);stroke-width:1;stroke-dasharray:3 3;}
+  .ternary__vertex,.ternary__pt{stroke:var(--surface);stroke-width:1.5;}
+  .ternary__label{font-family:var(--sans);}
+  .ternary__label-t{font-size:14px;font-weight:650;fill:var(--ink);}
+  .ternary__label-s{font-size:10.5px;fill:var(--ink-soft);}
+  .ternary__legend{justify-content:center;margin:12px 0 0;}
+  .ternary__caption{font-size:12.5px;color:var(--ink-soft);text-align:center;max-width:56ch;margin:10px auto 0;}
   .basics__src{
-    margin-top:18px;
-    padding-top:12px;
-    border-top:1px solid var(--line-soft);
+    margin-top:24px;
+    padding-top:14px;
+    border-top:1px dashed var(--line);
     font-size:13px;
   }
+
+  /* ── 착색제 발색 그라데이션 ───────────────── */
+  .stainchart{margin-top:8px;}
+  .stain{
+    margin-bottom:14px;
+    padding:18px;
+    border:1px solid var(--line-soft);
+    border-radius:4px;
+    background:var(--surface-2);
+  }
+  .stain:last-child{margin-bottom:0;}
+  .stain__name{font-size:14.5px;font-weight:700;color:var(--ink);margin:0 0 3px;}
+  .stain__note{font-size:13.5px;color:var(--ink-soft);margin:0 0 14px;max-width:62ch;}
+  .stain__row{margin-bottom:16px;}
+  .stain__row:last-child{margin-bottom:0;}
+  .stain__atmos{display:block;color:var(--ink-faint);margin-bottom:6px;text-transform:uppercase;}
+  .stain__bar{
+    position:relative;
+    height:34px;
+    border-radius:4px;
+    cursor:ew-resize;
+    touch-action:pan-y;          /* 세로 스크롤은 그대로, 가로로 끌면 색 보기 */
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  .stain__bar:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .stain__cursor{
+    position:absolute;
+    top:-6px;bottom:-6px;
+    width:0;
+    pointer-events:none;
+  }
+  .stain__cursor::before{          /* 세로선 */
+    content:"";
+    position:absolute;
+    top:0;bottom:0;left:-1px;
+    width:2px;
+    background:var(--surface);
+    box-shadow:0 0 0 1px var(--ink);
+    border-radius:1px;
+  }
+  .stain__cursor i{                /* 가운데 색 동그라미 */
+    position:absolute;
+    top:50%;left:0;
+    width:22px;height:22px;
+    margin:-11px 0 0 -11px;
+    border-radius:50%;
+    border:2px solid var(--surface);
+    box-shadow:0 0 0 1px var(--ink),0 2px 6px rgba(0,0,0,.25);
+  }
+  .stain__read{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:6px 12px;
+    margin-top:10px;
+    min-height:44px;
+    padding:8px 10px;
+    background:var(--surface);
+    border:1px solid var(--line-soft);
+    border-radius:4px;
+  }
+  .stain__read-chip{
+    width:44px;height:28px;
+    flex:0 0 auto;
+    border-radius:3px;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);
+  }
+  .stain__read-pct{
+    font-family:var(--mono);
+    font-size:16px;
+    font-weight:700;
+    color:var(--ink);
+    min-width:4.2em;
+    font-variant-numeric:tabular-nums;
+  }
+  .stain__read-t{font-size:13px;color:var(--ink-soft);flex:1 1 180px;}
+  .stain__read-t b{color:var(--ink);font-weight:650;}
+  .stain__read-go{
+    -webkit-appearance:none;
+    appearance:none;
+    font-family:var(--sans);
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--accent);
+    background:none;
+    border:1px solid currentColor;
+    border-radius:4px;
+    padding:4px 10px;
+    cursor:pointer;
+  }
+  .stain__tick{
+    position:absolute;
+    top:-4px;bottom:-4px;
+    width:2px;
+    margin-left:-1px;
+    background:var(--ink);
+    border-radius:1px;
+  }
+  .stain__scale{display:flex;justify-content:space-between;color:var(--ink-faint);margin-top:5px;font-variant-numeric:tabular-nums;}
+  .stain__marks{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .stain__mark{
+    -webkit-appearance:none;
+    appearance:none;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:3px 10px 3px 4px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:var(--surface);
+    font-family:var(--sans);
+    font-size:12px;
+    color:var(--ink-soft);
+    cursor:default;
+  }
+  button.stain__mark{cursor:pointer;transition:border-color .15s ease,color .15s ease;}
+  button.stain__mark:hover{border-color:var(--accent);color:var(--ink);}
+  .stain__mark i{display:inline-block;width:14px;height:14px;border-radius:2px;flex-shrink:0;}
+  .stain__combo{display:flex;flex-wrap:wrap;gap:10px;}
+  .stain__combo-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 14px 8px 8px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:var(--surface);
+    font-size:13px;
+    color:var(--ink-soft);
+    max-width:280px;
+  }
+  button.stain__combo-item{
+    -webkit-appearance:none;
+    appearance:none;
+    font-family:var(--sans);
+    cursor:pointer;
+    text-align:left;
+    transition:border-color .15s ease;
+  }
+  button.stain__combo-item:hover{border-color:var(--accent);}
+  .stain__combo-item i{display:block;width:26px;height:26px;border-radius:3px;flex-shrink:0;}
+  .stain__combo-item b{display:block;font-size:13.5px;color:var(--ink);font-weight:650;}
+
   .back--bottom{margin:18px 0 72px;}
 
   /* ── 취급 주의 ───────────────────────── */
   .safety{
+    position:relative;
     margin-top:16px;
-    background:#fff;
-    border:1px solid var(--celadon-deep);
-    border-left-width:4px;
-    border-radius:2px;
-    padding:20px 24px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    padding:22px 26px 22px 30px;
+    overflow:hidden;
+  }
+  .safety::before{            /* 경고 줄무늬 */
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:8px;
+    background:repeating-linear-gradient(-45deg, var(--warn) 0 6px, transparent 6px 12px);
+    opacity:.85;
   }
   .safety h2{
-    font-family:var(--serif);
-    font-size:18px;
-    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--sans);
+    font-size:16px;
+    font-weight:700;
+    margin:0 0 12px;
+  }
+  .safety h2::before{
+    content:"CAUTION";
+    font-family:var(--mono);
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.1em;
+    padding:2px 7px;
+    border-radius:3px;
+    background:var(--warn);
+    color:var(--surface);
   }
   .safety ul{
     margin:0;
     padding-left:18px;
-    max-width:62ch;
-    font-size:14.5px;
+    columns:3 240px;
+    column-gap:32px;
+    font-size:13.5px;
     color:var(--ink-soft);
   }
-  .safety li{margin-bottom:6px;}
-  .safety li:last-child{margin-bottom:0;}
-  .safety strong{color:var(--iron);font-weight:600;}
+  .safety li{margin-bottom:6px;break-inside:avoid;}
+  .safety strong{color:var(--warn);font-weight:650;}
 
   .tag--warn{
-    color:var(--iron);
-    border-color:rgba(142,83,38,.45);
-    background:#FBF2EA;
+    color:var(--warn);
+    border-color:color-mix(in srgb, var(--warn) 45%, transparent);
+    background:var(--warn-soft);
     font-weight:600;
   }
+  .tag--warn::before{content:"⚠ ";}
 
   /* ── 같은 조성 묶음 ─────────────────── */
-  .siblings{
-    margin-top:20px;
-    padding-top:16px;
-    border-top:1px solid var(--line-soft);
-  }
-  .siblings h3{
-    font-size:14px;
-    font-weight:600;
-    margin:0 0 4px;
-  }
-  .siblings__base{
-    margin:0 0 12px;
-    font-size:13px;
-    color:var(--ink-soft);
-    font-variant-numeric:tabular-nums;
-  }
+  .siblings{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);}
+  .siblings h3{font-size:14px;font-weight:700;margin:0 0 4px;}
+  .siblings__base{margin:0 0 14px;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
   .siblings__list{
     list-style:none;
-    margin:0;
-    padding:0;
+    margin:0;padding:0;
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(92px,1fr));
     gap:12px 10px;
   }
   .sib button{
@@ -582,133 +928,88 @@
   .sib__art{
     display:block;
     position:relative;
-    aspect-ratio:3/4;
+    width:100%;
+    height:0;
+    padding-top:100%;
     overflow:hidden;
-    border:1px solid rgba(28,35,30,.2);
-    border-radius:1px;
+    border-radius:3px;
     background:var(--line-soft);
     transition:transform .18s ease;
   }
-  .sib button:hover .sib__art{transform:translateY(-3px);}
-  .sib__art svg, .sib__art img{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .sib__name{
-    display:block;
-    margin-top:6px;
-    font-size:11.5px;
-    line-height:1.3;
-    word-break:keep-all;
-  }
-  .sib__add{
-    display:block;
-    margin-top:2px;
-    font-size:11px;
-    line-height:1.3;
-    color:var(--celadon-deep);
-    word-break:keep-all;
-  }
-  .sib--now .sib__art{
-    outline:2px solid var(--celadon-deep);
-    outline-offset:1px;
-  }
-  .sib--now .sib__name{font-weight:600;}
+  .sib button:hover .sib__art{transform:scale(.96);}
+  .sib__art svg, .sib__art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .sib__name{display:block;margin-top:6px;font-size:12px;font-weight:600;line-height:1.3;word-break:keep-all;}
+  .sib__add{display:block;margin-top:2px;font-family:var(--mono);font-size:10.5px;line-height:1.3;color:var(--accent);word-break:keep-all;}
+  .sib--now .sib__art{outline:2px solid var(--accent);outline-offset:2px;}
 
   /* ── 메모 ───────────────────────────── */
-  .notes{
-    border-top:1px solid var(--line-soft);
-    margin-top:18px;
-    padding-top:14px;
-  }
+  .notes{border-top:1px solid var(--line);margin-top:22px;padding-top:16px;}
   .notes__toggle{
     -webkit-appearance:none;
     appearance:none;
     background:none;
     border:0;
     padding:0;
-    font-family:var(--sans);
-    font-size:13.5px;
-    color:var(--celadon-deep);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.02em;
+    color:var(--ink-soft);
     cursor:pointer;
   }
-  .notes__toggle:hover{text-decoration:underline;}
-  .notes__toggle b{font-weight:600;font-variant-numeric:tabular-nums;}
+  .notes__toggle:hover{color:var(--ink);}
+  .notes__toggle b{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;}
   .notes__body{margin-top:14px;}
   .note-form{
     display:grid;
     gap:8px;
-    background:#fff;
+    background:var(--surface-2);
     border:1px solid var(--line-soft);
-    border-radius:2px;
-    padding:14px;
+    border-radius:var(--r);
+    padding:12px;
   }
   .note-form__row{display:flex;gap:8px;flex-wrap:wrap;}
   .note-form input,.note-form textarea{
     font-family:var(--sans);
     font-size:14px;
     color:var(--ink);
-    background:var(--porcelain);
+    background:var(--surface);
     border:1px solid var(--line);
-    border-radius:2px;
-    padding:7px 9px;
+    border-radius:4px;
+    padding:8px 10px;
     width:100%;
   }
+  .note-form input::placeholder,.note-form textarea::placeholder{color:var(--ink-faint);}
   .note-form__row input{flex:1 1 170px;width:auto;}
   .note-form textarea{resize:vertical;min-height:76px;line-height:1.55;}
-  .note-form input:focus,.note-form textarea:focus{border-color:var(--celadon);outline:none;}
-  .note-form__foot{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    flex-wrap:wrap;
-  }
-  .note-err{font-size:12.5px;color:var(--iron);}
+  .note-form input:focus,.note-form textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft);}
+  .note-form__foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+  .note-err{font-size:12.5px;color:var(--warn);}
   .btn{
     -webkit-appearance:none;
     appearance:none;
     font-family:var(--sans);
     font-size:13.5px;
-    padding:7px 16px;
-    border-radius:2px;
-    border:1px solid var(--celadon-deep);
-    background:var(--celadon-deep);
-    color:#F2F5F0;
+    font-weight:600;
+    padding:8px 16px;
+    border-radius:4px;
+    border:1px solid var(--accent);
+    background:var(--accent);
+    color:var(--accent-ink);
     cursor:pointer;
-    transition:background .15s ease;
+    transition:filter .15s ease;
   }
-  .btn:hover{background:#2A483F;}
-  .btn--sm{padding:6px 13px;font-size:13px;}
-  .notes__list{
-    list-style:none;
-    margin:16px 0 0;
-    padding:0;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
+  .btn:hover{filter:brightness(1.12);}
+  .btn--sm{padding:5px 12px;font-size:12.5px;}
+  .notes__list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .note{
+    padding:10px 14px;
+    border:1px solid var(--line-soft);
+    border-radius:4px;
+    background:var(--surface);
   }
-  .note{border-left:2px solid var(--line);padding-left:13px;}
-  .note__meta{
-    display:flex;
-    gap:9px;
-    align-items:baseline;
-    flex-wrap:wrap;
-    font-size:12.5px;
-    color:var(--ink-soft);
-    font-variant-numeric:tabular-nums;
-  }
-  .note__name{color:var(--ink);font-weight:600;font-size:13.5px;}
-  .note__cond{
-    border:1px solid var(--line);
-    border-radius:2px;
-    padding:1px 7px;
-    color:var(--celadon-deep);
-  }
+  .note__meta{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+  .note__name{color:var(--ink);font-weight:650;font-size:13.5px;font-family:var(--sans);}
+  .note__cond{border:1px solid var(--line);border-radius:3px;padding:1px 7px;color:var(--accent);}
   .note__text{margin:5px 0 0;font-size:14.5px;white-space:pre-wrap;max-width:62ch;}
   .note__del{
     -webkit-appearance:none;
@@ -717,32 +1018,483 @@
     border:0;
     padding:0;
     margin-left:auto;
-    font-family:var(--sans);
-    font-size:12.5px;
-    color:var(--ink-soft);
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--ink-faint);
     cursor:pointer;
     text-decoration:underline;
+    text-underline-offset:2px;
   }
+  .note__del:hover{color:var(--warn);}
   .notes__empty{margin:16px 0 0;font-size:14px;color:var(--ink-soft);}
-  .notes__scope{
-    margin:12px 0 0;
-    font-size:12.5px;
+  .notes__scope{margin:12px 0 0;color:var(--ink-faint);}
+  .notes__count{margin:0 0 14px;font-size:13.5px;color:var(--ink-soft);}
+  .notes__count b{color:var(--ink);font-variant-numeric:tabular-nums;}
+
+  /* ── 자유게시판 ─────────────────────── */
+  .board__toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:24px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+  }
+  .board__count{font-family:var(--mono);font-size:12px;color:var(--ink-soft);}
+  #board-form{margin-top:14px;}
+  .board__list{
+    list-style:none;
+    margin:18px 0 0;
+    padding:0;
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    overflow:hidden;
+  }
+  .board__item{border-top:1px solid var(--line-soft);}
+  .board__item:first-child{border-top:0;}
+  .board__row{
+    -webkit-appearance:none;
+    appearance:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:14px;
+    width:100%;
+    background:var(--surface);
+    border:0;
+    padding:13px 16px;
+    font-family:var(--sans);
+    text-align:left;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .board__row:hover{background:var(--surface-2);}
+  .board__title{font-size:14.5px;color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .board__meta{flex:0 0 auto;color:var(--ink-faint);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .post{margin-top:8px;}
+  .post__head{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px;}
+  .post__title{font-family:var(--sans);font-size:24px;font-weight:750;letter-spacing:-.02em;margin:0 0 8px;}
+  .post__meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+  .post__text{font-size:15px;line-height:1.75;white-space:pre-wrap;max-width:62ch;margin:0 0 8px;}
+
+  /* ── 유약 결함 도감 ─────────────────── */
+  .defects{
+    counter-reset:df;
+    margin-top:24px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  .defect{
+    counter-increment:df;
+    position:relative;
+    display:flex;
+    gap:22px;
+    align-items:flex-start;
+    padding:20px;
+    border:1px solid var(--line-soft);
+    border-radius:var(--r);
+    background:var(--surface-2);
+  }
+  .defect::after{
+    content:"D-" counter(df, decimal-leading-zero);
+    position:absolute;
+    top:18px;right:20px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-faint);
+  }
+  .defect:first-child{padding-top:20px;}
+  .defect-art{
+    width:128px;
+    flex:0 0 128px;
+    height:auto;
+    display:block;
+    border-radius:3px;
+  }
+  .defect-art__clay{fill:#C3AE92;}
+  .defect-art__glaze{fill:#6E9483;}
+  .defect-art__glaze-deep{fill:#33564C;}
+  .defect-art__frame{fill:none;stroke:transparent;stroke-width:1;}
+  .defect-art__crack{fill:none;stroke:#1C231E;stroke-width:.9;opacity:.5;stroke-linecap:round;stroke-linejoin:round;}
+  .defect-art__mark{fill:#8E5326;}
+  .defect-art__mark-soft{fill:#8E5326;opacity:.45;}
+  .defect__body{flex:1 1 auto;min-width:0;}
+  .basics .defect__name{display:block;margin:0 0 6px;}
+  .basics .defect__name::after{content:none;}
+  .defect__name{font-family:var(--sans);font-size:18px;font-weight:750;letter-spacing:-.02em;margin:0 0 6px;padding-right:48px;}
+  .defect__ko{display:block;font-size:12.5px;font-weight:400;letter-spacing:0;color:var(--ink-soft);margin-top:2px;}
+  .defect__desc{font-size:14px;line-height:1.6;margin:0 0 12px;}
+  .defect__info{margin:0;font-size:13.5px;display:grid;grid-template-columns:88px 1fr;gap:8px 14px;}
+  .defect__info dt{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.04em;color:var(--accent);margin:0;padding-top:2px;}
+  .defect__info dd{margin:0;line-height:1.65;color:var(--ink-soft);}
+
+
+  /* 한글이 주가 되는 작은 라벨은 고정폭 대신 본문 글꼴로 (띄어쓰기 폭이 넓어지지 않게) */
+  .count, caption, .notes__scope, .filters__label, .batch label, .notes__toggle,
+  .board__count, .stain__atmos, .note__meta, .post__meta, .board__meta,
+  .defect__info dt, .basics h4, .legend{
+    font-family:var(--sans);
+    letter-spacing:0;
+  }
+  .count, caption, .notes__scope, .notes__toggle, .board__count{font-size:12.5px;}
+  .filters__label, .batch label, .stain__atmos, .defect__info dt, .legend{font-size:12px;}
+  .basics h4{font-size:12.5px;font-weight:600;}
+
+  /* ── 관련 도서 ───────────────────────── */
+  .books-lead{display:flex;align-items:center;gap:12px;margin:0 0 6px;}
+  .books-lead .guide-book__ico{width:44px;height:44px;}
+  .books-lead .bk-ico{width:24px;height:24px;}
+  .basics .book-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .book{
+    display:grid;
+    grid-template-columns:96px minmax(0,1fr);
+    gap:0 16px;
+    padding:14px 16px;
+    background:var(--surface-2);
+    border:1px solid var(--line-soft);
+    border-radius:4px;
+  }
+  .book__cover{
+    grid-row:1 / span 4;
+    position:relative;
+    display:block;
+    width:96px;
+    border-radius:3px;
+    overflow:hidden;
+    box-shadow:0 1px 4px rgba(20,23,26,.18);
+    align-self:start;
+  }
+  .book__cover img, .book__cover .bc{display:block;width:100%;height:auto;}
+  .book__cover img + .bc{display:none;}     /* 직접 넣은 표지가 있으면 그림 대신 보입니다 */
+  .bc-t{fill:#fff;font-family:var(--sans);font-weight:700;letter-spacing:-.02em;}
+  .bc-a{fill:rgba(255,255,255,.75);font-family:var(--sans);font-weight:500;}
+  .basics .book__t{margin:0;font-size:15px;font-weight:700;color:var(--ink);line-height:1.4;}
+  .basics .book__m{margin:2px 0 0;font-size:12.5px;color:var(--ink-faint);}
+  .basics .book__d{margin:6px 0 0;font-size:13.5px;color:var(--ink-soft);}
+  .book__f{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;}
+  .book__tag{
+    font-size:11.5px;
+    padding:1px 7px;
+    border-radius:3px;
+    border:1px solid var(--line);
+    background:var(--surface);
     color:var(--ink-soft);
   }
+  .book__tag--pick{color:var(--accent);border-color:color-mix(in srgb, var(--accent) 40%, transparent);background:var(--accent-soft);}
+  .book__tag--warn{color:var(--warn);border-color:color-mix(in srgb, var(--warn) 40%, transparent);background:var(--warn-soft);}
+  .basics .book__link{margin-left:auto;font-size:12.5px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .basics .book__link:hover{text-decoration:underline;}
 
+  /* ── 내 유약 계산기 ─────────────────── */
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  .mc{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 260px;
+    gap:28px;
+    margin-top:24px;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+  }
+  .mc__meta{
+    display:grid;
+    grid-template-columns:1fr 1fr 150px;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .mc__field{display:flex;flex-direction:column;gap:5px;}
+  .mc__field > span:first-child{font-size:12px;color:var(--ink-faint);}
+  .mc input, .mc select, .mc textarea{
+    font-family:var(--sans);
+    font-size:14px;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:8px 10px;
+    width:100%;
+    min-width:0;
+  }
+  .mc input::placeholder, .mc textarea::placeholder{color:var(--ink-faint);}
+  .mc input:focus, .mc select:focus, .mc textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft);}
+  .mc__unit{position:relative;display:block;}
+  .mc__unit input{padding-right:28px;text-align:right;font-family:var(--mono);font-weight:600;}
+  .mc__unit i{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-style:normal;font-family:var(--mono);font-size:12px;color:var(--ink-faint);}
+
+  .mc__table{border-top:1px solid var(--line);}
+  .mc__row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 84px 96px 96px 32px;
+    gap:8px;
+    align-items:center;
+    padding:6px 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .mc__row--head{
+    padding:8px 0;
+    font-size:12px;
+    color:var(--ink-faint);
+    border-bottom-color:var(--line);
+  }
+  .mc__row .num{text-align:right;}
+  .mc__row input.num{font-family:var(--mono);}
+  .mc__g{
+    font-family:var(--mono);
+    font-size:14px;
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+    padding-right:2px;
+  }
+  .mc__row.is-add .mc__g, .mc__row.is-add input.num{color:var(--accent);}
+  .mc__row--total{
+    border-top:1.5px solid var(--ink);
+    border-bottom:0;
+    padding-top:10px;
+    font-weight:700;
+  }
+  .mc__row--total .num{font-family:var(--mono);font-size:14px;padding-right:2px;}
+  .mc__del{
+    -webkit-appearance:none;
+    appearance:none;
+    width:32px;height:32px;
+    border:1px solid transparent;
+    border-radius:4px;
+    background:none;
+    color:var(--ink-faint);
+    font-size:18px;
+    line-height:1;
+    cursor:pointer;
+  }
+  .mc__del:hover{color:var(--warn);border-color:var(--line);}
+  .mc__tools{margin-top:10px;}
+  .mc__add, .mc__ghost, .mc__fix, .mc__item-btn{
+    -webkit-appearance:none;
+    appearance:none;
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:7px 12px;
+    cursor:pointer;
+    transition:border-color .15s ease,color .15s ease;
+  }
+  .mc__add{border-style:dashed;width:100%;color:var(--ink-soft);}
+  .mc__add:hover, .mc__ghost:hover, .mc__fix:hover, .mc__item-btn:hover{border-color:var(--accent);color:var(--ink);}
+  .mc__sum{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px 14px;
+    margin:16px 0;
+    padding:12px 14px;
+    border-radius:4px;
+    font-size:13.5px;
+    background:var(--surface-2);
+    border:1px solid var(--line-soft);
+    color:var(--ink-soft);
+  }
+  .mc__sum.is-ok{border-left:3px solid var(--accent);}
+  .mc__sum.is-off{border-left:3px solid var(--warn);background:var(--warn-soft);color:var(--ink);}
+  .mc__sum b{font-family:var(--mono);font-weight:700;}
+  .mc__fix{border-color:var(--warn);color:var(--warn);background:var(--surface);}
+  .mc__field--memo textarea{resize:vertical;min-height:72px;line-height:1.55;}
+  .mc__foot{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:14px;
+  }
+  .mc__btns{display:flex;gap:8px;margin-left:auto;}
+  .mc__msg-ok{color:var(--accent);}
+
+  .mc__side{
+    align-self:start;
+    padding:16px;
+    background:var(--surface-2);
+    border:1px solid var(--line-soft);
+    border-radius:var(--r);
+  }
+  .basics .mc__side-t{margin:0 0 4px;font-size:14px;}
+  .basics .mc__side-t::after{content:none;}
+  .basics .mc__scope{margin:0 0 12px;font-size:12px;color:var(--ink-faint);}
+  .mc__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .mc__item{
+    padding:10px 12px;
+    background:var(--surface);
+    border:1px solid var(--line-soft);
+    border-radius:4px;
+  }
+  .mc__item.is-now{border-color:var(--accent);}
+  .mc__item-name{display:block;font-size:14px;font-weight:650;color:var(--ink);word-break:keep-all;overflow-wrap:anywhere;}
+  .mc__item-meta{display:block;margin-top:2px;font-size:11.5px;color:var(--ink-faint);}
+  .mc__item-btns{display:flex;gap:6px;margin-top:8px;}
+  .mc__item-btn{padding:4px 10px;font-size:12px;white-space:nowrap;}
+  .mc__item-btn.is-danger{color:var(--warn);border-color:var(--warn);}
+  .basics .mc__empty{margin:0;font-size:13px;color:var(--ink-soft);}
+
+  @media (max-width:900px){
+    .guide-links{grid-template-columns:repeat(2,1fr);}
+    .guide-link:last-child:nth-child(odd){grid-column:1 / -1;}
+    .mc{grid-template-columns:1fr;}
+  }
+  @media (min-width:901px){
+    .guide-links{grid-template-columns:repeat(5,1fr);}
+  }
+  @media (max-width:560px){
+    .book{grid-template-columns:72px minmax(0,1fr);gap:0 12px;padding:12px;}
+    .book__cover{width:72px;}
+    .mc__meta{grid-template-columns:1fr;}
+    .mc__row{grid-template-columns:1fr 1fr 1fr 32px;row-gap:6px;padding:10px 0;}
+    .mc__row > :first-child{grid-column:1 / -1;}
+    .mc__row--head{display:none;}
+    .mc__row--total > :first-child{grid-column:auto;}
+    .mc__row--total > :nth-child(2){display:none;}
+    .mc__row input.num{text-align:right;}
+    .mc__g::before{content:"계량 ";font-family:var(--sans);font-size:11px;color:var(--ink-faint);}
+  }
   @media (max-width:820px){
-    .tiles{grid-template-columns:repeat(10,1fr);gap:9px 5px;}
-    .tile__name{font-size:9.5px;min-height:3.9em;}
-    .detail{grid-template-columns:1fr;gap:18px;padding:22px;}
-    .detail .card__swatch{min-height:240px;}
-    .detail .card__title{font-size:25px;}
+    .defect{flex-direction:column;gap:12px;}
+    .defect-art{width:104px;flex:0 0 auto;}
+    .detail{grid-template-columns:1fr;gap:20px;padding:20px;}
+    .detail .card__swatch{aspect-ratio:4/3;min-height:240px;}
+    .detail .card__title{font-size:28px;}
+    .safety ul{columns:1;}
   }
   @media (max-width:520px){
-    .wrap{padding-inline:18px;}
-    .tiles{grid-template-columns:repeat(5,1fr);gap:9px 5px;}
-    .tile__name{font-size:10.5px;margin-top:6px;min-height:4em;letter-spacing:-.01em;}
-    .detail{padding:18px;}
-    .card__title{font-size:21px;}
+    .wrap{padding-inline:16px;}
+    .hero{padding-top:36px;}
+    .hero::before{inset:0 -16px;}
+    .bar__inner{flex-wrap:nowrap;gap:8px;}
+    .mark{font-size:14px;gap:8px;white-space:nowrap;}
+    .total__cell{flex-direction:column;align-items:flex-start;gap:6px;}
+    .batch input{width:60px;}
+    .batch .btn{display:none;}   /* 좁은 화면은 입력하는 대로 바로 계산 */
+    .tiles{grid-template-columns:repeat(2,1fr);}
+    .tile__name{font-size:13.5px;}
+    .filters{padding:12px;gap:10px;}
+    .filters__group{width:100%;justify-content:space-between;}
+    .guide-links{grid-template-columns:1fr;}
+    .guide-link{padding:40px 18px 18px;}
+    .detail{padding:16px;}
+    .card__title{font-size:22px;}
+    .basics__title{font-size:26px;}
+    .defect__info{grid-template-columns:1fr;gap:2px;}
+    .defect__info dd{margin-bottom:8px;}
+    .board__row{flex-direction:column;gap:2px;}
+  }
+
+  /* ── 메인 오른쪽 바로가기 ───────────── */
+  .home{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 250px;
+    grid-template-areas:"hero side" "body side";
+    column-gap:32px;
+    align-items:start;
+  }
+  .home{padding-bottom:40px;}     /* CAUTION 상자와 아래 안내 사이 여백 */
+  .home__hero{grid-area:hero;}
+  .home__body{grid-area:body;min-width:0;}
+  .home__side{
+    grid-area:side;
+    position:sticky;
+    top:78px;
+    margin-top:56px;            /* 제목 윗선과 맞춤 */
+  }
+  .home__side .guide-links{
+    grid-template-columns:1fr !important;
+    margin-top:0;
+  }
+  .home__side .guide-link{padding:14px 40px 14px 44px;gap:3px;}
+  .home__side .guide-link::before{top:16px;left:16px;}
+  .home__side .guide-link__t{font-size:14.5px;}
+  .home__side .guide-link__d{font-size:12px;line-height:1.45;}
+  .home__side .guide-link__a{top:50%;right:14px;transform:translateY(-50%);}
+  .home__side .guide-link:hover .guide-link__a{transform:translate(2px,-50%);}
+  .home__side .guide-link[data-go="mine"]{background:var(--accent-soft);}
+  .guide-book{
+    -webkit-appearance:none;
+    appearance:none;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    margin-top:12px;
+    padding:14px 14px 14px 12px;
+    text-align:left;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    cursor:pointer;
+    transition:border-color .15s ease,background .15s ease;
+  }
+  .guide-book:hover{border-color:var(--accent);background:var(--surface-2);}
+  .guide-book__ico{
+    flex:0 0 auto;
+    display:grid;
+    place-items:center;
+    width:40px;height:40px;
+    border-radius:4px;
+    background:var(--ink);
+    color:var(--surface);
+  }
+  .bk-ico{width:22px;height:22px;display:block;}
+  .guide-book__txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px;}
+  .guide-book__t{font-size:14.5px;font-weight:700;letter-spacing:-.02em;}
+  .guide-book__d{font-size:12px;line-height:1.45;color:var(--ink-soft);}
+  .guide-book__a{flex:0 0 auto;color:var(--ink-faint);transition:transform .15s ease,color .15s ease;}
+  .guide-book:hover .guide-book__a{color:var(--accent);transform:translateX(2px);}
+  .home .hero{padding-right:0;}
+  .home .tiles{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));}
+  .home .safety ul{columns:2 240px;}
+  @media (max-width:900px){
+    .home{grid-template-columns:minmax(0,1fr);grid-template-areas:"hero" "side" "body";}
+    .home__side{
+      position:static;
+      margin:0 0 18px;
+      min-width:0;
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      padding-bottom:4px;
+      scrollbar-width:none;
+    }
+    .home__side::-webkit-scrollbar{display:none;}
+    .home__side .guide-links{display:contents !important;}
+    .home__side .guide-book{
+      flex:0 0 auto;
+      width:auto;
+      margin:0;
+      padding:6px 14px 6px 6px;
+      gap:8px;
+      border-radius:4px;
+    }
+    .home__side .guide-book__ico{width:26px;height:26px;border-radius:3px;}
+    .home__side .bk-ico{width:16px;height:16px;}
+    .home__side .guide-book__d,
+    .home__side .guide-book__a{display:none;}
+    .home__side .guide-book__t{font-size:13.5px;white-space:nowrap;}
+    .home__side .guide-link{
+      flex:0 0 auto;
+      width:auto;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:4px;          /* 필터·버튼과 같은 네모 모서리 */
+      grid-column:auto !important;
+    }
+    .home__side .guide-link::before,
+    .home__side .guide-link__d,
+    .home__side .guide-link__a{display:none;}
+    .home__side .guide-link__t{font-size:13.5px;white-space:nowrap;}
   }
 </style>
 </head>
@@ -750,14 +1502,7 @@
 
 <div class="bar">
   <div class="wrap bar__inner">
-    <p class="mark">유약 노트</p>
-    <div class="batch">
-      <label for="batch">만들 양</label>
-      <input id="batch" type="number" min="1" max="100000" step="10" value="1000" inputmode="numeric"
-             aria-label="만들 양 (g). 각 레시피의 계량 값이 이 양에 맞춰 바뀝니다.">
-      <span>g</span>
-      <button class="btn btn--sm" id="calc">계산하기</button>
-    </div>
+    <p class="mark"><span class="mark__sub">GLAZE LAB</span></p>
   </div>
 </div>
 
@@ -765,10 +1510,17 @@
 
   <!-- ── 1면: 시편 목록 ────────────────────────────── -->
   <section id="view-list">
+  <div class="home">
+  <div class="home__hero">
     <header class="hero">
-      <h1>Ceramic Glaze Recipes</h1>
+      <h1>Ceramic Glaze<br>Recipes</h1>
+      <div class="searchbar">
+        <input id="search" type="search" placeholder="이름이나 원료로 검색 — 예: 코발트, 무광, 환원"
+               aria-label="레시피 검색 (이름 또는 원료)" autocomplete="off">
+      </div>
     </header>
-
+  </div>
+  <div class="home__body">
   <div class="filters">
     <div class="filters__group">
       <span class="filters__label">소성 분위기</span>
@@ -785,13 +1537,6 @@
   </div>
     <p class="count" id="count"></p>
     <div class="tiles" id="tiles"></div>
-
-  <button class="guide-link" data-go="guide">
-      <span class="guide-link__t">유약의 기초</span>
-      <span class="guide-link__d">원료가 하는 일, 같은 조합이 다르게 나오는 이유, 시편 내는 법</span>
-      <span class="guide-link__a" aria-hidden="true">→</span>
-    </button>
-
   <section class="safety">
     <h2>원료를 다룰 때</h2>
     <ul>
@@ -800,6 +1545,45 @@
       <li>씻지 않은 나무재와 볏짚재는 강알칼리라 맨손으로 만지면 피부가 상합니다. 라쿠는 벌겋게 단 기물을 집게로 꺼내는 작업이라 방열 장갑과 보안경, 물통이 곁에 있어야 합니다.</li>
     </ul>
   </section>
+  </div>
+  <aside class="home__side" aria-label="바로가기">
+  <div class="guide-links">
+    <button class="guide-link" data-go="guide">
+      <span class="guide-link__t">유약의 기초</span>
+      <span class="guide-link__d">원료가 하는 일, 같은 조합이 다르게 나오는 이유, 시편 내는 법</span>
+      <span class="guide-link__a" aria-hidden="true">→</span>
+    </button>
+    <button class="guide-link" data-go="buy">
+      <span class="guide-link__t">재료상</span>
+      <span class="guide-link__d">장석·규석·카올린 같은 원료부터 물레·성형도구까지, 어디서 구할 수 있는지</span>
+      <span class="guide-link__a" aria-hidden="true">→</span>
+    </button>
+    <button class="guide-link" data-go="defects">
+      <span class="guide-link__t">유약 결함 도감</span>
+      <span class="guide-link__d">크롤링, 빙렬, 핀홀처럼 구우면서 자주 만나는 문제와 원인·해결법</span>
+      <span class="guide-link__a" aria-hidden="true">→</span>
+    </button>
+    <button class="guide-link" data-go="talk">
+      <span class="guide-link__t">자유게시판</span>
+      <span class="guide-link__d">레시피 생각, 바라는 점, 유약 이야기를 자유롭게</span>
+      <span class="guide-link__a" aria-hidden="true">→</span>
+    </button>
+    <button class="guide-link" data-go="mine">
+      <span class="guide-link__t">내 유약 계산기</span>
+      <span class="guide-link__d">직접 만든 배합을 적고, 만들 양에 맞춰 원료별 계량을 계산</span>
+      <span class="guide-link__a" aria-hidden="true">→</span>
+    </button>
+  </div>
+    <button class="guide-book" data-go="books">
+      <span class="guide-book__ico"><svg class="bk-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 20.5V5.5M20 20.5V5.5" stroke="currentColor" stroke-width="1.6"/><path d="M6.5 8h2.5M6.5 11h2.5M15 8h2.5M15 11h2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+      <span class="guide-book__txt">
+        <span class="guide-book__t">관련 도서</span>
+        <span class="guide-book__d">도자기 역사·만들기·유약 공부에 도움이 되는 책</span>
+      </span>
+      <span class="guide-book__a" aria-hidden="true">→</span>
+    </button>
+  </aside>
+  </div>
   </section>
 
   <!-- ── 2면: 유약 정보 ────────────────────────────── -->
@@ -817,60 +1601,99 @@
       <h3>유약은 세 갈래 원료로 이루어집니다</h3>
       <p>이 페이지의 원료 구성 막대에 쓰인 색이 이 분류를 그대로 나눈 것입니다.</p>
       <dl>
-        <dt>유리를 만드는 것 — 규석</dt>
+        <dt>유리를 만드는 것 — Silica 규석</dt>
         <dd>유약을 유리로 굳히는 뼈대입니다. 혼자서는 1700℃가 넘어야 녹아서, 그대로는 쓸 수 없습니다.</dd>
-        <dt>녹여 주는 것 — 매용제</dt>
+        <dt>녹여 주는 것 — Flux 매용제</dt>
         <dd>석회석, 장석, 재, 돌로마이트, 산화아연, 프릿이 여기 듭니다. 규석의 녹는점을 가마가 닿는 온도까지 끌어내립니다. 어떤 매용제를 쓰느냐가 표면 질감과 발색을 크게 바꿉니다.</dd>
-        <dt>붙잡아 주는 것 — 알루미나</dt>
+        <dt>붙잡아 주는 것 — Alumina 알루미나</dt>
         <dd>카올린과 볼클레이가 담당합니다. 녹은 유약에 점도를 줘서 흘러내리지 않게 잡습니다. 모자라면 굽까지 흘러 가마 선반에 눌어붙고, 많으면 덜 녹아 표면이 거칠어집니다.</dd>
       </dl>
+
+      <figure class="ternary">
+        <svg viewBox="0 0 460 400" role="img" aria-label="Silica 규석·Flux 매용제·Alumina 알루미나 세 성분의 비중을 나타낸 삼각좌표. 규석은 위쪽 꼭짓점, 매용제는 왼쪽 아래 꼭짓점, 알루미나는 오른쪽 아래 꼭짓점이며, 각 꼭짓점은 그 성분이 100%인 자리입니다.">
+          <polygon points="230,40.2 80,300 380,300" class="ternary__tri"/>
+          <polygon points="155,170.1 305,170.1 230,300" class="ternary__mid"/>
+
+          <circle cx="230" cy="40.2" r="4.5" class="ternary__vertex" style="fill:var(--cat-silica)"/>
+          <circle cx="80" cy="300" r="4.5" class="ternary__vertex" style="fill:var(--cat-flux)"/>
+          <circle cx="380" cy="300" r="4.5" class="ternary__vertex" style="fill:var(--cat-clay)"/>
+
+          <circle cx="232.3" cy="131.9" r="4" class="ternary__pt" style="fill:var(--celadon-deep)"/>
+          <circle cx="298.9" cy="159.5" r="4" class="ternary__pt" style="fill:var(--iron)"/>
+
+          <text x="230" y="16" text-anchor="middle" class="ternary__label ternary__label-t">Silica 규석</text>
+          <text x="230" y="30" text-anchor="middle" class="ternary__label ternary__label-s">유리를 만드는 것</text>
+
+          <text x="80" y="320" text-anchor="middle" class="ternary__label ternary__label-t">Flux 매용제</text>
+          <text x="80" y="334" text-anchor="middle" class="ternary__label ternary__label-s">녹여 주는 것</text>
+          <text x="80" y="347" text-anchor="middle" class="ternary__label ternary__label-s">예: 석회석·돌로마이트</text>
+
+          <text x="380" y="320" text-anchor="middle" class="ternary__label ternary__label-t">Alumina 알루미나</text>
+          <text x="380" y="334" text-anchor="middle" class="ternary__label ternary__label-s">붙잡아 주는 것</text>
+          <text x="380" y="347" text-anchor="middle" class="ternary__label ternary__label-s">예: 카올린·볼클레이</text>
+        </svg>
+        <div class="legend ternary__legend">
+          <span><i style="background:var(--celadon-deep)"></i>Feldspar 장석 — 규석 65 · 알루미나 18 · 매용제 17 (%)</span>
+          <span><i style="background:var(--iron)"></i>Kaolin (fired) 카올린(소성 후) — 규석 54 · 알루미나 46 (%)</span>
+        </div>
+        <figcaption class="ternary__caption">세 꼭짓점은 그 성분이 홀로 100%인 자리입니다. 장석과 카올린을 소성 후 산화물 무게비로 짚어 보면, 장석은 세 성분을 조금씩 다 갖고 있어 혼자서도 유리가 되고, 카올린은 절반 가까이가 사실 규석 성분이라는 게 보입니다. 실제 유약은 이런 원료들을 섞어 삼각형 안 어딘가에 자리잡습니다. (재·프릿처럼 조성이 제품마다 다른 원료는 표시하지 않았습니다.)</figcaption>
+      </figure>
 
       <h3>원료별로 하는 일</h3>
       <p>이 페이지의 레시피에 나오는 원료들입니다. 하나가 한 가지 일만 하지는 않습니다. 장석은 뼈대이면서 매용제이고, 재는 매용제이면서 규석을 함께 들여옵니다.</p>
 
-      <h4>장석질 — 뼈대이자 매용제</h4>
+      <h4>Feldspars 장석질 — 뼈대이자 매용제</h4>
       <table class="mat">
-        <tr><th>장석</th><td>고화도 유약 대부분의 바탕입니다. 규석과 알루미나와 알칼리를 한꺼번에 갖고 있어서, 장석만 단독으로도 높은 온도에서는 유리가 됩니다. 다른 원료는 이 바탕을 조정하는 셈입니다.</td></tr>
-        <tr><th>네펠린 사이아나이트</th><td>장석과 비슷하지만 알칼리가 더 많아 낮은 온도에서 녹습니다. 대신 수축이 커서 잘 갈라집니다. 빙렬유와 시노가 이 성질을 일부러 쓴 것입니다.</td></tr>
-        <tr><th>프릿</th><td>원료를 미리 한번 녹여 유리로 만든 뒤 다시 갈아 놓은 가루입니다. 저화도에서 쓸 수 있고, 물에 녹거나 몸에 해로운 성분을 유리 안에 가둬 안전하게 다룰 수 있습니다.</td></tr>
+        <tr><th>Feldspar<br><span class="mat__ko">장석</span></th><td>고화도 유약 대부분의 바탕입니다. 규석과 알루미나와 알칼리를 한꺼번에 갖고 있어서, 장석만 단독으로도 높은 온도에서는 유리가 됩니다. 다른 원료는 이 바탕을 조정하는 셈입니다.</td></tr>
+        <tr><th>Nepheline Syenite<br><span class="mat__ko">네펠린 사이아나이트</span></th><td>장석과 비슷하지만 알칼리가 더 많아 낮은 온도에서 녹습니다. 대신 수축이 커서 잘 갈라집니다. 빙렬유와 시노가 이 성질을 일부러 쓴 것입니다.</td></tr>
+        <tr><th>Spodumene<br><span class="mat__ko">스포듀민</span></th><td>리튬이 든 장석입니다. 리튬이 열팽창을 낮춰 빙렬을 줄이고 녹는 것을 돕습니다. 오트밀 무광유에 들어갑니다.</td></tr>
+        <tr><th>Frit<br><span class="mat__ko">프릿</span></th><td>원료를 미리 한번 녹여 유리로 만든 뒤 다시 갈아 놓은 가루입니다. 저화도에서 쓸 수 있고, 물에 녹거나 몸에 해로운 성분을 유리 안에 가둬 안전하게 다룰 수 있습니다.</td></tr>
       </table>
 
-      <h4>규석 — 유리를 만드는 성분</h4>
+      <h4>Silica 규석 — 유리를 만드는 성분</h4>
       <table class="mat">
-        <tr><th>규석</th><td>유약을 유리로 굳히는 성분입니다. 늘리면 단단해지고 광택이 나지만, 너무 많으면 녹지 않아 표면이 거칠어집니다.</td></tr>
+        <tr><th>Silica<br><span class="mat__ko">규석</span></th><td>유약을 유리로 굳히는 성분입니다. 늘리면 단단해지고 광택이 나지만, 너무 많으면 녹지 않아 표면이 거칠어집니다.</td></tr>
       </table>
 
-      <h4>매용제 — 녹는점을 끌어내리는 것</h4>
+      <h4>Flux 매용제 — 녹는점을 끌어내리는 것</h4>
       <table class="mat">
-        <tr><th>석회석</th><td>고화도의 대표 매용제입니다. 맑고 단단한 유리를 만듭니다. 많이 넣으면 다 녹지 못하고 무광으로 굳습니다.</td></tr>
-        <tr><th>돌로마이트</th><td>칼슘과 마그네슘을 함께 들여옵니다. 마그네슘이 만드는 부드러운 무광이 특징입니다.</td></tr>
-        <tr><th>탄산바륨</th><td>강한 매용제이면서 발색을 바꿉니다. 진사의 붉은색을 돕는 것도 이 성분입니다. 독성이 있어 취급에 주의합니다.</td></tr>
-        <tr><th>산화아연</th><td>잘 녹이면서 결정이 자랄 자리를 만듭니다. 결정유의 핵심 원료입니다. 다만 크롬과 만나면 녹색을 갈색으로 돌려놓는 등 착색에 간섭합니다.</td></tr>
-        <tr><th>탄산소다</th><td>매우 강한 알칼리 매용제입니다. 물에 녹는 성질 때문에 시노에서 유약 표면으로 떠올라 탄소를 잡는 역할을 합니다.</td></tr>
-        <tr><th>나무재 · 볏짚재</th><td>칼슘과 칼륨 위주의 천연 매용제이고, 규석과 알루미나도 함께 들어 있습니다. 볏짚재는 규석 비중이 높아 뽀얀 유탁이 납니다.</td></tr>
-        <tr><th>골회</th><td>인산칼슘입니다. 유리 안에서 미세한 방울로 갈라져 빛을 흩어 놓습니다. 균요의 푸른 젖빛이 이렇게 나옵니다.</td></tr>
+        <tr><th>Whiting<br><span class="mat__ko">석회석</span></th><td>고화도의 대표 매용제입니다. 맑고 단단한 유리를 만듭니다. 많이 넣으면 다 녹지 못하고 무광으로 굳습니다.</td></tr>
+        <tr><th>Dolomite<br><span class="mat__ko">돌로마이트</span></th><td>칼슘과 마그네슘을 함께 들여옵니다. 마그네슘이 만드는 부드러운 무광이 특징입니다.</td></tr>
+        <tr><th>Wollastonite<br><span class="mat__ko">규회석</span></th><td>칼슘과 규석을 함께 들여오는 매용제입니다. 석회석과 달리 구울 때 탄산가스가 나오지 않아 기포와 핀홀이 덜 생깁니다. 콘 6·콘 10 기본유에 자주 쓰입니다.</td></tr>
+        <tr><th>Talc<br><span class="mat__ko">활석</span></th><td>마그네슘을 들여옵니다. 조금 넣으면 콘 6에서 녹는 것을 돕고, 많이 넣으면 부드러운 무광 쪽으로 기웁니다.</td></tr>
+        <tr><th>Gerstley Borate<br><span class="mat__ko">거스틀리 보레이트</span></th><td>붕소와 칼슘이 든 천연 광물로, 낮은 온도에서 잘 녹입니다. 광산에서 캔 원료라 성분이 조금씩 달라서 붕산 프릿으로 바꿔 쓰기도 합니다.</td></tr>
+        <tr><th>Barium Carbonate<br><span class="mat__ko">탄산바륨</span></th><td>강한 매용제이면서 발색을 바꿉니다. 진사의 붉은색을 돕는 것도 이 성분입니다. 독성이 있어 취급에 주의합니다.</td></tr>
+        <tr><th>Zinc Oxide<br><span class="mat__ko">산화아연</span></th><td>잘 녹이면서 결정이 자랄 자리를 만듭니다. 결정유의 핵심 원료입니다. 다만 크롬과 만나면 녹색을 갈색으로 돌려놓는 등 착색에 간섭합니다.</td></tr>
+        <tr><th>Soda Ash<br><span class="mat__ko">탄산소다</span></th><td>매우 강한 알칼리 매용제입니다. 물에 녹는 성질 때문에 시노에서 유약 표면으로 떠올라 탄소를 잡는 역할을 합니다.</td></tr>
+        <tr><th>Wood Ash · Rice Straw Ash<br><span class="mat__ko">나무재 · 볏짚재</span></th><td>칼슘과 칼륨 위주의 천연 매용제이고, 규석과 알루미나도 함께 들어 있습니다. 볏짚재는 규석 비중이 높아 뽀얀 유탁이 납니다.</td></tr>
+        <tr><th>Bone Ash<br><span class="mat__ko">골회</span></th><td>인산칼슘입니다. 유리 안에서 미세한 방울로 갈라져 빛을 흩어 놓습니다. 균요의 푸른 젖빛이 이렇게 나옵니다.</td></tr>
       </table>
 
-      <h4>점토 — 흘러내림을 잡는 것</h4>
+      <h4>Clay 점토 — 흘러내림을 잡는 것</h4>
       <table class="mat">
-        <tr><th>카올린</th><td>알루미나를 공급해 녹은 유약에 점도를 줍니다. 물에 푼 상태에서 다른 원료가 가라앉지 않게 붙잡아 주는 일도 합니다.</td></tr>
-        <tr><th>볼클레이</th><td>카올린보다 입자가 곱고 끈기가 강합니다. 마르기 전 유약이 기물에 잘 붙어 있게 합니다. 대신 수축이 커서 두껍게 바르면 갈라집니다.</td></tr>
-        <tr><th>목절점토</th><td>유기물이 섞인 점토로, 볼클레이와 비슷한 자리에 씁니다. 구하기 어려우면 볼클레이로 바꿔 써도 큰 차이가 없습니다.</td></tr>
+        <tr><th>Kaolin<br><span class="mat__ko">카올린</span></th><td>알루미나를 공급해 녹은 유약에 점도를 줍니다. 물에 푼 상태에서 다른 원료가 가라앉지 않게 붙잡아 주는 일도 합니다.</td></tr>
+        <tr><th>Ball Clay<br><span class="mat__ko">볼클레이</span></th><td>카올린보다 입자가 곱고 끈기가 강합니다. 마르기 전 유약이 기물에 잘 붙어 있게 합니다. 대신 수축이 커서 두껍게 바르면 갈라집니다.</td></tr>
+        <tr><th>Calcined Kaolin<br><span class="mat__ko">하소 카올린</span></th><td>한 번 구워 결정수를 빼낸 카올린입니다. 마를 때 덜 줄어들어서, 카올린이 많은 유약이 갈라지거나 크롤링이 생기는 것을 막아 줍니다.</td></tr>
+        <tr><th>Kibushi Clay<br><span class="mat__ko">목절점토</span></th><td>유기물이 섞인 점토로, 볼클레이와 비슷한 자리에 씁니다. 구하기 어려우면 볼클레이로 바꿔 써도 큰 차이가 없습니다.</td></tr>
       </table>
 
-      <h4>착색제와 유탁제 — 색과 불투명을 만드는 것</h4>
+      <h4>Colorants & Opacifiers 착색제와 유탁제 — 색과 불투명을 만드는 것</h4>
       <table class="mat">
-        <tr><th>산화철</th><td>가장 폭이 넓은 착색제입니다. 같은 철이 양과 소성 분위기에 따라 청자, 황갈, 흑유, 감색까지 갑니다.</td></tr>
-        <tr><th>산화구리</th><td>산화에서 녹색, 환원에서 붉은색. 가마 안에서 증기로 날아가 옆 기물에 옮겨 붙습니다.</td></tr>
-        <tr><th>산화코발트</th><td>가장 힘이 센 청색 착색제입니다. 1%만 넘겨도 검푸르게 죽습니다.</td></tr>
-        <tr><th>산화망간</th><td>갈보라색을 냅니다. 소성 중 유독한 증기가 나옵니다.</td></tr>
-        <tr><th>산화니켈</th><td>기본유의 성분에 따라 회청부터 겨자색까지 갈립니다. 결과를 미리 짐작하기 어려운 편입니다.</td></tr>
-        <tr><th>산화크롬</th><td>녹색을 냅니다. 주석과 만나면 분홍이 되고, 증기로 날아가 옆 기물까지 물들입니다.</td></tr>
-        <tr><th>루틸</th><td>티탄과 철이 섞인 천연 광물입니다. 색과 결정 줄무늬를 동시에 냅니다.</td></tr>
-        <tr><th>산화티탄</th><td>흰 결정을 키우고 유약을 뿌옇게 만듭니다. 루틸과 달리 누런빛은 나오지 않습니다.</td></tr>
-        <tr><th>산화주석</th><td>녹지 않고 유리 안에 남아 빛을 막습니다. 색이 아니라 흰 불투명을 만드는 유탁제입니다.</td></tr>
-        <tr><th>지르코늄 실리케이트</th><td>주석과 같은 일을 더 싼값에 합니다. 흰색이 조금 더 차갑고 건조합니다.</td></tr>
+        <tr><th>Iron Oxide<br><span class="mat__ko">산화철</span></th><td>가장 폭이 넓은 착색제입니다. 같은 철이 양과 소성 분위기에 따라 청자, 황갈, 흑유, 감색까지 갑니다.</td></tr>
+        <tr><th>Copper Oxide<br><span class="mat__ko">산화구리</span></th><td>산화에서 녹색, 환원에서 붉은색. 가마 안에서 증기로 날아가 옆 기물에 옮겨 붙습니다.</td></tr>
+        <tr><th>Cobalt Oxide<br><span class="mat__ko">산화코발트</span></th><td>가장 힘이 센 청색 착색제입니다. 1%만 넘겨도 검푸르게 죽습니다.</td></tr>
+        <tr><th>Manganese Oxide<br><span class="mat__ko">산화망간</span></th><td>갈보라색을 냅니다. 소성 중 유독한 증기가 나옵니다.</td></tr>
+        <tr><th>Nickel Oxide<br><span class="mat__ko">산화니켈</span></th><td>기본유의 성분에 따라 회청부터 겨자색까지 갈립니다. 결과를 미리 짐작하기 어려운 편입니다.</td></tr>
+        <tr><th>Chromium Oxide<br><span class="mat__ko">산화크롬</span></th><td>녹색을 냅니다. 주석과 만나면 분홍이 되고, 증기로 날아가 옆 기물까지 물들입니다.</td></tr>
+        <tr><th>Rutile<br><span class="mat__ko">루틸</span></th><td>티탄과 철이 섞인 천연 광물입니다. 색과 결정 줄무늬를 동시에 냅니다.</td></tr>
+        <tr><th>Titanium Dioxide<br><span class="mat__ko">산화티탄</span></th><td>흰 결정을 키우고 유약을 뿌옇게 만듭니다. 루틸과 달리 누런빛은 나오지 않습니다.</td></tr>
+        <tr><th>Tin Oxide<br><span class="mat__ko">산화주석</span></th><td>녹지 않고 유리 안에 남아 빛을 막습니다. 색이 아니라 흰 불투명을 만드는 유탁제입니다.</td></tr>
+        <tr><th>Zirconium Silicate<br><span class="mat__ko">지르코늄 실리케이트</span></th><td>주석과 같은 일을 더 싼값에 합니다. 흰색이 조금 더 차갑고 건조합니다.</td></tr>
       </table>
+
+      <h3>착색제 발색 그라데이션</h3>
+      <p>같은 착색제도 양이 늘수록 색이 어떻게 바뀌는지 정리했습니다. 막대 위에서 커서를 움직이거나 손가락으로 끌면 그 양에서의 색을 볼 수 있습니다(막대를 누른 뒤 방향키로도 움직입니다). 눈금이 있는 지점은 이 페이지에 실제로 있는 레시피이고, 아래 이름표를 누르면 바로 넘어갑니다. 그 사이 색은 짐작해 채운 것이라 참고용으로만 봐 주세요 — 정확한 색은 기본유 조성과 소성 조건에 따라 또 달라집니다.</p>
+      <div class="stainchart" id="stainchart"></div>
 
       <p><strong>여기서 알려 드릴 수 없는 것.</strong> 프릿 번호별 정확한 조성은 제조사마다 다르고 저도 확실히 알지 못하니, 사시는 제품의 성분표를 확인하세요. 재의 성분은 나무 종류와 태운 조건에 따라 매번 달라서 애초에 숫자로 고정할 수 없습니다. 국내에 유통되는 원료의 상품명과 등급 차이도 제가 정확히 아는 부분이 아닙니다.</p>
 
@@ -902,14 +1725,487 @@
     <button class="back back--bottom" data-go="">← 목록으로</button>
   </section>
 
+  <!-- ── 4면: 재료상 ────────────────────────────────── -->
+  <section id="view-buy" hidden>
+    <button class="back" data-go="">← 목록으로</button>
+    <article class="basics">
+      <h2 class="basics__title">재료상</h2>
+    <div class="basics__body">
+      <p>이 페이지의 레시피에 쓰이는 원료와, 물레·성형도구 같은 도구를 구할 수 있는 곳을 정리했습니다. 도자기 원료는 대부분 이천·여주 쪽 원료상에서 전화나 방문으로 사고, 온라인 장바구니를 갖춘 곳은 많지 않습니다. 재고와 가격은 주문 전에 다시 확인하세요.</p>
+
+      <h3>온라인에서 바로 주문할 수 있는 곳 — 원료</h3>
+      <table class="mat">
+        <tr>
+          <th><a href="https://clayer.co.kr/" target="_blank" rel="noopener">클레이어</a></th>
+          <td>흙(소지)·석고·화장토와 완제품 유약이 중심인 도예 쇼핑몰입니다. 산화코발트처럼 낱개 발색제를 100g 단위 소량으로도 팝니다. 장석·규석·카올린 같은 벌크 원료는 눈에 잘 안 띄니 "도예재료 → 기타재료" 카테고리를 직접 뒤져 보세요.</td>
+        </tr>
+        <tr>
+          <th><a href="https://www.dosishop.co.kr/" target="_blank" rel="noopener">도시샵</a></th>
+          <td>도구와 전사지가 주력이지만 "흙(소지)/유약/석고" 카테고리도 있습니다. 원료별 상세 목록은 따로 정리되어 있지 않아, 유약 원료를 찾는다면 사이트에서 직접 검색해 봐야 합니다.</td>
+        </tr>
+      </table>
+
+      <h3>도구·장비 — 물레, 성형도구, 시유 도구, 가마</h3>
+      <p>원료와 달리 도구는 온라인 쇼핑몰에서 바로 주문하는 경우가 많습니다.</p>
+      <table class="mat">
+        <tr>
+          <th><a href="https://clayer.co.kr/category/%EB%8F%84%EC%98%88%EB%8F%84%EA%B5%AC/7/" target="_blank" rel="noopener">클레이어</a></th>
+          <td>도구만 848개를 갖춘, 이 목록에서 가장 폭넓은 도구 쇼핑몰입니다. 손물레(13만~15만원대)·전기물레, 성형도구 150종, 흙도장·문양패드, 시유집게 같은 시유 도구, 스펀지·사포 43종, 석고도구까지 있습니다. 머드툴·MKM 같은 해외 브랜드 도구도 수입해서 팝니다.</td>
+        </tr>
+        <tr>
+          <th><a href="https://www.dosishop.co.kr/" target="_blank" rel="noopener">도시샵</a></th>
+          <td>성형도구·물레·스펀지 같은 기본 도구와 수입 전사지가 주력인 쇼핑몰입니다. 안료·페인팅 도구도 함께 팝니다.</td>
+        </tr>
+        <tr>
+          <th><a href="http://www.woongjin2000.co.kr/" target="_blank" rel="noopener">웅진2000</a></th>
+          <td>전기물레·진공토련기·상압토련기·유약시유기·스프레이부스처럼 공방을 차릴 때 필요한 큰 장비와 가마 쪽을 취급한다고 소개하는 곳입니다. 큰 장비를 알아볼 때 후보로 참고하고 자세한 건 문의해 보세요.</td>
+        </tr>
+      </table>
+
+      <h3>원료 전문점 — 전화·방문 주문</h3>
+      <p>이름은 재료상이지만 홈페이지 없이 전화나 방문으로만 주문받는 곳이 많습니다. 장석·규석·카올린처럼 무거운 원료를 대량으로 살 때는 오히려 이쪽이 낫습니다.</p>
+      <table class="mat">
+        <tr>
+          <th>봉운도자기재료백화점</th>
+          <td>031-886-9966 · 경기 여주. 장석, 규석, 석회석, 카올린, 아연화(산화아연), 티탄(산화티탄) 같은 유약 원료를 직접 내세우는 곳이라, 이 페이지 레시피 대부분의 원료를 한 곳에서 구할 수 있을 듯합니다. 홈페이지는 없습니다.</td>
+        </tr>
+        <tr>
+          <th><a href="https://ceramate.co.kr/" target="_blank" rel="noopener">대원도재</a></th>
+          <td>031-885-7005 · 경기 여주. "1,800여 가지" 도예 재료를 취급한다고 소개하는, 규모가 큰 원료상입니다. 온라인몰이 있어 재료명을 미리 검색해 볼 수 있습니다.</td>
+        </tr>
+        <tr>
+          <th><a href="https://cafe.naver.com/wooridojae.cafe" target="_blank" rel="noopener">우리도재</a></th>
+          <td>031-974-8311 · 경기 의정부. 네이버 카페를 매장처럼 씁니다. 25종의 조합유·기본유, 22가지 흙, 13가지 색화장토를 소개하고 있어 유약 원료를 두루 찾기 좋습니다.</td>
+        </tr>
+        <tr>
+          <th><a href="http://joongangceramic.com/" target="_blank" rel="noopener">중앙도재</a></th>
+          <td>02-334-5004 · 서울 서대문. 소지·안료 등 재료와 굽칼 같은 기본 도구, 자체 개발 유약·색화장토를 팝니다.</td>
+        </tr>
+        <tr>
+          <th>여주유약랜드</th>
+          <td>031-886-2221 · 경기 여주. 이름 그대로 유약이 중심인 원료상으로, 전통유약·색유·채색안료를 취급한다고 알려져 있습니다. 홈페이지는 확인되지 않아 전화 문의가 필요합니다.</td>
+        </tr>
+        <tr>
+          <th>이천도재</th>
+          <td>031-633-2259 · 경기 이천. 도자기재료·안료·유약을 취급하는 이천 지역 원료상입니다. 홈페이지는 확인되지 않았습니다.</td>
+        </tr>
+      </table>
+
+      <p class="basics__src">상호명, 연락처, 취급 품목, 가격은 시간이 지나며 바뀔 수 있으니 주문 전에 전화나 홈페이지로 다시 확인하세요. 탄산바륨·크롬·망간처럼 몸에 해로운 원료는 이 페이지 맨 앞의 "원료를 다룰 때"에 적힌 대로 다룹니다.</p>
+    </div>
+    </article>
+    <button class="back back--bottom" data-go="">← 목록으로</button>
+  </section>
+
+  <!-- ── 5면: 자유게시판 (목록) ──────────────────────── -->
+  <section id="view-talk" hidden>
+    <button class="back" data-go="">← 목록으로</button>
+    <article class="basics">
+      <h2 class="basics__title">자유게시판</h2>
+    <div class="basics__body">
+      <p>레시피에 대한 생각, 이 페이지에 바라는 점, 유약 이야기라면 뭐든 편하게 글로 남겨 주세요.</p>
+      <p><strong>다만 이 게시판은 지금 보고 계신 이 브라우저에만 저장됩니다.</strong> 서버가 없는 정적 페이지라, 다른 기기나 다른 사람에게는 보이지 않고 새 브라우저로 열면 여기 쓴 글도 보이지 않습니다. 실제로 여러 사람과 나누려면 댓글 서비스를 따로 붙여야 합니다. 그래도 스스로 기록을 남기거나 생각을 정리하는 용도로는 써 보세요.</p>
+
+      <div class="board__toolbar">
+        <p class="board__count" id="board-count"></p>
+        <button class="btn btn--sm" id="board-new-toggle" aria-expanded="false">글쓰기</button>
+      </div>
+
+      <div class="note-form" id="board-form" hidden>
+        <div class="note-form__row">
+          <input type="text" id="board-title" maxlength="40" placeholder="제목">
+          <input type="text" id="board-name" maxlength="20" placeholder="이름 (비우면 익명)">
+        </div>
+        <textarea id="board-text" maxlength="800" placeholder="내용을 적어 주세요."></textarea>
+        <div class="note-form__foot">
+          <span class="note-err" id="board-err"></span>
+          <button class="btn" id="board-post">올리기</button>
+        </div>
+      </div>
+
+      <div id="board-list"></div>
+    </div>
+    </article>
+    <button class="back back--bottom" data-go="">← 목록으로</button>
+  </section>
+
+  <!-- ── 6면: 자유게시판 (글 보기) ────────────────────── -->
+  <section id="view-talk-post" hidden>
+    <button class="back" data-go="talk">← 게시판으로</button>
+    <div id="talk-post"></div>
+    <button class="back back--bottom" data-go="talk">← 게시판으로</button>
+  </section>
+
+  <!-- ── 7면: 유약 결함 도감 ──────────────────────────── -->
+  <section id="view-defects" hidden>
+    <button class="back" data-go="">← 목록으로</button>
+    <article class="basics">
+      <h2 class="basics__title">유약 결함 도감</h2>
+    <div class="basics__body">
+      <p>구워 보면 자주 만나는 문제들을 모았습니다. 같은 증상이라도 원인이 여러 개 겹쳐 있는 경우가 많아서, 아래 설명은 가장 흔히 꼽히는 원인을 정리한 것일 뿐 정답은 아닙니다. 의심 가는 것부터 하나씩 바꿔 가며 시편을 내 보는 게 가장 확실합니다.</p>
+
+      <div class="defects">
+
+        <article class="defect">
+          <svg class="defect-art" viewBox="0 0 128 100" role="img" aria-label="유약이 오그라들어 흙 바탕이 드러난 크롤링 예시 그림">
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__clay"/>
+            <path class="defect-art__glaze" d="M8,10 C28,2 46,4 54,14 C60,23 55,35 42,38 C28,42 12,37 7,27 C3,19 4,14 8,10 Z"/>
+            <path class="defect-art__glaze" d="M66,5 C90,-1 113,6 119,19 C123,29 114,41 98,41 C82,41 67,32 63,20 C61,13 62,9 66,5 Z"/>
+            <path class="defect-art__glaze" d="M9,54 C34,47 53,52 59,64 C63,75 52,88 35,90 C19,92 5,83 3,70 C1,61 3,58 9,54 Z"/>
+            <path class="defect-art__glaze" d="M70,51 C97,44 121,53 123,68 C125,81 110,93 89,91 C71,89 60,78 62,65 C63,57 65,55 70,51 Z"/>
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__frame"/>
+          </svg>
+          <div class="defect__body">
+            <h3 class="defect__name">Crawling <span class="defect__ko">크롤링 · 오그라듦</span></h3>
+            <p class="defect__desc">유약이 표면 전체에 고르게 퍼지지 못하고 여기저기 뭉치면서 갈라져, 그 틈으로 흙 바탕이 그대로 드러나는 현상입니다.</p>
+            <dl class="defect__info">
+              <dt>원인</dt>
+              <dd>초벌 표면에 먼지·기름기·손자국이 남아 있거나, 시유를 너무 두껍게 했을 때 잘 생깁니다. 유약에 점토 성분(카올린·볼클레이)이 많이 들어가면 마르면서 수축이 커져 갈라지기 쉽고, 초벌 자체가 너무 매끈하거나 기름진 경우에도 유약이 붙잡히지 못합니다.</dd>
+              <dt>해결 · 예방</dt>
+              <dd>시유 전에 초벌을 물걸레로 깨끗이 닦고 손으로 만지지 않습니다. 한 번에 두껍게 담그기보다 적정 두께를 지키고, 유약이 마르며 갈라지는 게 보이면 그 부분을 닦아내고 다시 얇게 입힙니다. 점토 함량이 높은 유약이라면 소량의 규석이나 장석으로 비율을 조정해 볼 수 있습니다.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="defect">
+          <svg class="defect-art" viewBox="0 0 128 100" role="img" aria-label="유약 표면에 실금이 그물처럼 퍼진 빙렬 예시 그림">
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__glaze"/>
+            <path class="defect-art__crack" d="M10,10 L32,28 L20,48 L36,62 L28,88 M32,28 L56,22 L68,40 M56,22 L72,6 M68,40 L94,34 L110,50 M94,34 L98,12 M110,50 L120,74 M68,40 L62,66 L36,62 M62,66 L86,80 L80,96 M36,62 L14,76"/>
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__frame"/>
+          </svg>
+          <div class="defect__body">
+            <h3 class="defect__name">Crazing <span class="defect__ko">크레이징 · 빙렬</span></h3>
+            <p class="defect__desc">유약 표면에 머리카락 같은 가는 금이 그물처럼 퍼지는 현상입니다. 청자 같은 데서는 일부러 만드는 장식(빙열)이기도 하지만, 의도치 않았다면 흠이 됩니다.</p>
+            <dl class="defect__info">
+              <dt>원인</dt>
+              <dd>식으면서 유약이 흙보다 더 많이 수축해, 유약 층이 당겨지는 힘을 못 버티고 갈라지는 것입니다. 유약에 매용제(특히 소다·칼륨 성분)가 많거나 규석이 적을 때, 또는 소지가 충분히 소성되지 않았을 때 잘 생깁니다. 시간이 지나 습기를 먹으면서 나중에 금이 가는 경우도 있습니다.</dd>
+              <dt>해결 · 예방</dt>
+              <dd>유약의 규석 비율을 조금 늘리거나 매용제를 줄여 봅니다. 소지와 유약의 궁합 문제이기도 해서, 같은 유약이라도 소지를 바꾸면 없어지기도 합니다. 의도한 장식이라면 그대로 두어도 됩니다.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="defect">
+          <svg class="defect-art" viewBox="0 0 128 100" role="img" aria-label="유약 표면에 작은 구멍이 흩어진 핀홀 예시 그림">
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__glaze"/>
+            <circle cx="18" cy="16" r="1.6" class="defect-art__mark"/>
+            <circle cx="42" cy="9" r="1.2" class="defect-art__mark"/>
+            <circle cx="63" cy="20" r="1.7" class="defect-art__mark"/>
+            <circle cx="86" cy="12" r="1.3" class="defect-art__mark"/>
+            <circle cx="108" cy="24" r="1.5" class="defect-art__mark"/>
+            <circle cx="24" cy="42" r="1.4" class="defect-art__mark"/>
+            <circle cx="52" cy="46" r="1.8" class="defect-art__mark"/>
+            <circle cx="76" cy="40" r="1.2" class="defect-art__mark"/>
+            <circle cx="100" cy="50" r="1.6" class="defect-art__mark"/>
+            <circle cx="16" cy="68" r="1.3" class="defect-art__mark"/>
+            <circle cx="40" cy="74" r="1.6" class="defect-art__mark"/>
+            <circle cx="66" cy="70" r="1.3" class="defect-art__mark"/>
+            <circle cx="90" cy="78" r="1.7" class="defect-art__mark"/>
+            <circle cx="114" cy="66" r="1.2" class="defect-art__mark"/>
+            <circle cx="55" cy="88" r="1.4" class="defect-art__mark"/>
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__frame"/>
+          </svg>
+          <div class="defect__body">
+            <h3 class="defect__name">Pinholing <span class="defect__ko">핀홀</span></h3>
+            <p class="defect__desc">유약 표면에 바늘로 찌른 듯한 작은 구멍이 남는 현상입니다. 가스가 빠져나간 자리가 다 메워지지 못하고 굳어버린 것입니다.</p>
+            <dl class="defect__info">
+              <dt>원인</dt>
+              <dd>흙이나 유약 속 유기물·탄산염 성분이 소성 중 가스를 내보내는데, 최고 온도에서 머무는 시간이 짧으면 그 자국이 매끈하게 메워지지 못합니다. 소성 속도가 너무 빠르거나, 흙이 충분히 숙성·탈기되지 않은 경우에도 잘 생깁니다.</dd>
+              <dt>해결 · 예방</dt>
+              <dd>최고 온도에서 소성을 잠깐 멈추는 '소킹(유지)' 시간을 주면 유약이 흘러 구멍을 메울 여유가 생깁니다. 소성 속도, 특히 중간 온도 구간을 너무 서두르지 않는 것도 도움이 됩니다. 유약을 충분히 고운 체로 걸러 덩어리를 없애는 것도 예방에 도움이 됩니다.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="defect">
+          <svg class="defect-art" viewBox="0 0 128 100" role="img" aria-label="유약 표면이 부풀었다 터진 자국이 남은 기포 예시 그림">
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__glaze"/>
+            <circle cx="30" cy="28" r="10" class="defect-art__mark-soft"/>
+            <circle cx="30" cy="28" r="5.5" class="defect-art__glaze-deep"/>
+            <circle cx="82" cy="22" r="7.5" class="defect-art__mark-soft"/>
+            <circle cx="82" cy="22" r="4" class="defect-art__glaze-deep"/>
+            <circle cx="102" cy="58" r="9" class="defect-art__mark-soft"/>
+            <circle cx="102" cy="58" r="5" class="defect-art__glaze-deep"/>
+            <circle cx="52" cy="66" r="8" class="defect-art__mark-soft"/>
+            <circle cx="52" cy="66" r="4.3" class="defect-art__glaze-deep"/>
+            <circle cx="20" cy="80" r="6" class="defect-art__mark-soft"/>
+            <circle cx="20" cy="80" r="3" class="defect-art__glaze-deep"/>
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__frame"/>
+          </svg>
+          <div class="defect__body">
+            <h3 class="defect__name">Blistering <span class="defect__ko">기포 자국 · 블리스터링</span></h3>
+            <p class="defect__desc">핀홀보다 크게, 유약 표면이 부풀었다가 터진 자국이 분화구처럼 남는 현상입니다.</p>
+            <dl class="defect__info">
+              <dt>원인</dt>
+              <dd>대개 과소성(정해진 온도보다 더 구워짐)이거나, 환원 소성에서 가스가 급하게 빠질 때 생깁니다. 유기물이 많은 흙, 소성을 너무 빠르게 올릴 때도 잘 나타납니다.</dd>
+              <dt>해결 · 예방</dt>
+              <dd>목표 온도를 넘기지 않도록 콘을 확인하고, 최고 온도 근처에서 소성 속도를 늦추거나 소킹 시간을 줍니다. 환원으로 전환하는 구간은 특히 천천히, 가마 안 환기(공기 흐름)가 잘 되도록 신경 씁니다.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="defect">
+          <svg class="defect-art" viewBox="0 0 128 100" role="img" aria-label="유약이 아래로 흘러내려 방울진 예시 그림">
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__clay"/>
+            <path class="defect-art__glaze" d="M1,5 C1,3 3,1 5,1 L123,1 C125,1 127,3 127,5 L127,66 L1,66 Z"/>
+            <path class="defect-art__glaze-deep" d="M20,64 C17,78 14,94 21,99 C28,95 26,78 24,64 Z"/>
+            <path class="defect-art__glaze-deep" d="M52,64 C48,84 45,99 53,99 C60,97 57,82 55,64 Z"/>
+            <path class="defect-art__glaze-deep" d="M88,64 C85,80 82,96 90,99 C97,96 94,80 92,64 Z"/>
+            <path class="defect-art__glaze-deep" d="M110,64 C108,76 107,88 113,92 C118,89 116,76 114,64 Z"/>
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__frame"/>
+          </svg>
+          <div class="defect__body">
+            <h3 class="defect__name">Running <span class="defect__ko">흘러내림 · 드리핑</span></h3>
+            <p class="defect__desc">유약이 구워지는 동안 너무 묽게 녹아 아래로 흘러내려, 방울지거나 가마 선반에 눌어붙는 현상입니다.</p>
+            <dl class="defect__info">
+              <dt>원인</dt>
+              <dd>매용제가 규석·알루미나에 비해 많아 그 온도에서 유약이 지나치게 잘 녹을 때, 또는 목표 온도를 넘겨 구웠을 때(과소성), 시유를 너무 두껍게 했을 때 잘 생깁니다.</dd>
+              <dt>해결 · 예방</dt>
+              <dd>유약에 알루미나(카올린 등)나 규석 비율을 조금 늘려 흐름을 잡아 줍니다. 굽 주변은 유약을 닦아내고 시유하고, 바닥에 받침이나 유약받이를 두면 가마 선반이 상하는 걸 막을 수 있습니다. 목표 콘을 넘기지 않는 것이 기본입니다.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="defect">
+          <svg class="defect-art" viewBox="0 0 128 100" role="img" aria-label="가장자리에서 유약이 얇게 떨어져 나간 박리 예시 그림">
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__glaze"/>
+            <path class="defect-art__clay" d="M1,60 C1,60 6,58 14,60 C22,62 26,68 24,76 C22,84 12,90 4,88 C2,87 1,85 1,83 Z"/>
+            <ellipse cx="34" cy="80" rx="18" ry="7" class="defect-art__mark-soft" opacity=".25"/>
+            <path class="defect-art__glaze-deep" d="M8,58 C16,56 26,60 30,68 C33,75 30,82 22,84 C24,76 20,68 12,64 C9,62 8,60 8,58 Z"/>
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__frame"/>
+          </svg>
+          <div class="defect__body">
+            <h3 class="defect__name">Shivering <span class="defect__ko">박리 · 쉬버링</span></h3>
+            <p class="defect__desc">크레이징과 반대로, 유약이 흙보다 덜 수축해 눌린 상태로 있다가 가장자리나 모서리에서 얇게 떨어져 나가는 현상입니다. 떨어진 조각이 날카로워 크레이징보다 다루기 위험할 수 있습니다.</p>
+            <dl class="defect__info">
+              <dt>원인</dt>
+              <dd>유약의 열팽창이 소지보다 낮을 때, 즉 규석·알루미나가 많고 매용제가 적을 때 잘 생깁니다. 특히 굽이나 테두리처럼 얇고 눌리는 힘을 많이 받는 자리에서 두드러집니다.</dd>
+              <dt>해결 · 예방</dt>
+              <dd>유약에 매용제 비율을 조금 늘리거나 규석을 줄여 소지 쪽 팽창에 가깝게 맞춥니다. 가장자리는 유약을 살짝 얇게 입히는 것도 도움이 됩니다. 쓰던 그릇에서 떨어진 조각은 날카로울 수 있으니 맨손으로 만지지 않습니다.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="defect">
+          <svg class="defect-art" viewBox="0 0 128 100" role="img" aria-label="같은 유약인데도 부분마다 색이 다르게 나온 불균일 발색 예시 그림">
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__clay"/>
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__glaze"/>
+            <ellipse cx="28" cy="26" rx="24" ry="18" class="defect-art__glaze-deep" opacity=".55" transform="rotate(-12 28 26)"/>
+            <ellipse cx="96" cy="20" rx="20" ry="15" class="defect-art__mark-soft" opacity=".5" transform="rotate(10 96 20)"/>
+            <ellipse cx="100" cy="72" rx="26" ry="18" class="defect-art__glaze-deep" opacity=".5" transform="rotate(-8 100 72)"/>
+            <ellipse cx="32" cy="76" rx="18" ry="14" class="defect-art__mark-soft" opacity=".4" transform="rotate(15 32 76)"/>
+            <rect x="1" y="1" width="126" height="98" rx="4" class="defect-art__frame"/>
+          </svg>
+          <div class="defect__body">
+            <h3 class="defect__name">Mottling <span class="defect__ko">불균일 발색 · 색 얼룩</span></h3>
+            <p class="defect__desc">같은 유약, 같은 소성인데도 위치에 따라 색이 다르게 나오는 현상입니다.</p>
+            <dl class="defect__info">
+              <dt>원인</dt>
+              <dd>유약 두께가 고르지 않거나, 유약 통 안에서 착색제가 가라앉아 위아래 농도가 다를 때 생깁니다. 가마 안에서도 자리에 따라 불꽃·산소 흐름이 달라, 같은 재임에서도 앞쪽과 뒤쪽 분위기가 다를 수 있습니다.</dd>
+              <dt>해결 · 예방</dt>
+              <dd>시유 전에 유약을 바닥까지 충분히 저어 줍니다. 시유 시간과 방법을 일정하게 유지해 두께를 고르게 하고, 가마 안 위치에 따라 결과가 달라질 수 있다는 걸 감안해 어느 자리에 놓았는지 기록해 두면 다음에 참고할 수 있습니다.</dd>
+            </dl>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="basics__src">여기 적은 원인·해결법은 도예에서 흔히 알려진 설명을 정리한 것으로, 가마·소지·유약 조합에 따라 실제 원인은 다를 수 있습니다. 여러 원인이 겹쳐 있을 때도 많으니, 한 가지를 바꿔 보고 시편으로 확인하는 과정을 반복하는 게 가장 확실합니다.</p>
+    </div>
+    </article>
+    <button class="back back--bottom" data-go="">← 목록으로</button>
+  </section>
+
+  <!-- ── 9면: 관련 도서 ──────────────────────────────── -->
+  <section id="view-books" hidden>
+    <button class="back" data-go="">← 목록으로</button>
+    <article class="basics">
+      <div class="books-lead"><span class="guide-book__ico"><svg class="bk-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 20.5V5.5M20 20.5V5.5" stroke="currentColor" stroke-width="1.6"/><path d="M6.5 8h2.5M6.5 11h2.5M15 8h2.5M15 11h2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span><h2 class="basics__title" style="margin:0">관련 도서</h2></div>
+      <div class="basics__body">
+      <p>도자기의 역사, 만들기, 유약을 공부할 때 도움이 되는 책입니다. 처음 한 권을 고른다면 유약은 『나만의 유약 만들기 — 완결편』, 역사는 『도자기로 보는 조선왕실문화』부터 권합니다.</p>
+      <h3>도자기의 역사</h3>
+      <ul class="book-list">
+        <li class="book" style="--bk:#8E5326">
+          <span class="book__cover"><img src="images/books/b-kdjt.jpg" alt="한국도자제작기술사 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="한국도자제작기술사 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#8E5326"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">한국도자제작기</text><text x="18" y="43.4" class="bc-t" font-size="10">술사</text><text x="18" y="106" class="bc-a" font-size="7">방병선</text></svg></span>
+          <p class="book__t">한국도자제작기술사</p>
+          <p class="book__m">방병선 · 아카넷 · 2022 · 880쪽</p>
+          <p class="book__d">선사시대부터 조선까지 우리 도자기가 어떻게 만들어졌는지 다룹니다. 고려청자 유약, 분청사기 기법, 조선백자, 가마 구조까지 역사와 기술을 함께 볼 수 있는 두꺼운 학술서입니다.</p>
+          <div class="book__f"><span class="book__tag">국내</span><span class="book__tag">심화</span><a class="book__link" href="https://www.yes24.com/product/goods/116575406" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#8E5326">
+          <span class="book__cover"><img src="images/books/b-joseon.jpg" alt="도자기로 보는 조선왕실문화 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="도자기로 보는 조선왕실문화 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#8E5326"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">도자기로 보는</text><text x="18" y="43.4" class="bc-t" font-size="10">조선왕실문화</text><text x="18" y="106" class="bc-a" font-size="7">방병선</text></svg></span>
+          <p class="book__t">도자기로 보는 조선왕실문화</p>
+          <p class="book__m">방병선 · 민속원 · 2016</p>
+          <p class="book__d">왕실 의례에 쓰인 그릇, 태항아리 등 조선 왕실 도자기를 주제로 한 책입니다. 위 책보다 가볍게 읽기 좋습니다.</p>
+          <div class="book__f"><span class="book__tag">국내</span><span class="book__tag">교양</span><span class="book__tag book__tag--pick">처음 읽기 좋음</span><a class="book__link" href="https://m.yes24.com/Goods/Detail/38286737" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#8E5326">
+          <span class="book__cover"><img src="images/books/b-kdsa.jpg" alt="한국 도자사의 연구 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="한국 도자사의 연구 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#8E5326"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">한국 도자사의</text><text x="18" y="43.4" class="bc-t" font-size="10">연구</text><text x="18" y="106" class="bc-a" font-size="7">강경숙</text></svg></span>
+          <p class="book__t">한국 도자사의 연구</p>
+          <p class="book__m">강경숙 · 시공사 · 2000 · 500쪽</p>
+          <p class="book__d">분청사기 연구자가 30년 연구를 모은 한국 도자사 개론입니다.</p>
+          <div class="book__f"><span class="book__tag">국내</span><span class="book__tag book__tag--warn">새 책 품절 · 중고로 구함</span><a class="book__link" href="https://www.aladin.co.kr/shop/wproduct.aspx?itemid=262298" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#8E5326">
+          <span class="book__cover"><img src="images/books/b-whiteroad.jpg" alt="The White Road 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="The White Road 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#8E5326"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">The White Road</text><text x="18" y="106" class="bc-a" font-size="7">Edmund de Waal</text></svg></span>
+          <p class="book__t">The White Road</p>
+          <p class="book__m">Edmund de Waal</p>
+          <p class="book__d">도예가인 저자가 백자의 역사를 따라 중국 경덕진, 독일, 영국 등을 여행하며 쓴 에세이입니다. 영문판 기준으로 소개합니다.</p>
+          <div class="book__f"><span class="book__tag">영문</span><span class="book__tag">에세이</span><a class="book__link" href="https://us.macmillan.com/books/9781250097323/thewhiteroad/" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+      </ul>
+      <h3>만들기 (성형)</h3>
+      <ul class="book-list">
+        <li class="book" style="--bk:#6E9483">
+          <span class="book__cover"><img src="images/books/b-mulle.jpg" alt="내가 만드는 도자기 물레성형기법 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="내가 만드는 도자기 물레성형기법 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#6E9483"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="12" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="24.0" class="bc-t" font-size="10">내가 만드는</text><text x="18" y="37.4" class="bc-t" font-size="10">도자기</text><text x="18" y="50.8" class="bc-t" font-size="10">물레성형기법</text><text x="18" y="106" class="bc-a" font-size="7">신미영</text></svg></span>
+          <p class="book__t">내가 만드는 도자기 물레성형기법</p>
+          <p class="book__m">신미영 · 예경 · 2013</p>
+          <p class="book__d">물레 입문서입니다. 중심 잡기부터 컵·그릇·접시·병 만들기, 굽 깎기까지 사진으로 따라 할 수 있습니다.</p>
+          <div class="book__f"><span class="book__tag">국내</span><span class="book__tag">입문</span><a class="book__link" href="https://www.yes24.com/product/goods/8695267" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#6E9483">
+          <span class="book__cover"><img src="images/books/b-mulle2.jpg" alt="명장에게 배우는 도자기 물레 성형 심화과정 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="명장에게 배우는 도자기 물레 성형 심화과정 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#6E9483"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="12" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="24.0" class="bc-t" font-size="10">명장에게 배우는</text><text x="18" y="37.4" class="bc-t" font-size="10">도자기 물레</text><text x="18" y="50.8" class="bc-t" font-size="10">성형 심화과정</text><text x="18" y="106" class="bc-a" font-size="7">이향구</text></svg></span>
+          <p class="book__t">명장에게 배우는 도자기 물레 성형 심화과정</p>
+          <p class="book__m">이향구 · 아우룸 · 2024 · 186쪽</p>
+          <p class="book__d">기초를 익힌 뒤 물레 실력을 더 키우고 싶을 때 보는 심화서입니다.</p>
+          <div class="book__f"><span class="book__tag">국내</span><span class="book__tag">심화</span><a class="book__link" href="https://www.yes24.com/Product/Goods/126037019" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#6E9483">
+          <span class="book__cover"><img src="images/books/b-wheel.jpg" alt="Studio: Wheel Throwing 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="Studio: Wheel Throwing 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#6E9483"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">Studio: Wheel</text><text x="18" y="43.4" class="bc-t" font-size="10">Throwing</text><text x="18" y="106" class="bc-a" font-size="7">Emily Reason</text></svg></span>
+          <p class="book__t">Studio: Wheel Throwing</p>
+          <p class="book__m">Emily Reason</p>
+          <p class="book__d">아홉 가지 과제를 따라가며 물레의 기본기를 익히는 입문서입니다. 해외 도예 교육 사이트 Ceramic School이 입문서로 추천합니다.</p>
+          <div class="book__f"><span class="book__tag">영문</span><span class="book__tag">입문</span><a class="book__link" href="https://ceramic.school/10-pottery-books-for-beginners/" target="_blank" rel="noopener">추천 목록 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#6E9483">
+          <span class="book__cover"><img src="images/books/b-handbuild.jpg" alt="Mastering Hand Building 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="Mastering Hand Building 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#6E9483"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">Mastering Hand</text><text x="18" y="43.4" class="bc-t" font-size="10">Building</text><text x="18" y="106" class="bc-a" font-size="7">Sunshine Cobb</text></svg></span>
+          <p class="book__t">Mastering Hand Building</p>
+          <p class="book__m">Sunshine Cobb</p>
+          <p class="book__d">손 성형(판·코일 등)을 기본 형태부터 뚜껑 있는 그릇까지 단계별로 다룹니다. Ceramic School 추천 입문서입니다.</p>
+          <div class="book__f"><span class="book__tag">영문</span><span class="book__tag">입문</span><a class="book__link" href="https://ceramic.school/10-pottery-books-for-beginners/" target="_blank" rel="noopener">추천 목록 보기 ↗</a></div>
+        </li>
+      </ul>
+      <h3>유약</h3>
+      <ul class="book-list">
+        <li class="book" style="--bk:#2743D6">
+          <span class="book__cover"><img src="images/books/b-yuyak.jpg" alt="나만의 유약 만들기 — 완결편 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="나만의 유약 만들기 — 완결편 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#2743D6"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">나만의 유약</text><text x="18" y="43.4" class="bc-t" font-size="10">만들기 — 완결편</text><text x="18" y="106" class="bc-a" font-size="7">이병하</text></svg></span>
+          <p class="book__t">나만의 유약 만들기 — 완결편</p>
+          <p class="book__m">이병하 · 김상곤 · 한림원 · 2024 · 273쪽</p>
+          <p class="book__d">국내 원료 기준으로 원료의 역할, 석회·돌로마이트·바륨·아연·재·프릿 기본유, 동·철·안료 유약, 결정유와 유백유까지 시편 사진과 함께 정리한 책입니다. 유약노트의 &quot;유약의 기초&quot;도 이 책을 참고했습니다.</p>
+          <div class="book__f"><span class="book__tag">국내</span><span class="book__tag book__tag--pick">가장 먼저 권함</span><a class="book__link" href="https://www.yes24.com/product/goods/126420719" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#2743D6">
+          <span class="book__cover"><img src="images/books/b-cone6.jpg" alt="Mastering Cone 6 Glazes 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="Mastering Cone 6 Glazes 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#2743D6"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">Mastering Cone</text><text x="18" y="43.4" class="bc-t" font-size="10">6 Glazes</text><text x="18" y="106" class="bc-a" font-size="7">John Hesselberth</text></svg></span>
+          <p class="book__t">Mastering Cone 6 Glazes</p>
+          <p class="book__m">John Hesselberth · Ron Roy</p>
+          <p class="book__d">전기가마 1220℃(콘 6) 유약을 식기 안전성과 빙렬 문제 중심으로 다룹니다. 유약노트의 &quot;콘6 발색 기본유&quot;가 이 책의 레시피입니다.</p>
+          <div class="book__f"><span class="book__tag">영문</span><span class="book__tag">콘 6</span><a class="book__link" href="https://www.barnesandnoble.com/w/mastering-cone-6-glazes-john-hesselberth/1136022765" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#2743D6">
+          <span class="book__cover"><img src="images/books/b-highfire.jpg" alt="The Complete Guide to High-Fire Glazes 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="The Complete Guide to High-Fire Glazes 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#2743D6"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="12" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="24.0" class="bc-t" font-size="9">The Complete</text><text x="18" y="36.4" class="bc-t" font-size="9">Guide to</text><text x="18" y="48.8" class="bc-t" font-size="9">High-Fire</text><text x="18" y="61.2" class="bc-t" font-size="9">Glazes</text><text x="18" y="106" class="bc-a" font-size="7">John Britt</text></svg></span>
+          <p class="book__t">The Complete Guide to High-Fire Glazes</p>
+          <p class="book__m">John Britt · Lark Books</p>
+          <p class="book__d">가스가마 환원 1280℃(콘 10) 유약과 소성법을 다룹니다. 셀러돈, 천목, 시노 같은 환원 유약이 자세합니다.</p>
+          <div class="book__f"><span class="book__tag">영문</span><span class="book__tag">콘 10</span><a class="book__link" href="https://www.hachettebookgroup.com/titles/john-britt/the-complete-guide-to-high-fire-glazes/9781600592164/" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+        <li class="book" style="--bk:#2743D6">
+          <span class="book__cover"><img src="images/books/b-spectrum.jpg" alt="The Ceramic Spectrum 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="The Ceramic Spectrum 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#2743D6"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="18" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="30.0" class="bc-t" font-size="10">The Ceramic</text><text x="18" y="43.4" class="bc-t" font-size="10">Spectrum</text><text x="18" y="106" class="bc-a" font-size="7">Robin Hopper</text></svg></span>
+          <p class="book__t">The Ceramic Spectrum</p>
+          <p class="book__m">Robin Hopper</p>
+          <p class="book__d">발색을 체계적으로 실험하는 방법과 시험을 거친 레시피 500여 개를 담았습니다.</p>
+          <div class="book__f"><span class="book__tag">영문</span><a class="book__link" href="https://ceramic.school/10-pottery-books-for-beginners/" target="_blank" rel="noopener">추천 목록 보기 ↗</a></div>
+        </li>
+      </ul>
+      <h3>곁에 두고 찾아보는 사전</h3>
+      <ul class="book-list">
+        <li class="book" style="--bk:#5B6268">
+          <span class="book__cover"><img src="images/books/b-dict.jpg" alt="The Potter&amp;#x27;s Dictionary of Materials and Techniques 표지" loading="lazy" onerror="this.remove()"><svg class="bc" viewBox="0 0 96 128" role="img" aria-label="The Potter&amp;#x27;s Dictionary of Materials and Techniques 표지 자리 그림"><rect width="96" height="128" rx="2" fill="#5B6268"/><rect width="8" height="128" fill="rgba(0,0,0,.22)"/><rect x="8" width="1.2" height="128" fill="rgba(255,255,255,.25)"/><rect x="18" y="12" width="20" height="1.4" fill="rgba(255,255,255,.55)"/><text x="18" y="24.0" class="bc-t" font-size="9">The</text><text x="18" y="36.4" class="bc-t" font-size="9">Potter&amp;#x27;s</text><text x="18" y="48.8" class="bc-t" font-size="9">Dictionary of</text><text x="18" y="61.2" class="bc-t" font-size="9">Materials and</text><text x="18" y="73.6" class="bc-t" font-size="9">Techniques</text><text x="18" y="106" class="bc-a" font-size="7">Frank Hamer</text></svg></span>
+          <p class="book__t">The Potter&#x27;s Dictionary of Materials and Techniques</p>
+          <p class="book__m">Frank Hamer · Janet Hamer · Penn Press · 6판</p>
+          <p class="book__d">원료, 결함, 기법을 사전처럼 알파벳순으로 찾아볼 수 있는 책입니다.</p>
+          <div class="book__f"><span class="book__tag">영문</span><span class="book__tag">사전</span><a class="book__link" href="https://www.pennpress.org/9780812247923/the-potters-dictionary-of-materials-and-techniques/" target="_blank" rel="noopener">책 정보 보기 ↗</a></div>
+        </li>
+      </ul>
+      <p class="basics__src">표지 그림은 실제 책 표지가 아니라 제목과 지은이로 만든 자리 그림입니다. 직접 구한 표지 사진이 있으면 index.html 옆 images/books 폴더에 아래 파일 이름으로 넣으면 그 자리에 보입니다 — b-kdjt.jpg, b-joseon.jpg, b-kdsa.jpg, b-whiteroad.jpg, b-mulle.jpg, b-mulle2.jpg, b-wheel.jpg, b-handbuild.jpg, b-yuyak.jpg, b-cone6.jpg, b-highfire.jpg, b-spectrum.jpg, b-dict.jpg. 출판 정보와 품절 여부는 2026년 9월 기준입니다. '책 정보 보기'는 온라인 서점이나 출판사 페이지로 연결됩니다.</p>
+      </div>
+    </article>
+    <button class="back back--bottom" data-go="">← 목록으로</button>
+  </section>
+
+  <!-- ── 8면: 내 유약 계산기 ────────────────────────── -->
+  <section id="view-mine" hidden>
+    <button class="back" data-go="">← 목록으로</button>
+    <article class="basics">
+      <h2 class="basics__title">내 유약 계산기</h2>
+      <div class="basics__body">
+        <p>직접 만든 배합을 적으면 만들 양에 맞춰 원료별 계량(g)을 바로 계산합니다. 기본 원료는 비율의 합이 100이 되게 적고, 착색제나 유탁제처럼 기본 조성 위에 더하는 원료는 구분을 <b>첨가</b>로 바꿉니다.</p>
+      </div>
+
+      <div class="mc">
+        <div class="mc__main">
+          <div class="mc__meta">
+            <label class="mc__field"><span>유약 이름</span>
+              <input type="text" id="mc-name" maxlength="40" placeholder="예: 내 청자 3번" autocomplete="off"></label>
+            <label class="mc__field"><span>소성 조건</span>
+              <input type="text" id="mc-cond" maxlength="40" placeholder="예: 전기가마 1230℃ 산화" autocomplete="off"></label>
+            <label class="mc__field mc__field--batch"><span>만들 양</span>
+              <span class="mc__unit"><input type="number" id="mc-batch" min="1" max="100000" step="10" value="1000" inputmode="decimal"><i>g</i></span></label>
+          </div>
+
+          <div class="mc__table" role="table" aria-label="원료와 계량">
+            <div class="mc__row mc__row--head" role="row">
+              <span role="columnheader">원료</span>
+              <span role="columnheader">구분</span>
+              <span role="columnheader" class="num">비율 %</span>
+              <span role="columnheader" class="num">계량 g</span>
+              <span role="columnheader"><span class="sr">지우기</span></span>
+            </div>
+            <div id="mc-rows"></div>
+            <div class="mc__row mc__row--total" role="row">
+              <span role="cell">합계</span>
+              <span role="cell"></span>
+              <span role="cell" class="num" id="mc-total-pct"></span>
+              <span role="cell" class="num" id="mc-total-g"></span>
+              <span role="cell"></span>
+            </div>
+          </div>
+          <datalist id="mc-materials"></datalist>
+
+          <div class="mc__tools">
+            <button type="button" class="mc__add" id="mc-add">+ 원료 추가</button>
+          </div>
+
+          <div class="mc__sum" id="mc-sum" aria-live="polite"></div>
+
+          <label class="mc__field mc__field--memo"><span>메모</span>
+            <textarea id="mc-memo" maxlength="800" placeholder="시유 두께, 결과, 다음에 바꿔 볼 점 등"></textarea></label>
+
+          <div class="mc__foot">
+            <span class="note-err" id="mc-msg" aria-live="polite"></span>
+            <div class="mc__btns">
+              <button type="button" class="mc__ghost" id="mc-new">새로 쓰기</button>
+              <button type="button" class="btn" id="mc-save">저장</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="mc__side">
+          <h3 class="mc__side-t">저장한 유약</h3>
+          <p class="mc__scope" id="mc-scope"></p>
+          <div id="mc-list"></div>
+        </aside>
+      </div>
+    </article>
+    <button class="back back--bottom" data-go="">← 목록으로</button>
+  </section>
+
 </main>
 
 <footer class="foot wrap">
-  <h2>결과를 읽을 때</h2>
   <ul>
     <li>같은 레시피라도 가마, 소지, 시유 두께에 따라 결과가 달라집니다. 본 소성 전에 반드시 시편을 구워 보세요.</li>
     <li>표기된 온도는 목표 온도이며, 실제로는 콘이 쓰러지는 시점을 기준으로 판단합니다.</li>
-    <li>구운 시편은 같은 조명에서 정면으로 찍어 두면 나중에 비교하기 좋습니다. 사진은 images 폴더에 넣고 index.html 안의 PHOTOS 목록에 파일명을 적으면 표시됩니다.</li>
+    <li>구운 시편은 같은 조명에서 정면으로 찍어 두면 나중에 비교하기 좋습니다.</li>
   </ul>
 </footer>
 
@@ -1161,6 +2457,101 @@ const RECIPES = [
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",20,"flux"],["카올린",10,"clay"]],
     add:[["루틸",6,"color"]],
     note:"루틸은 티탄과 철이 섞인 광물이라 색과 결정을 같이 냅니다. 유약이 흐르는 자리를 따라 누런 줄무늬가 앉고, 두껍게 바를수록 무늬가 굵어집니다. 순수한 산화티탄만 넣으면 흰 결정만 나오고 이 누런빛은 나오지 않습니다."
+  },
+
+  /* ── 2026-09-17 추가: 출처가 공개된 레시피 ───────────────────
+     원문 배합을 그대로 옮기고(합계가 100이 아니면 100에 맞춰 환산),
+     source에 원문 주소를 적습니다. 온도는 오튼 콘 표(자립형 콘,
+     시간당 60℃ 승온) 기준입니다. */
+  {
+    id:"g2926b", name:"콘6 초투명유", hanja:"G2926B",
+    c1:"#EEF0EA", c2:"#D5DBD2", texture:"", light:true,
+    atmos:"산화", temp:"1222℃ · 콘 6", surface:"투명",
+    base:[["네펠린 사이아나이트",16.62,"feldspar"],["프릿 3134",23.07,"feldspar"],["카올린 (EPK)",17.8,"clay"],["규회석",6.27,"flux"],["규석",34.15,"silica"],["활석",2.09,"flux"]],
+    add:[],
+    note:"Tony Hansen이 만든 콘 6 기본 투명유입니다. 광택이 높고 아주 맑으며, 녹아도 잘 흐르지 않습니다. 백자토나 밝은 석기토에서 가장 맑게 나오고, 짙은 흙과는 덜 어울립니다. 80메시 체에 거르고, 볼밀로 갈면 더 투명해지고 빙렬이 줄어든다고 안내합니다. 원문 배합(합계 110.1)을 100에 맞춰 환산했습니다.",
+    source:{ label:"Digitalfire G2926B (Tony Hansen)", url:"https://digitalfire.com/recipe/g2926b" }
+  },
+  {
+    id:"g2934", name:"콘6 실키 무광유", hanja:"G2934",
+    c1:"#E6E3DA", c2:"#C9C3B3", texture:"matte", light:true,
+    atmos:"산화", temp:"1222℃ · 콘 6", surface:"무광",
+    base:[["프릿 3124",17.4,"feldspar"],["돌로마이트",23.5,"flux"],["규석",26.9,"silica"],["카올린 (EPK)",18.3,"clay"],["하소 카올린",13.9,"clay"]],
+    add:[],
+    note:"콘 6 산화용 무광 기본유입니다. 칼자국이 잘 남지 않는 단단하고 매끈한 무광이 나옵니다. 빨리 식으면 매끈한 무광, 천천히 식으면 더 건조한 무광이 됩니다. 너무 무광이면 콘6 초투명유(G2926B)를 20~25%부터 섞어 보고, 너무 반짝이면 하소 알루미나를 1.5% 더하라고 안내합니다. 크롬·주석 계열 적색 안료와는 맞지 않습니다.",
+    source:{ label:"Digitalfire G2934 (Tony Hansen)", url:"https://digitalfire.com/recipe/g2934" }
+  },
+  {
+    id:"mgbase3", name:"콘6 발색 기본유", hanja:"Glossy Base 1",
+    c1:"#E9E2D3", c2:"#CBBDA3", texture:"", light:true,
+    atmos:"산화", temp:"1222℃ · 콘 6", surface:"투명",
+    base:[["장석 (G-200)",20,"feldspar"],["프릿 3134",20,"feldspar"],["규회석",10,"flux"],["카올린 (EPK)",20,"clay"],["활석",11.5,"flux"],["규석",18.5,"silica"]],
+    add:[],
+    note:"『Mastering Cone 6 Glazes』에 실린 광택 기본유로, 산화물이나 안료를 더해 자기만의 색을 만들 바탕으로 권하는 조합입니다. 색이 탁해지지 않고 젖은 듯한 광택이 납니다. 마그네슘이 많아 가마가 천천히 식으면 광택이 줄 수 있고, 빙렬이 생길 여지가 조금 있으니 쓰는 흙에서 먼저 시험합니다. 짙은 흙에서는 기포가 갇힐 수 있어 최고 온도에서 잠시 유지하면 좋습니다.",
+    source:{ label:"『Mastering Cone 6 Glazes』(John Hesselberth·Ron Roy) Glossy Base 1 — Digitalfire MGBase3", url:"https://digitalfire.com/recipe/mgbase3" }
+  },
+  {
+    id:"g1214z1", name:"콘6 석회 무광유", hanja:"G1214Z1",
+    c1:"#E4E2D8", c2:"#C4C0AE", texture:"matte", light:true,
+    atmos:"산화", temp:"1222℃ · 콘 6", surface:"무광",
+    base:[["규회석",26.73,"flux"],["프릿 3124",35.64,"feldspar"],["카올린 (EPK)",19.8,"clay"],["규석",4.95,"silica"],["하소 카올린",12.87,"clay"]],
+    add:[],
+    note:"광택 기본유의 화학을 바꿔 무광으로 만든 콘 6 산화용 무광유입니다. 칼슘을 아주 많이 넣어 무광을 냅니다. 하소 카올린이 마를 때 수축을 줄여 갈라짐과 크롤링을 막아 줍니다. 비중 1.45(가루 3,000g에 물 2,600g)로 맞추면 응집제 없이도 담그기 좋은 농도가 된다고 안내합니다. 원문 배합(합계 101)을 100에 맞춰 환산했습니다.",
+    source:{ label:"Digitalfire G1214Z1 (Tony Hansen)", url:"https://digitalfire.com/recipe/g1214z1" }
+  },
+  {
+    id:"g1947u", name:"콘10 투명유", hanja:"G1947U",
+    c1:"#E5EDEC", c2:"#C3D4D5", texture:"", light:true,
+    atmos:"공통", temp:"1285℃ · 콘 10", surface:"투명",
+    base:[["장석 (커스터)",27,"feldspar"],["카올린 (EPK)",20.5,"clay"],["규석",26.5,"silica"],["규회석",23.5,"flux"],["산화아연",2.5,"flux"]],
+    add:[],
+    note:"Tony Hansen이 오래 써 온 콘 10 투명 기본유로, 원래 전기 절연용 자기(애자)에 쓰려고 만든 조합입니다. 환원용으로 만들었지만 산화에서도 됩니다. 장석을 적게 넣어 빙렬을 줄였고, 소량의 산화아연이 녹기 시작을 돕습니다. 백자토에서는 EPK 대신 그롤렉(Grolleg) 카올린을 쓰면 푸른 기가 더 돕니다. 산화물이나 안료를 더하는 바탕으로 쓰기 좋습니다.",
+    source:{ label:"Digitalfire G1947U (Tony Hansen)", url:"https://digitalfire.com/recipe/g1947u" }
+  },
+  {
+    id:"g2571a", name:"콘10 돌로마이트 무광유", hanja:"G2571A",
+    c1:"#E7E2D6", c2:"#C6BCA6", texture:"matte", light:true,
+    atmos:"환원", temp:"1285℃ · 콘 10", surface:"무광",
+    base:[["규회석",5.5,"flux"],["장석 (커스터)",28.5,"feldspar"],["카올린 (EPK)",28,"clay"],["규석",15,"silica"],["돌로마이트",19,"flux"],["거스틀리 보레이트",4,"flux"]],
+    add:[],
+    note:"콘 10 환원용 매끈한 무광유입니다. 흔한 소지에서 칼자국·얼룩·빙렬이 잘 생기지 않는다고 안내합니다. 여러 착색제를 받아 환원 특유의 흙빛 효과를 내기 좋습니다. 규회석은 석회석으로, 거스틀리 보레이트는 붕산 프릿으로 바꿀 수 있다고 적혀 있습니다. 비중은 1.43~1.45에 맞춥니다.",
+    source:{ label:"Digitalfire G2571A (Tony Hansen)", url:"https://digitalfire.com/recipe/g2571a" }
+  },
+  {
+    id:"bamboo", name:"콘10 대나무 무광유", hanja:"G2571A 변형",
+    c1:"#D3BC8A", c2:"#9C8150", texture:"matte", light:true,
+    atmos:"환원", temp:"1285℃ · 콘 10", surface:"무광",
+    base:[["규회석",5.5,"flux"],["장석 (커스터)",28.5,"feldspar"],["카올린 (EPK)",28,"clay"],["규석",15,"silica"],["돌로마이트",19,"flux"],["거스틀리 보레이트",4,"flux"]],
+    add:[["루틸",3.5,"color"],["지르코늄 실리케이트",10,"color"]],
+    note:"콘10 돌로마이트 무광유(G2571A)에 루틸 3.5%와 지르코늄 실리케이트(지르코팍스) 10%를 더한 조합으로, 원문에서 가장 인기 있는 변형인 '대나무(bamboo)' 효과로 소개합니다. 원문에 색 설명이 자세하지 않아 옆의 그림은 짐작한 색이니, 실제 색은 시편으로 확인하세요.",
+    source:{ label:"Digitalfire G2571A (Tony Hansen) — 대나무 효과 변형", url:"https://digitalfire.com/recipe/g2571a" }
+  },
+  {
+    id:"g2240", name:"오트밀 무광유", hanja:"G2240",
+    c1:"#DACDB3", c2:"#A89372", texture:"speckle", light:true,
+    atmos:"환원", temp:"1285℃ · 콘 10", surface:"무광",
+    base:[["돌로마이트",25,"flux"],["장석 (커스터)",27.5,"feldspar"],["볼클레이",10,"clay"],["스포듀민",8.5,"feldspar"],["카올린",17.5,"clay"],["규석",7.5,"silica"],["지르코늄 실리케이트",4,"color"]],
+    add:[],
+    note:"콘 10 환원에서 전통적인 오트밀 무광을 내는 조합입니다. 두께에 따라 색이 달라져, 철분 많은 흙 위에서는 얇게 입힌 곳이 더 어둡게 나옵니다. 리튬(스포듀민)이 많은 비슷한 무광유에서 흔한 표면의 잔구멍과 칼자국 문제를 잘 피한다고 안내합니다. 지르코늄 실리케이트는 원문대로 기본 배합 안에 들어 있습니다.",
+    source:{ label:"Digitalfire G2240 (Tony Hansen)", url:"https://digitalfire.com/recipe/g2240" }
+  },
+  {
+    id:"g1916q", name:"저화도 투명유", hanja:"G1916Q",
+    c1:"#EEECE5", c2:"#D3CEC0", texture:"", light:true,
+    atmos:"산화", temp:"1063℃ · 콘 04", surface:"투명",
+    base:[["프릿 3195",65,"feldspar"],["프릿 3110",10,"feldspar"],["프릿 3249",10,"feldspar"],["볼클레이 (No.5)",15,"clay"]],
+    add:[],
+    note:"흔한 Ferro 프릿 세 가지로 만든 저화도 투명유로, 콘 04~02에서 씁니다. 열팽창이 다른 프릿을 섞어 두어서, 프릿 비율을 바꾸면 쓰는 흙에 맞게 빙렬이나 박리를 조절할 수 있습니다. 볼클레이가 유약이 가라앉지 않게 잡아 주어 다루기 쉽습니다. 얇게 입히고, 최고 온도에서 조금 내린 뒤 유지하는 소성을 권합니다.",
+    source:{ label:"Digitalfire G1916Q (Tony Hansen)", url:"https://digitalfire.com/recipe/g1916q" }
+  },
+  {
+    id:"g2931k", name:"저화도 초투명유", hanja:"G2931K",
+    c1:"#EFF2F0", c2:"#D0D8D4", texture:"", light:true,
+    atmos:"산화", temp:"1086℃ · 콘 03", surface:"투명",
+    base:[["프릿 3195",26.32,"feldspar"],["프릿 3134",34.74,"feldspar"],["카올린 (EPK)",21.05,"clay"],["프릿 3249",10.53,"feldspar"],["프릿 3110",7.37,"feldspar"]],
+    add:[],
+    note:"오래된 워딩턴 투명유(Worthington Clear)를 고쳐 만든 저화도 투명유입니다. 프릿 네 가지를 섞어 붕소 때문에 뿌옇게 흐려지는 현상을 막고, 아주 맑고 반짝이는 표면을 냅니다. 원래 조합과 달리 통 안에서 젤리처럼 굳지 않아 담그기가 고릅니다. 원문 배합(합계 95)을 100에 맞춰 환산했습니다.",
+    source:{ label:"Digitalfire G2931K (Tony Hansen)", url:"https://digitalfire.com/recipe/g2931k" }
   }
 ];
 
@@ -1184,10 +2575,336 @@ const WARN = {
 const warnTags = id => [].concat(WARN[id] || [])
   .map(w => `<span class="tag tag--warn">${w}</span>`).join("");
 
-const state = { atmos:"전체", surface:"전체", range:"전체", batch:1000 };
+/* ── 착색제 발색 그라데이션 데이터 ───────────────────────────
+   착색제별로 양(%)에 따라 색이 어떻게 흘러가는지 보여 주는 참고용
+   그라데이션입니다. label이 붙은 지점은 이 페이지의 실제 레시피
+   색을 그대로 가져왔고(go로 그 레시피로 넘어갑니다), label이 없는
+   지점은 그 사이를 이어 주려고 짐작해 채운 색입니다. 크롬처럼 단독
+   양이 아니라 다른 원료와의 조합으로만 색이 나오는 경우는 rows 대신
+   items를 쓴 combo 형식으로 다룹니다.
+--------------------------------------------------------- */
+const STAINS = [
+  {
+    name:"산화철", max:12,
+    note:"철은 양보다 소성 분위기가 색을 더 크게 가릅니다. 같은 1%대도 환원이면 푸른 회록, 산화면 누런 황갈로 갈립니다. 17%까지 올리고 서냉하면 이 흐름과 다른 감빛(철유 감색)이 따로 나옵니다.",
+    rows:[
+      { atmos:"환원", stops:[
+        {pct:0,    color:"#D8C3A0", label:"0%",   note:"투명유",   go:"leach"},
+        {pct:1.2,  color:"#8FAE9C", label:"1.2%", note:"청자유",   go:"celadon"},
+        {pct:4,    color:"#4B6B57"},
+        {pct:7,    color:"#30392E"},
+        {pct:10,   color:"#211712", label:"10%",  note:"천목유",   go:"tenmoku"}
+      ]},
+      { atmos:"산화", stops:[
+        {pct:0,    color:"#D8C3A0", label:"0%", note:"투명유",   go:"leach"},
+        {pct:3,    color:"#AA7A3C", label:"3%", note:"철 재유",  go:"ashiron"},
+        {pct:7,    color:"#7C5127"},
+        {pct:12,   color:"#432A13"}
+      ]}
+    ]
+  },
+  {
+    name:"산화구리", max:6,
+    note:"산화에서는 녹색, 환원에서는 붉은색으로 완전히 갈립니다. 붉은색(진사)은 0.3~0.5% 안팎의 좁은 구간에서만 나오고, 벗어나면 초록이나 회색으로 무너집니다.",
+    rows:[
+      { atmos:"산화", stops:[
+        {pct:0, color:"#D8C3A0", label:"0%", note:"투명유",     go:"leach"},
+        {pct:2, color:"#6E9E60"},
+        {pct:4, color:"#4F7F45", label:"4%", note:"오리베 녹유", go:"oribe"},
+        {pct:6, color:"#375F34"}
+      ]},
+      { atmos:"환원 · 좁은 구간", stops:[
+        {pct:0,   color:"#D8C3A0", label:"0%",   note:"투명유", go:"leach"},
+        {pct:0.4, color:"#A8393A", label:"0.4%", note:"진사",   go:"copperred"},
+        {pct:0.8, color:"#7A5259"},
+        {pct:1.5, color:"#5C5C5C"}
+      ]}
+    ]
+  },
+  {
+    name:"산화코발트", max:1.5,
+    note:"소성 분위기를 거의 타지 않는, 가장 힘센 착색제입니다. 0.3%만 넘어도 색이 확실히 서고, 1%를 넘기면 검푸르게 죽습니다.",
+    rows:[
+      { stops:[
+        {pct:0,   color:"#D8C3A0", label:"0%",   note:"투명유",     go:"leach"},
+        {pct:0.4, color:"#7791B4"},
+        {pct:0.8, color:"#41639C", label:"0.8%", note:"코발트 남색유", go:"cobalt"},
+        {pct:1.5, color:"#1F3763"}
+      ]}
+    ]
+  },
+  {
+    name:"산화망간", max:6,
+    note:"3~5%에서 갈보라색이 섭니다. 더 넣으면 검게 죽고 표면이 오돌토돌해집니다. 소성 중 유독한 증기가 나오므로 환기가 필요합니다.",
+    rows:[
+      { atmos:"산화", stops:[
+        {pct:0, color:"#D8C3A0", label:"0%", note:"투명유",       go:"leach"},
+        {pct:2, color:"#9C7686"},
+        {pct:4, color:"#82606F", label:"4%", note:"망간 자갈색유", go:"manganese"},
+        {pct:6, color:"#4A3040"}
+      ]}
+    ]
+  },
+  {
+    name:"산화니켈", max:3,
+    note:"기본유 성분에 따라 회갈부터 겨자색까지 갈리는, 결과를 가장 짐작하기 어려운 착색제입니다. 아래 그라데이션은 이 페이지의 기본유 하나를 기준으로 한 예시일 뿐입니다.",
+    rows:[
+      { atmos:"산화", stops:[
+        {pct:0, color:"#D8C3A0", label:"0%", note:"투명유",     go:"leach"},
+        {pct:1, color:"#A6ADA5"},
+        {pct:2, color:"#8F9BA4", label:"2%", note:"니켈 회청유", go:"nickel"},
+        {pct:3, color:"#54626C"}
+      ]}
+    ]
+  },
+  {
+    name:"산화크롬", type:"combo",
+    note:"크롬 홀로는 녹색이지만, 주석과 함께 있으면 전혀 다른 분홍으로 바뀝니다. 둘 중 하나만으로는 나오지 않는 색이라 양이 아니라 조합으로 보여드립니다.",
+    items:[
+      { title:"크롬 단독", desc:" — 일반적으로 짙은 녹색. 이 페이지에는 단독으로 쓴 레시피가 없습니다.", color:"#5E7A5A" },
+      { title:"크롬 0.25% + 주석 8%", desc:" — 크롬·주석 분홍유", color:"#CE9298", go:"chrometin" }
+    ]
+  },
+  {
+    name:"루틸 · 산화티탄", max:10,
+    note:"둘 다 흰 결정을 키우지만, 루틸에는 철이 섞여 있어 누런빛이 돕니다. 산화티탄만 쓰면 그 누런빛 없이 흽니다.",
+    rows:[
+      { atmos:"루틸 · 산화", stops:[
+        {pct:0,  color:"#D8C3A0", label:"0%",  note:"투명유",     go:"leach"},
+        {pct:3,  color:"#D2B384"},
+        {pct:6,  color:"#CDA76B", label:"6%",  note:"루틸 흐름유", go:"rutile"},
+        {pct:10, color:"#8A6A34"}
+      ]},
+      { atmos:"산화티탄 · 산화", stops:[
+        {pct:0,  color:"#D8C3A0", label:"0%", note:"투명유", go:"leach"},
+        {pct:3,  color:"#7C93B4", label:"3%", note:"결정유", go:"crystal"},
+        {pct:6,  color:"#B7C1CC"},
+        {pct:10, color:"#EDEEE9"}
+      ]}
+    ]
+  },
+  {
+    name:"주석 · 지르코늄 실리케이트 (유탁제)", max:10,
+    note:"색이 아니라 흰 불투명도를 만드는 원료입니다. 늘수록 밑에 깔린 색과 무늬가 점점 가려집니다.",
+    rows:[
+      { atmos:"산화주석", stops:[
+        {pct:0, color:"#D8C3A0", label:"0%", note:"투명유",     go:"leach"},
+        {pct:4, color:"#E1D6BF"},
+        {pct:8, color:"#F4F2EB", label:"8%", note:"주석 유백유", go:"tinwhite"}
+      ]},
+      { atmos:"지르코늄 실리케이트", stops:[
+        {pct:0,  color:"#D8C3A0", label:"0%",  note:"투명유",     go:"leach"},
+        {pct:5,  color:"#E7E0CD"},
+        {pct:10, color:"#F5F3ED", label:"10%", note:"저화도 유백유", go:"lowwhite"}
+      ]}
+    ]
+  }
+];
+
+/* ── 발색 막대 위에서 색 보기 ─────────────────────────────
+   막대 위 위치를 착색제 양(%)으로 바꾸고, 앞뒤 색 지점 사이를
+   CSS 그라데이션과 같은 방식(sRGB 직선 보간)으로 섞어 보여 줍니다.
+--------------------------------------------------------- */
+const hexRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const rgbHex = a => "#" + a.map(v => Math.round(v).toString(16).padStart(2, "0")).join("");
+
+function stainColorAt(stops, pct){
+  if (pct <= stops[0].pct) return stops[0].color;
+  const last = stops[stops.length - 1];
+  if (pct >= last.pct) return last.color;
+  for (let i = 0; i < stops.length - 1; i++){
+    const a = stops[i], b = stops[i + 1];
+    if (pct >= a.pct && pct <= b.pct){
+      const t = (pct - a.pct) / ((b.pct - a.pct) || 1);
+      const ca = hexRgb(a.color), cb = hexRgb(b.color);
+      return rgbHex(ca.map((v, k) => v + (cb[k] - v) * t));
+    }
+  }
+  return last.color;
+}
+
+/* 착색제 최대치에 맞춘 이동 간격 */
+const stainStep = max => (max <= 2 ? 0.05 : 0.1);
+const stainRound = (v, max) => {
+  const st = stainStep(max);
+  return Math.round(v / st) * st;
+};
+const pctText = v => (Math.round(v * 100) / 100).toString() + "%";
+
+function stainReadHtml(row, max, pct){
+  const color = stainColorAt(row.stops, pct);
+  const hit = row.stops.find(s => s.label && Math.abs(s.pct - pct) < 1e-9);
+  const last = row.stops[row.stops.length - 1];
+  let text;
+  if (hit && hit.note){
+    text = `<b>${hit.note}</b>의 색입니다.`;
+  } else if (hit){
+    text = `<b>${hit.label}</b> 지점의 색입니다.`;
+  } else if (pct > last.pct){
+    text = `${pctText(last.pct)}를 넘는 구간은 자료가 없어 마지막 색을 그대로 두었습니다.`;
+  } else {
+    text = `앞뒤 레시피 색을 이어 <b>짐작한 색</b>입니다.`;
+  }
+  const go = hit && hit.go ? `<button type="button" class="stain__read-go" data-go="${hit.go}">레시피 보기</button>` : "";
+  return `<span class="stain__read-chip" style="background:${color}"></span>
+    <span class="stain__read-pct">${pctText(pct)}</span>
+    <span class="stain__read-t">${text}</span>${go}`;
+}
+
+function stainStart(row){
+  const m = row.stops.filter(s => s.label && s.pct > 0);
+  return m.length ? m[0].pct : 0;
+}
+
+function stainBarRow(row, max, key){
+  const stopsCss = row.stops
+    .map(s => `${s.color} ${(s.pct / max * 100).toFixed(1)}%`).join(", ");
+  const marked = row.stops.filter(s => s.label);
+  const ticks = marked
+    .map(s => `<span class="stain__tick" style="left:${(s.pct / max * 100).toFixed(1)}%"></span>`).join("");
+  const marks = marked.map(s => {
+    const tag = s.go ? "button" : "span";
+    const go = s.go ? ` data-go="${s.go}"` : "";
+    return `<${tag} class="stain__mark" data-stain-pct="${s.pct}"${go}><i style="background:${s.color}"></i>${s.label}${s.note ? ` · ${s.note}` : ""}</${tag}>`;
+  }).join("");
+  const start = stainStart(row);
+  return `
+    <div class="stain__row" data-stain="${key}">
+      ${row.atmos ? `<span class="stain__atmos">${row.atmos}</span>` : ""}
+      <div class="stain__bar" style="background:linear-gradient(to right, ${stopsCss})"
+           tabindex="0" role="slider" aria-label="${row.atmos ? row.atmos + " " : ""}착색제 양"
+           aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${start}">
+        ${ticks}
+        <span class="stain__cursor" style="left:${(start / max * 100).toFixed(2)}%"><i style="background:${stainColorAt(row.stops, start)}"></i></span>
+      </div>
+      <div class="stain__scale"><span>0%</span><span>${max}%</span></div>
+      <div class="stain__read" aria-live="polite">${stainReadHtml(row, max, start)}</div>
+      <div class="stain__marks">${marks}</div>
+    </div>`;
+}
+
+function stainComboItem(it){
+  const tag = it.go ? "button" : "div";
+  const go = it.go ? ` data-go="${it.go}"` : "";
+  return `<${tag} class="stain__combo-item"${go}>
+      <i style="background:${it.color}"></i>
+      <span><b>${it.title}</b>${it.desc}</span>
+    </${tag}>`;
+}
+
+function renderStains(){
+  const box = document.getElementById("stainchart");
+  if (!box) return;
+  box.innerHTML = STAINS.map((s, si) => `
+    <div class="stain">
+      <p class="stain__name">${s.name}</p>
+      <p class="stain__note">${s.note}</p>
+      ${s.type === "combo"
+        ? `<div class="stain__combo">${s.items.map(stainComboItem).join("")}</div>`
+        : s.rows.map((row, ri) => stainBarRow(row, s.max, si + "-" + ri)).join("")}
+    </div>`).join("");
+}
+
+/* 한 줄의 커서·읽기 칸을 주어진 양으로 옮깁니다 */
+function stainSet(rowEl, pct){
+  const [si, ri] = rowEl.dataset.stain.split("-").map(Number);
+  const st = STAINS[si], row = st.rows[ri], max = st.max;
+  pct = Math.min(max, Math.max(0, pct));
+  const bar = rowEl.querySelector(".stain__bar");
+  const cur = rowEl.querySelector(".stain__cursor");
+  const color = stainColorAt(row.stops, pct);
+  cur.style.left = (pct / max * 100).toFixed(2) + "%";
+  cur.querySelector("i").style.background = color;
+  bar.setAttribute("aria-valuenow", String(Math.round(pct * 100) / 100));
+  const hit = row.stops.find(s => s.label && Math.abs(s.pct - pct) < 1e-9);
+  bar.setAttribute("aria-valuetext", pctText(pct) + (hit && hit.note ? " · " + hit.note : ""));
+  rowEl.querySelector(".stain__read").innerHTML = stainReadHtml(row, max, pct);
+  rowEl._pct = pct;
+}
+
+/* 막대 위 위치 → 양. 레시피 지점 가까이(막대 폭의 2.5% 안)면 그 지점에 붙입니다 */
+function stainFromPointer(rowEl, clientX){
+  const [si, ri] = rowEl.dataset.stain.split("-").map(Number);
+  const st = STAINS[si], row = st.rows[ri], max = st.max;
+  const rect = rowEl.querySelector(".stain__bar").getBoundingClientRect();
+  const x = Math.min(1, Math.max(0, (clientX - rect.left) / (rect.width || 1)));
+  const raw = x * max;
+  const near = row.stops.filter(s => s.label).find(s => Math.abs(s.pct - raw) <= max * 0.025);
+  return near ? near.pct : stainRound(raw, max);
+}
+
+(() => {
+  const box = document.getElementById("stainchart");
+  if (!box) return;
+  let dragRow = null;
+
+  box.addEventListener("pointerdown", e => {
+    const bar = e.target.closest(".stain__bar");
+    if (!bar) return;
+    dragRow = bar.closest("[data-stain]");
+    try { bar.setPointerCapture(e.pointerId); } catch (err) {}
+    stainSet(dragRow, stainFromPointer(dragRow, e.clientX));
+  });
+  box.addEventListener("pointermove", e => {
+    if (dragRow){
+      stainSet(dragRow, stainFromPointer(dragRow, e.clientX));
+      return;
+    }
+    /* 마우스는 누르지 않고 올려만 두어도 따라갑니다 */
+    if (e.pointerType !== "mouse") return;
+    const bar = e.target.closest(".stain__bar");
+    if (!bar) return;
+    const rowEl = bar.closest("[data-stain]");
+    stainSet(rowEl, stainFromPointer(rowEl, e.clientX));
+  });
+  const end = () => { dragRow = null; };
+  box.addEventListener("pointerup", end);
+  box.addEventListener("pointercancel", end);
+
+  /* 방향키: 한 칸씩, Shift는 10칸씩, Home/End는 끝으로 */
+  box.addEventListener("keydown", e => {
+    const bar = e.target.closest(".stain__bar");
+    if (!bar) return;
+    const rowEl = bar.closest("[data-stain]");
+    const [si] = rowEl.dataset.stain.split("-").map(Number);
+    const max = STAINS[si].max;
+    const cur = rowEl._pct != null ? rowEl._pct : parseFloat(bar.getAttribute("aria-valuenow")) || 0;
+    const step = stainStep(max) * (e.shiftKey ? 10 : 1);
+    let next = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") next = stainRound(cur + step, max);
+    else if (e.key === "ArrowLeft" || e.key === "ArrowDown") next = stainRound(cur - step, max);
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = max;
+    if (next === null) return;
+    e.preventDefault();
+    stainSet(rowEl, next);
+  });
+
+  /* 아래 이름표에 마우스를 올리거나 초점이 가면 그 지점으로 옮깁니다 */
+  const toMark = e => {
+    const m = e.target.closest && e.target.closest("[data-stain-pct]");
+    if (!m) return;
+    stainSet(m.closest("[data-stain]"), parseFloat(m.dataset.stainPct));
+  };
+  box.addEventListener("mouseover", toMark);
+  box.addEventListener("focusin", toMark);
+})();
+
+const state = { atmos:"전체", surface:"전체", range:"전체", batch:1000, search:"" };
 const ATMOS = ["전체","산화","환원"];
 const SURFACE = ["전체","투명","유탁","무광","빙렬","결정"];
 const RANGE = ["전체","고화도","저화도"];
+
+/* 이름, 한자, 원료 이름, 소성·표면 표기까지 뒤져서 찾습니다. */
+function searchMatch(r, q){
+  if (!q) return true;
+  const hay = [
+    r.name, r.hanja, r.atmos, r.surface, r.temp,
+    ...r.base.map(m => m[0]),
+    ...r.add.map(m => m[0])
+  ].join(" ").toLowerCase();
+  return hay.includes(q);
+}
 
 /* 온도대는 표기된 목표 온도에서 읽어 옵니다. */
 const rangeOf = r => {
@@ -1248,7 +2965,7 @@ function seeded(str){
 function svgArt(r){
   const R = seeded(r.id);
   const W = 120, H = 160, GB = 132;      // GB: 유약이 끝나는 높이
-  const uid = "a" + r.id;
+  const uid = "a" + r.id + "-" + (++svgArt.n);   /* 화면마다 고유한 이름 (숨은 목록과 겹치지 않게) */
   const matte = r.texture === "matte";
   const clay = "#C3AE92";                 // 시유하지 않은 흙 색
   let extra = "";
@@ -1325,6 +3042,8 @@ function svgArt(r){
 </svg>`;
 }
 
+svgArt.n = 0;
+
 /* 사진이 있으면 사진, 없으면 그림 */
 const artFor = r => photoTag(r) || svgArt(r);
 
@@ -1335,16 +3054,23 @@ function renderTiles(){
   const items = RECIPES.filter(match);
   updateCount();
   if (!items.length){
-    $("#tiles").innerHTML = "";
+    $("#tiles").innerHTML = state.search
+      ? `<p class="notes__empty">"${esc(state.search)}"에 맞는 레시피가 없습니다. 다른 이름이나 원료로 찾아보세요.</p>`
+      : "";
     return;
   }
   $("#tiles").innerHTML = items.map(r => `
     <button class="tile${photoClass(r)}" data-go="${r.id}"
             aria-label="${r.name} 자세히 보기">
+      <span class="tile__top">${r.surface}</span>
       <span class="tile__art">${artFor(r)}</span>
       <span class="tile__name">${r.name}</span>
+      <span class="tile__meta"><i class="${r.atmos === "환원" ? "is-red" : r.atmos === "산화" ? "is-ox" : ""}"></i>${r.atmos} · ${tempOf(r)}</span>
     </button>`).join("");
 }
+
+/* 짧은 온도 표기 */
+const tempOf = r => String(r.temp).split("·")[0].trim();
 
 /* 필터 칩 */
 function renderChips(){
@@ -1356,11 +3082,21 @@ function renderChips(){
     `<button class="chip" data-k="range" data-v="${v}" aria-pressed="${state.range===v}">${v}</button>`).join(" ");
 }
 
+/* 필터 칩을 누르면 상태를 바꾸고 칩·목록을 다시 그립니다. */
+document.addEventListener("click", e => {
+  const chip = e.target.closest("[data-k]");
+  if (!chip) return;
+  state[chip.dataset.k] = chip.dataset.v;
+  renderChips();
+  renderTiles();
+});
+
 function match(r){
   const a = state.atmos === "전체" || r.atmos === state.atmos || r.atmos === "공통";
   const s = state.surface === "전체" || r.surface === state.surface;
   const t = state.range === "전체" || rangeOf(r) === state.range;
-  return a && s && t;
+  const q = searchMatch(r, state.search);
+  return a && s && t && q;
 }
 
 function compBar(r){
@@ -1382,7 +3118,14 @@ function rows(r){
   const totalAdd = r.add.reduce((s, m) => s + m[1], 0);
   const total = 100 + totalAdd;
   return `${baseRows}${addRows}
-    <tr class="total"><td>합계</td><td class="num">${fmt(total)}</td><td class="num" data-pct="${total}">${fmt(g * total / 100)}</td></tr>`;
+    <tr class="total"><td><div class="total__cell"><span>합계</span>
+      <span class="batch">
+        <label for="batch">만들 양</label>
+        <input id="batch" type="number" min="1" max="100000" step="10" value="${g}" inputmode="decimal"
+               aria-label="만들 양 (g). 입력하면 이 표의 계량 값이 바로 바뀝니다.">
+        <span>g</span>
+        <button type="button" class="btn btn--sm" id="calc">계산하기</button>
+      </span></div></td><td class="num">${fmt(total)}</td><td class="num" data-pct="${total}">${fmt(g * total / 100)}</td></tr>`;
 }
 
 /* ── 메모 저장소 ───────────────────────────────────────────
@@ -1475,6 +3218,186 @@ function refreshNotes(id){
   if (btn) btn.textContent = Store.read(id).length;
 }
 
+/* ── 자유게시판 ────────────────────────────────────────────
+   소성 메모와 같은 Store를 쓰되, 레시피에 묶이지 않은 별도 키
+   "__board__"에 글 목록을 저장합니다. 댓글은 각 글 객체 안의
+   comments 배열에 함께 담습니다. 역시 이 브라우저에만 남습니다.
+--------------------------------------------------------- */
+const BOARD_ID = "__board__";
+const isBoardPost = id => typeof id === "string" && id.indexOf("post-") === 0;
+const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+const boardPosts = () => Store.read(BOARD_ID);
+const saveBoardPosts = posts => Store.write(BOARD_ID, posts);
+const findBoardPost = id => boardPosts().find(p => p.id === id);
+
+function boardRow(p){
+  const n = (p.comments || []).length;
+  return `
+    <li class="board__item">
+      <button class="board__row" data-go="${p.id}">
+        <span class="board__title">${esc(p.title || "(제목 없음)")}</span>
+        <span class="board__meta">${esc(p.name)} · ${stamp(p.at)} · 댓글 ${n}</span>
+      </button>
+    </li>`;
+}
+
+function renderBoardList(){
+  const posts = boardPosts();
+  const box = document.getElementById("board-list");
+  if (box) box.innerHTML = posts.length
+    ? `<ul class="board__list">${posts.map(boardRow).join("")}</ul>`
+    : `<p class="notes__empty">아직 올라온 글이 없습니다. 첫 글을 남겨 보세요.</p>`;
+  const cnt = document.getElementById("board-count");
+  if (cnt) cnt.textContent = `글 ${posts.length}개 · ${Store.persistent
+    ? "이 브라우저에만 저장됩니다" : "이 환경에서는 저장되지 않아 새로 고치면 사라집니다"}`;
+}
+
+function commentList(post){
+  const comments = post.comments || [];
+  if (!comments.length) return `<p class="notes__empty">아직 댓글이 없습니다.</p>`;
+  return `<ul class="notes__list">` + comments.map(c => `
+    <li class="note">
+      <div class="note__meta">
+        <span class="note__name">${esc(c.name)}</span>
+        <span>${stamp(c.at)}</span>
+        <button class="note__del" data-comment-del="${post.id}|${c.id}">지우기</button>
+      </div>
+      <p class="note__text">${esc(c.text)}</p>
+    </li>`).join("") + `</ul>`;
+}
+
+function renderBoardPost(post){
+  const box = document.getElementById("talk-post");
+  if (!box) return;
+  const comments = post.comments || [];
+  box.innerHTML = `
+    <article class="post">
+      <div class="post__head">
+        <h2 class="post__title">${esc(post.title || "(제목 없음)")}</h2>
+        <div class="post__meta">
+          <span>${esc(post.name)} · ${stamp(post.at)}</span>
+          <button class="note__del" data-post-del="${post.id}">글 지우기</button>
+        </div>
+      </div>
+      <p class="post__text">${esc(post.text)}</p>
+
+      <div class="notes">
+        <p class="notes__count">댓글 <b>${comments.length}</b>개</p>
+        <div class="note-form">
+          <div class="note-form__row">
+            <input type="text" id="comment-name" maxlength="20" placeholder="이름 (비우면 익명)">
+          </div>
+          <textarea id="comment-text" maxlength="400" placeholder="댓글을 남겨 주세요."></textarea>
+          <div class="note-form__foot">
+            <span class="note-err" id="comment-err"></span>
+            <button class="btn" data-comment-post="${post.id}">댓글 달기</button>
+          </div>
+        </div>
+        <div id="comment-list">${commentList(post)}</div>
+      </div>
+    </article>`;
+}
+
+/* 글쓰기 폼 열고 닫기 */
+document.getElementById("board-new-toggle").addEventListener("click", () => {
+  const form = document.getElementById("board-form");
+  const btn = document.getElementById("board-new-toggle");
+  const open = form.hidden;
+  form.hidden = !open;
+  btn.setAttribute("aria-expanded", open);
+  btn.textContent = open ? "접기" : "글쓰기";
+  if (open) document.getElementById("board-title").focus();
+});
+
+/* 글 올리기 */
+document.getElementById("board-post").addEventListener("click", () => {
+  const titleEl = document.getElementById("board-title");
+  const nameEl  = document.getElementById("board-name");
+  const textEl  = document.getElementById("board-text");
+  const errEl   = document.getElementById("board-err");
+  const text = textEl.value.trim();
+
+  if (!text){
+    errEl.textContent = "내용을 적어야 올릴 수 있습니다.";
+    textEl.focus();
+    return;
+  }
+  const post = {
+    id: "post-" + newId(),
+    title: titleEl.value.trim(),
+    name: nameEl.value.trim() || "익명",
+    text,
+    at: Date.now(),
+    comments: []
+  };
+  const posts = boardPosts();
+  posts.unshift(post);
+  if (!saveBoardPosts(posts)){
+    errEl.textContent = "저장 공간이 가득 찼습니다. 오래된 글을 지우고 다시 시도해 주세요.";
+    return;
+  }
+  errEl.textContent = "";
+  titleEl.value = "";
+  textEl.value = "";
+  document.getElementById("board-form").hidden = true;
+  document.getElementById("board-new-toggle").textContent = "글쓰기";
+  document.getElementById("board-new-toggle").setAttribute("aria-expanded", "false");
+  try { history.pushState({ id: post.id }, "", "#" + post.id); } catch (err) {}
+  show(post.id);
+});
+
+/* 글 지우기 */
+document.addEventListener("click", e => {
+  const del = e.target.closest("[data-post-del]");
+  if (!del) return;
+  saveBoardPosts(boardPosts().filter(p => p.id !== del.dataset.postDel));
+  try { history.pushState({ id: "talk" }, "", "#talk"); } catch (err) {}
+  show("talk");
+});
+
+/* 댓글 달기 */
+document.addEventListener("click", e => {
+  const post = e.target.closest("[data-comment-post]");
+  if (!post) return;
+  const id = post.dataset.commentPost;
+  const nameEl = document.getElementById("comment-name");
+  const textEl = document.getElementById("comment-text");
+  const errEl  = document.getElementById("comment-err");
+  const text = textEl.value.trim();
+
+  if (!text){
+    errEl.textContent = "내용을 적어야 댓글을 달 수 있습니다.";
+    textEl.focus();
+    return;
+  }
+  const posts = boardPosts();
+  const target = posts.find(p => p.id === id);
+  if (!target) return;
+  target.comments = target.comments || [];
+  target.comments.push({ id: newId(), name: nameEl.value.trim() || "익명", text, at: Date.now() });
+  if (!saveBoardPosts(posts)){
+    errEl.textContent = "저장 공간이 가득 찼습니다. 오래된 댓글을 지우고 다시 시도해 주세요.";
+    return;
+  }
+  errEl.textContent = "";
+  textEl.value = "";
+  renderBoardPost(target);
+});
+
+/* 댓글 지우기 */
+document.addEventListener("click", e => {
+  const del = e.target.closest("[data-comment-del]");
+  if (!del) return;
+  const [postId, commentId] = del.dataset.commentDel.split("|");
+  const posts = boardPosts();
+  const target = posts.find(p => p.id === postId);
+  if (!target) return;
+  target.comments = (target.comments || []).filter(c => c.id !== commentId);
+  saveBoardPosts(posts);
+  renderBoardPost(target);
+});
+
 document.addEventListener("click", e => {
   const toggle = e.target.closest("[data-toggle]");
   if (toggle){
@@ -1534,7 +3457,7 @@ document.addEventListener("click", e => {
 function updateCount(){
   const n = RECIPES.filter(match).length;
   $("#count").textContent =
-    `레시피 ${n}개 · 표의 계량 g은 ${state.batch.toLocaleString("ko-KR")}g 만들 때 기준입니다`;
+    `레시피 ${n}개`;
 }
 
 /* ── 같은 기본 조성 묶기 ───────────────────────────────────
@@ -1580,6 +3503,12 @@ function renderDetail(r){
       <figure class="card__media">
         <div class="card__swatch${photoClass(r)}">${artFor(r)}</div>
         ${photoOf(r.id) && PHOTOS[r.id].credit ? `<figcaption class="credit">${PHOTOS[r.id].credit}</figcaption>` : ""}
+        <dl class="spec">
+          <div><dt>ATMOS</dt><dd>${r.atmos}</dd></div>
+          <div><dt>TEMP</dt><dd>${tempOf(r)}</dd></div>
+          <div><dt>SURFACE</dt><dd>${r.surface}</dd></div>
+          <div><dt>FIRING</dt><dd>${String(r.temp).split("·")[1]?.trim() || "—"}</dd></div>
+        </dl>
       </figure>
       <div>
         <div class="card__head">
@@ -1600,11 +3529,20 @@ function renderDetail(r){
           <tbody>${rows(r)}</tbody>
         </table>
         <p class="card__note">${r.note}</p>
+        ${sourceBlock(r)}
         ${siblingBlock(r)}
         ${notesBlock(r)}
       </div>
     </article>
     ${neighborNav(r)}`;
+}
+
+/* 출처가 있는 레시피만 원문 링크와 원료 안내를 붙입니다 */
+function sourceBlock(r){
+  if (!r.source) return "";
+  return `<p class="card__src"><span class="card__src-k">SOURCE</span>
+    <a href="${r.source.url}" target="_blank" rel="noopener">${r.source.label}</a>
+    <span class="card__src-n">원문 원료 이름(EPK, 커스터 장석, Ferro 프릿 등)은 미국 제품명입니다. 국내 원료로 바꾸면 결과가 달라질 수 있으니 시편으로 확인하세요. 온도는 오튼 콘 표(시간당 60℃ 승온) 기준입니다.</span></p>`;
 }
 
 /* 상세 화면 아래의 앞뒤 이동 */
@@ -1620,6 +3558,235 @@ function neighborNav(r){
   </nav>`;
 }
 
+/* ── 내 유약 계산기 ───────────────────────────────────────
+   직접 만든 배합을 적으면 만들 양에 맞춰 계량을 계산합니다.
+   기본 원료는 합이 100이 되게, 착색제 등은 '첨가'로 더합니다.
+   저장한 유약은 소성 메모처럼 이 브라우저에만 남습니다.
+--------------------------------------------------------- */
+const MINE_ID = "my-recipes";
+const myRecipes = () => Store.read(MINE_ID);
+const blankRow = () => ({ m:"", pct:"", add:false });
+let mc = null;               /* 지금 쓰고 있는 배합 */
+let mcDelArmed = "";         /* 지우기를 한 번 누른 항목 */
+
+const mcNum = v => {
+  const n = parseFloat(String(v).replace(/,/g, ".").trim());
+  return isNaN(n) || n < 0 ? 0 : n;
+};
+const mcFresh = () => ({
+  id:"", name:"", cond:"", memo:"",
+  batch: state.batch || 1000,
+  rows:[blankRow(), blankRow(), blankRow(), blankRow()]
+});
+
+/* 이 페이지 레시피에 나오는 원료 이름을 입력 도우미로 씁니다 */
+function mcMaterials(){
+  const set = new Set();
+  RECIPES.forEach(r => [...r.base, ...r.add].forEach(m => set.add(m[0])));
+  return [...set].sort((a, b) => a.localeCompare(b, "ko"));
+}
+
+function mcRowHtml(row, i){
+  return `
+    <div class="mc__row${row.add ? " is-add" : ""}" role="row" data-mc-i="${i}">
+      <span role="cell"><input type="text" list="mc-materials" data-mc-f="m" value="${esc(row.m)}"
+        placeholder="원료 이름" maxlength="30" aria-label="${i + 1}번째 원료 이름" autocomplete="off"></span>
+      <span role="cell"><select data-mc-f="add" aria-label="${i + 1}번째 원료 구분">
+        <option value="0"${row.add ? "" : " selected"}>기본</option>
+        <option value="1"${row.add ? " selected" : ""}>첨가</option>
+      </select></span>
+      <span role="cell"><input type="text" class="num" inputmode="decimal" data-mc-f="pct" value="${esc(row.pct)}"
+        placeholder="0" maxlength="8" aria-label="${i + 1}번째 원료 비율(%)"></span>
+      <span role="cell" class="mc__g" data-mc-g></span>
+      <span role="cell"><button type="button" class="mc__del" data-mc-del="${i}" aria-label="${i + 1}번째 원료 줄 지우기">×</button></span>
+    </div>`;
+}
+
+function mcSums(){
+  let base = 0, add = 0;
+  mc.rows.forEach(r => { r.add ? (add += mcNum(r.pct)) : (base += mcNum(r.pct)); });
+  return { base, add };
+}
+
+/* 숫자 칸만 다시 계산합니다 (입력 중인 칸의 커서를 지키려고) */
+function mcUpdate(){
+  const b = mcNum(mc.batch) || 0;
+  document.querySelectorAll("#mc-rows [data-mc-i]").forEach(el => {
+    const row = mc.rows[+el.dataset.mcI];
+    el.classList.toggle("is-add", !!row.add);
+    const p = mcNum(row.pct);
+    el.querySelector("[data-mc-g]").textContent = p ? fmt(b * p / 100) : "–";
+  });
+  const { base, add } = mcSums();
+  const round2 = n => Math.round(n * 100) / 100;
+  $("#mc-total-pct").textContent = add ? `${fmt(base)} + ${fmt(add)}` : fmt(base);
+  $("#mc-total-g").textContent = fmt(b * (base + add) / 100);
+
+  const box = $("#mc-sum");
+  const filled = mc.rows.some(r => !r.add && mcNum(r.pct) > 0);
+  box.classList.remove("is-ok", "is-off");
+  if (!filled){
+    box.innerHTML = `<span>기본 원료의 비율을 적으면 합계를 확인해 드립니다.</span>`;
+  } else if (Math.abs(base - 100) < 0.05){
+    box.classList.add("is-ok");
+    box.innerHTML = `<span>기본 원료 합 <b>100</b> — 계량이 맞습니다.${add ? ` 첨가 원료 <b>${fmt(add)}</b>%는 그 위에 더합니다.` : ""}</span>`;
+  } else {
+    box.classList.add("is-off");
+    box.innerHTML = `<span>기본 원료 합이 <b>${fmt(round2(base))}</b>입니다. 100이 되어야 비율대로 계량됩니다.</span>
+      <button type="button" class="mc__fix" id="mc-fix">100으로 맞추기</button>`;
+  }
+}
+
+function mcRenderRows(){
+  $("#mc-rows").innerHTML = mc.rows.map(mcRowHtml).join("");
+  mcUpdate();
+}
+
+function mcRenderList(){
+  const list = myRecipes();
+  $("#mc-scope").textContent = Store.persistent
+    ? `${list.length}개 · 이 브라우저에만 저장됩니다`
+    : "이 환경에서는 저장되지 않아 새로 고치면 사라집니다";
+  $("#mc-list").innerHTML = list.length
+    ? `<ul class="mc__list">${list.map(x => `
+        <li class="mc__item${x.id === mc.id ? " is-now" : ""}">
+          <span class="mc__item-name">${esc(x.name)}</span>
+          <span class="mc__item-meta">${x.cond ? esc(x.cond) + " · " : ""}${stamp(x.at)}</span>
+          <span class="mc__item-btns">
+            <button type="button" class="mc__item-btn" data-mc-load="${x.id}">불러오기</button>
+            <button type="button" class="mc__item-btn${mcDelArmed === x.id ? " is-danger" : ""}" data-mc-remove="${x.id}">${mcDelArmed === x.id ? "정말 지우기" : "지우기"}</button>
+          </span>
+        </li>`).join("")}</ul>`
+    : `<p class="mc__empty">아직 저장한 유약이 없습니다.</p>`;
+}
+
+function mcFill(){
+  $("#mc-name").value = mc.name;
+  $("#mc-cond").value = mc.cond;
+  $("#mc-memo").value = mc.memo;
+  $("#mc-batch").value = mc.batch;
+  mcRenderRows();
+  mcRenderList();
+}
+
+function mcMsg(text, ok){
+  const el = $("#mc-msg");
+  el.textContent = text;
+  el.classList.toggle("mc__msg-ok", !!ok);
+}
+
+function renderMine(){
+  if (!mc) mc = mcFresh();
+  $("#mc-materials").innerHTML = mcMaterials().map(m => `<option value="${esc(m)}"></option>`).join("");
+  mcDelArmed = "";
+  mcMsg("");
+  mcFill();
+}
+
+/* 입력 */
+document.getElementById("view-mine").addEventListener("input", e => {
+  const t = e.target;
+  if (t.id === "mc-name") mc.name = t.value;
+  else if (t.id === "mc-cond") mc.cond = t.value;
+  else if (t.id === "mc-memo") mc.memo = t.value;
+  else if (t.id === "mc-batch") mc.batch = t.value;
+  else if (t.dataset.mcF){
+    const row = mc.rows[+t.closest("[data-mc-i]").dataset.mcI];
+    if (t.dataset.mcF === "add") row.add = t.value === "1";
+    else row[t.dataset.mcF] = t.value;
+  } else return;
+  mcMsg("");
+  mcUpdate();
+});
+
+/* 버튼 */
+document.getElementById("view-mine").addEventListener("click", e => {
+  const t = e.target.closest("button");
+  if (!t) return;
+
+  if (t.id === "mc-add"){
+    mc.rows.push(blankRow());
+    mcRenderRows();
+    const inputs = document.querySelectorAll('#mc-rows [data-mc-f="m"]');
+    inputs[inputs.length - 1].focus();
+    return;
+  }
+  if (t.dataset.mcDel !== undefined){
+    mc.rows.splice(+t.dataset.mcDel, 1);
+    if (!mc.rows.length) mc.rows.push(blankRow());
+    mcRenderRows();
+    return;
+  }
+  if (t.id === "mc-fix"){
+    /* 기본 원료만 비율을 유지한 채 합이 100이 되게 늘리거나 줄입니다 */
+    const { base } = mcSums();
+    if (!base) return;
+    const rows = mc.rows.filter(r => !r.add && mcNum(r.pct) > 0);
+    rows.forEach(r => { r.pct = String(Math.round(mcNum(r.pct) * 10000 / base) / 100); });
+    const drift = Math.round((100 - rows.reduce((s, r) => s + mcNum(r.pct), 0)) * 100) / 100;
+    if (drift){
+      const big = rows.reduce((a, b) => (mcNum(b.pct) > mcNum(a.pct) ? b : a));
+      big.pct = String(Math.round((mcNum(big.pct) + drift) * 100) / 100);
+    }
+    mcRenderRows();
+    mcMsg("기본 원료 합을 100으로 맞췄습니다. 첨가 원료는 그대로 두었습니다.", true);
+    return;
+  }
+  if (t.id === "mc-new"){
+    mc = mcFresh();
+    mcDelArmed = "";
+    mcMsg("");
+    mcFill();
+    $("#mc-name").focus();
+    return;
+  }
+  if (t.id === "mc-save"){
+    const rows = mc.rows
+      .map(r => ({ m:r.m.trim(), pct:mcNum(r.pct), add:!!r.add }))
+      .filter(r => r.m || r.pct);
+    if (!rows.length){ mcMsg("원료를 하나 이상 적어 주세요."); return; }
+    if (rows.some(r => !r.m)){ mcMsg("비율만 있고 이름이 빈 원료가 있습니다."); return; }
+    if (rows.some(r => !r.pct)){ mcMsg("비율이 비어 있는 원료가 있습니다."); return; }
+    const list = myRecipes();
+    const now = Date.now();
+    const item = {
+      id: mc.id || "mine-" + newId(),
+      name: mc.name.trim() || `이름 없는 유약 ${stamp(now)}`,
+      cond: mc.cond.trim(),
+      memo: mc.memo.trim(),
+      batch: mcNum(mc.batch) || 1000,
+      rows,
+      at: now
+    };
+    const i = list.findIndex(x => x.id === item.id);
+    if (i >= 0) list[i] = item; else list.unshift(item);
+    if (!Store.write(MINE_ID, list)){ mcMsg("저장하지 못했습니다. 브라우저 저장 공간을 확인해 주세요."); return; }
+    mc = { ...item, rows: item.rows.map(r => ({ m:r.m, pct:String(r.pct), add:r.add })) };
+    mcDelArmed = "";
+    mcFill();
+    mcMsg(i >= 0 ? "고친 내용을 저장했습니다." : "저장했습니다.", true);
+    return;
+  }
+  if (t.dataset.mcLoad){
+    const x = myRecipes().find(y => y.id === t.dataset.mcLoad);
+    if (!x) return;
+    mc = { ...x, batch: x.batch || 1000, rows: x.rows.map(r => ({ m:r.m, pct:String(r.pct), add:!!r.add })) };
+    mcDelArmed = "";
+    mcFill();
+    mcMsg(`"${x.name}"을(를) 불러왔습니다. 고친 뒤 저장하면 이 항목에 덮어씁니다.`, true);
+    return;
+  }
+  if (t.dataset.mcRemove){
+    const id = t.dataset.mcRemove;
+    if (mcDelArmed !== id){ mcDelArmed = id; mcRenderList(); return; }
+    Store.write(MINE_ID, myRecipes().filter(y => y.id !== id));
+    if (mc.id === id) mc.id = "";
+    mcDelArmed = "";
+    mcRenderList();
+    mcMsg("지웠습니다.", true);
+  }
+});
+
 /* ── 화면 전환 ─────────────────────────────────────────────
    1면(목록)과 2면(정보)을 오갑니다. 주소의 # 표시를 기준으로 삼되,
    그 방식이 막히는 환경(미리보기 iframe 등)에서도 동작하도록
@@ -1632,23 +3799,45 @@ const idFromHash = () => {
   catch (e) { return ""; }
 };
 
-const VIEWS = ["guide"];                       /* 레시피가 아닌 별도 화면 */
+const VIEWS = ["guide", "buy", "talk", "defects", "mine", "books"];  /* 레시피가 아닌 별도 화면 */
 
 function show(id){
-  viewId = (VIEWS.includes(id) || RECIPES.some(r => r.id === id)) ? id : "";
+  viewId = (VIEWS.includes(id) || RECIPES.some(r => r.id === id) || isBoardPost(id)) ? id : "";
   render();
 }
 
 function render(){
-  const r      = RECIPES.find(x => x.id === viewId);
-  const list   = document.getElementById("view-list");
-  const detail = document.getElementById("view-detail");
-  const basics = document.getElementById("view-basics");
+  const r        = RECIPES.find(x => x.id === viewId);
+  const post     = isBoardPost(viewId) ? findBoardPost(viewId) : null;
+  const list     = document.getElementById("view-list");
+  const detail   = document.getElementById("view-detail");
+  const basics   = document.getElementById("view-basics");
+  const buy      = document.getElementById("view-buy");
+  const talk     = document.getElementById("view-talk");
+  const talkPost = document.getElementById("view-talk-post");
+  const defects  = document.getElementById("view-defects");
+  const mine     = document.getElementById("view-mine");
+  const books    = document.getElementById("view-books");
 
-  list.hidden = detail.hidden = basics.hidden = true;
+  list.hidden = detail.hidden = basics.hidden = buy.hidden = talk.hidden = talkPost.hidden = defects.hidden = mine.hidden = books.hidden = true;
 
   if (viewId === "guide"){
     basics.hidden = false;
+  } else if (viewId === "buy"){
+    buy.hidden = false;
+  } else if (viewId === "talk"){
+    renderBoardList();
+    talk.hidden = false;
+  } else if (viewId === "defects"){
+    defects.hidden = false;
+  } else if (viewId === "books"){
+    books.hidden = false;
+  } else if (viewId === "mine"){
+    renderMine();
+    mine.hidden = false;
+  } else if (post){
+    renderBoardPost(post);
+    talkPost.hidden = false;
   } else if (r){
     renderDetail(r);
     detail.hidden = false;
@@ -1690,12 +3879,35 @@ function applyBatch(){
   updateCount();
 }
 
-$("#calc").addEventListener("click", applyBatch);
-$("#batch").addEventListener("keydown", e => {
-  if (e.key === "Enter"){ e.preventDefault(); applyBatch(); }
+/* 만들 양 칸은 레시피 상세 표 안에 있고 화면마다 새로 그려지므로 위임으로 받습니다 */
+const detailBox = document.getElementById("detail");
+detailBox.addEventListener("click", e => {
+  if (e.target.closest("#calc")) applyBatch();
+});
+detailBox.addEventListener("input", e => {
+  if (e.target.id !== "batch") return;
+  const v = parseFloat(e.target.value);
+  if (!isNaN(v) && v > 0) applyBatch();      /* 비우는 중에는 기다립니다 */
+});
+detailBox.addEventListener("keydown", e => {
+  if (e.target.id === "batch" && e.key === "Enter"){ e.preventDefault(); applyBatch(); }
+});
+detailBox.addEventListener("focusout", e => {
+  if (e.target.id === "batch" && !(parseFloat(e.target.value) > 0)){
+    e.target.value = state.batch;             /* 빈 칸으로 두고 나가면 마지막 값으로 되돌립니다 */
+  }
+});
+
+$("#search").addEventListener("input", e => {
+  state.search = e.target.value.trim().toLowerCase();
+  renderTiles();
+});
+$("#search").addEventListener("keydown", e => {
+  if (e.key === "Escape"){ e.target.value = ""; state.search = ""; renderTiles(); }
 });
 
 renderChips();
+renderStains();
 show(idFromHash());
 </script>
 </body>
