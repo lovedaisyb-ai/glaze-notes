@@ -2353,6 +2353,7 @@ const PHOTOS = {
 const RECIPES = [
   {
     id:"celadon", name:"청자유", hanja:"靑磁釉",
+    trust:"unverified",
     c1:"#8FAE9C", c2:"#5F8674", texture:"", light:true,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"투명",
     base:[["장석",40,"feldspar"],["규석",25,"silica"],["석회석",20,"flux"],["카올린",15,"clay"]],
@@ -2361,6 +2362,7 @@ const RECIPES = [
   },
   {
     id:"leach", name:"투명유 4·3·2·1", hanja:"",
+    trust:"sourced", sourceText:"리치의 4·3·2·1, 널리 알려진 조합",
     c1:"#D8C3A0", c2:"#BFA47E", texture:"", light:true,
     atmos:"공통", temp:"1230–1250℃", surface:"투명",
     base:[["장석",40,"feldspar"],["석회석",30,"flux"],["규석",20,"silica"],["카올린",10,"clay"]],
@@ -2369,6 +2371,7 @@ const RECIPES = [
   },
   {
     id:"tenmoku", name:"천목유", hanja:"天目釉",
+    trust:"unverified",
     c1:"#3A2418", c2:"#150D08", texture:"speckle", light:false,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"투명",
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",15,"flux"],["산화철",10,"color"],["카올린",5,"clay"]],
@@ -2377,6 +2380,7 @@ const RECIPES = [
   },
   {
     id:"dolomite", name:"돌로마이트 유백 무광", hanja:"",
+    trust:"unverified",
     c1:"#EDEAE0", c2:"#DAD6C7", texture:"matte", light:true,
     atmos:"산화", temp:"1230–1250℃", surface:"무광",
     base:[["장석",45,"feldspar"],["규석",20,"silica"],["카올린",15,"clay"],["돌로마이트",12,"flux"],["석회석",8,"flux"]],
@@ -2385,6 +2389,7 @@ const RECIPES = [
   },
   {
     id:"crackle", name:"빙렬유", hanja:"氷裂釉",
+    trust:"unverified",
     c1:"#EAF0EB", c2:"#D3DDD5", texture:"crackle", light:true,
     atmos:"산화", temp:"1230℃", surface:"빙렬",
     base:[["네펠린 사이아나이트",55,"feldspar"],["규석",25,"silica"],["석회석",10,"flux"],["카올린",10,"clay"]],
@@ -2393,6 +2398,7 @@ const RECIPES = [
   },
   {
     id:"copperred", name:"진사", hanja:"辰砂",
+    trust:"unverified",
     c1:"#A8393A", c2:"#6B1F27", texture:"", light:false,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"투명",
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",20,"flux"],["탄산바륨",5,"flux"],["카올린",5,"clay"]],
@@ -2402,6 +2408,7 @@ const RECIPES = [
   },
   {
     id:"oribe", name:"오리베 녹유", hanja:"織部",
+    trust:"unverified",
     c1:"#4F7F45", c2:"#2E5730", texture:"", light:false,
     atmos:"산화", temp:"1230℃", surface:"투명",
     base:[["장석",50,"feldspar"],["석회석",20,"flux"],["규석",20,"silica"],["카올린",10,"clay"]],
@@ -2410,6 +2417,7 @@ const RECIPES = [
   },
   {
     id:"crystal", name:"결정유", hanja:"結晶釉",
+    trust:"unverified",
     c1:"#7C93B4", c2:"#4C6280", texture:"crystal", light:false,
     atmos:"산화", temp:"1250℃ · 서냉",
     surface:"결정",
@@ -2419,6 +2427,7 @@ const RECIPES = [
   },
   {
     id:"ash", name:"재유", hanja:"灰釉",
+    trust:"sourced", sourceText:"재유 기본 비율, 널리 알려진 조합",
     c1:"#A79A5C", c2:"#6D6433", texture:"", light:false,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"투명",
     base:[["나무재",40,"flux"],["장석",30,"feldspar"],["카올린",20,"clay"],["규석",10,"silica"]],
@@ -2427,6 +2436,7 @@ const RECIPES = [
   },
   {
     id:"shino", name:"시노", hanja:"志野",
+    trust:"unverified",
     c1:"#F0DFC7", c2:"#D3B392", texture:"speckle", light:true,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"유탁",
     base:[["네펠린 사이아나이트",60,"feldspar"],["볼클레이",25,"clay"],["규석",10,"silica"],["탄산소다",5,"flux"]],
@@ -2435,6 +2445,7 @@ const RECIPES = [
   },
   {
     id:"chun", name:"균요 유탁청유", hanja:"鈞窯",
+    trust:"unverified",
     c1:"#AEC6D0", c2:"#7B9DB0", texture:"", light:true,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"유탁",
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",18,"flux"],["카올린",7,"clay"],["골회",5,"flux"]],
@@ -2443,6 +2454,7 @@ const RECIPES = [
   },
   {
     id:"nuka", name:"누카 백유", hanja:"糠釉",
+    trust:"unverified",
     c1:"#F2F0E6", c2:"#DBD9CB", texture:"", light:true,
     atmos:"공통", temp:"1250℃ · 콘 10", surface:"유탁",
     base:[["볏짚재",40,"flux"],["장석",40,"feldspar"],["석회석",10,"flux"],["카올린",10,"clay"]],
@@ -2451,6 +2463,7 @@ const RECIPES = [
   },
   {
     id:"cobalt", name:"코발트 남색유", hanja:"",
+    trust:"unverified",
     c1:"#41639C", c2:"#1F3763", texture:"", light:false,
     atmos:"산화", temp:"1230℃", surface:"투명",
     base:[["장석",50,"feldspar"],["석회석",20,"flux"],["규석",20,"silica"],["카올린",10,"clay"]],
@@ -2459,6 +2472,7 @@ const RECIPES = [
   },
   {
     id:"kaki", name:"철유 감색", hanja:"柿釉",
+    trust:"unverified",
     c1:"#B0632F", c2:"#77391B", texture:"matte", light:false,
     atmos:"환원", temp:"1250℃ · 서냉", surface:"무광",
     base:[["장석",40,"feldspar"],["규석",20,"silica"],["산화철",17,"color"],["석회석",15,"flux"],["카올린",8,"clay"]],
@@ -2467,6 +2481,7 @@ const RECIPES = [
   },
   {
     id:"raku", name:"라쿠 구리유", hanja:"樂",
+    trust:"sourced", sourceText:"라쿠 기본 80:20, 널리 알려진 조합",
     c1:"#C6B7A2", c2:"#8A755D", texture:"crackle", light:false,
     atmos:"환원", temp:"1000℃ · 급냉", surface:"빙렬",
     base:[["프릿 3134",80,"feldspar"],["카올린",20,"clay"]],
@@ -2475,6 +2490,7 @@ const RECIPES = [
   },
   {
     id:"lowwhite", name:"저화도 유백유", hanja:"",
+    trust:"unverified",
     c1:"#F5F3ED", c2:"#E2DFD4", texture:"", light:true,
     atmos:"산화", temp:"1050–1080℃", surface:"유탁",
     base:[["프릿 3124",65,"feldspar"],["규석",15,"silica"],["지르코늄 실리케이트",10,"color"],["카올린",10,"clay"]],
@@ -2483,6 +2499,7 @@ const RECIPES = [
   },
   {
     id:"ashfeldspar", name:"회장석 재유", hanja:"灰長石釉",
+    trust:"unverified",
     c1:"#B6A76B", c2:"#7C6C35", texture:"", light:false,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"투명",
     base:[["나무재",50,"flux"],["장석",50,"feldspar"]],
@@ -2491,6 +2508,7 @@ const RECIPES = [
   },
   {
     id:"rawash", name:"생재유", hanja:"生灰釉",
+    trust:"unverified",
     c1:"#948B5C", c2:"#655C35", texture:"matte", light:false,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"무광",
     base:[["나무재",50,"flux"],["목절점토",50,"clay"]],
@@ -2499,6 +2517,7 @@ const RECIPES = [
   },
   {
     id:"ashiron", name:"철 재유", hanja:"",
+    trust:"unverified",
     c1:"#AA7A3C", c2:"#6F4B20", texture:"", light:false,
     atmos:"공통", temp:"1250℃ · 콘 10", surface:"투명",
     base:[["나무재",40,"flux"],["장석",30,"feldspar"],["규석",15,"silica"],["카올린",15,"clay"]],
@@ -2507,6 +2526,7 @@ const RECIPES = [
   },
   {
     id:"ashrun", name:"흘림 재유", hanja:"自然釉",
+    trust:"unverified",
     c1:"#AEB276", c2:"#4E5D2D", texture:"", light:false,
     atmos:"환원", temp:"1250℃ · 콘 10", surface:"투명",
     base:[["나무재",55,"flux"],["장석",25,"feldspar"],["규석",10,"silica"],["카올린",10,"clay"]],
@@ -2518,6 +2538,7 @@ const RECIPES = [
      같은 유약이 산화물 하나로 어디까지 달라지는지 비교용입니다. */
   {
     id:"tinwhite", name:"주석 유백유", hanja:"",
+    trust:"unverified",
     c1:"#F4F2EB", c2:"#DFDBD0", texture:"", light:true,
     atmos:"산화", temp:"1230℃", surface:"유탁",
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",20,"flux"],["카올린",10,"clay"]],
@@ -2526,6 +2547,7 @@ const RECIPES = [
   },
   {
     id:"manganese", name:"망간 자갈색유", hanja:"",
+    trust:"unverified",
     c1:"#82606F", c2:"#4A3040", texture:"", light:false,
     atmos:"산화", temp:"1230℃", surface:"투명",
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",20,"flux"],["카올린",10,"clay"]],
@@ -2534,6 +2556,7 @@ const RECIPES = [
   },
   {
     id:"chrometin", name:"크롬·주석 분홍유", hanja:"",
+    trust:"unverified",
     c1:"#CE9298", c2:"#9A5C66", texture:"", light:false,
     atmos:"산화", temp:"1230℃", surface:"유탁",
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",20,"flux"],["카올린",10,"clay"]],
@@ -2542,6 +2565,7 @@ const RECIPES = [
   },
   {
     id:"nickel", name:"니켈 회청유", hanja:"",
+    trust:"unverified",
     c1:"#8F9BA4", c2:"#54626C", texture:"", light:false,
     atmos:"산화", temp:"1230℃", surface:"투명",
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",20,"flux"],["카올린",10,"clay"]],
@@ -2550,6 +2574,7 @@ const RECIPES = [
   },
   {
     id:"rutile", name:"루틸 흐름유", hanja:"",
+    trust:"unverified",
     c1:"#CDA76B", c2:"#8A6A34", texture:"crystal", light:false,
     atmos:"산화", temp:"1230℃", surface:"결정",
     base:[["장석",45,"feldspar"],["규석",25,"silica"],["석회석",20,"flux"],["카올린",10,"clay"]],
@@ -2563,6 +2588,7 @@ const RECIPES = [
      시간당 60℃ 승온) 기준입니다. */
   {
     id:"g2926b", name:"콘6 초투명유", hanja:"G2926B",
+    trust:"sourced", sourceText:"원문 합계 110.1을 100으로 환산",
     c1:"#EEF0EA", c2:"#D5DBD2", texture:"", light:true,
     atmos:"산화", temp:"1222℃ · 콘 6", surface:"투명",
     base:[["네펠린 사이아나이트",16.62,"feldspar"],["프릿 3134",23.07,"feldspar"],["카올린 (EPK)",17.8,"clay"],["규회석",6.27,"flux"],["규석",34.15,"silica"],["활석",2.09,"flux"]],
@@ -2572,6 +2598,7 @@ const RECIPES = [
   },
   {
     id:"g2934", name:"콘6 실키 무광유", hanja:"G2934",
+    trust:"sourced",
     c1:"#E6E3DA", c2:"#C9C3B3", texture:"matte", light:true,
     atmos:"산화", temp:"1222℃ · 콘 6", surface:"무광",
     base:[["프릿 3124",17.4,"feldspar"],["돌로마이트",23.5,"flux"],["규석",26.9,"silica"],["카올린 (EPK)",18.3,"clay"],["하소 카올린",13.9,"clay"]],
@@ -2581,6 +2608,7 @@ const RECIPES = [
   },
   {
     id:"mgbase3", name:"콘6 발색 기본유", hanja:"Glossy Base 1",
+    trust:"sourced",
     c1:"#E9E2D3", c2:"#CBBDA3", texture:"", light:true,
     atmos:"산화", temp:"1222℃ · 콘 6", surface:"투명",
     base:[["장석 (G-200)",20,"feldspar"],["프릿 3134",20,"feldspar"],["규회석",10,"flux"],["카올린 (EPK)",20,"clay"],["활석",11.5,"flux"],["규석",18.5,"silica"]],
@@ -2590,6 +2618,7 @@ const RECIPES = [
   },
   {
     id:"g1214z1", name:"콘6 석회 무광유", hanja:"G1214Z1",
+    trust:"sourced", sourceText:"원문 합계 101을 100으로 환산",
     c1:"#E4E2D8", c2:"#C4C0AE", texture:"matte", light:true,
     atmos:"산화", temp:"1222℃ · 콘 6", surface:"무광",
     base:[["규회석",26.73,"flux"],["프릿 3124",35.64,"feldspar"],["카올린 (EPK)",19.8,"clay"],["규석",4.95,"silica"],["하소 카올린",12.87,"clay"]],
@@ -2599,6 +2628,7 @@ const RECIPES = [
   },
   {
     id:"g1947u", name:"콘10 투명유", hanja:"G1947U",
+    trust:"sourced",
     c1:"#E5EDEC", c2:"#C3D4D5", texture:"", light:true,
     atmos:"공통", temp:"1285℃ · 콘 10", surface:"투명",
     base:[["장석 (커스터)",27,"feldspar"],["카올린 (EPK)",20.5,"clay"],["규석",26.5,"silica"],["규회석",23.5,"flux"],["산화아연",2.5,"flux"]],
@@ -2608,6 +2638,7 @@ const RECIPES = [
   },
   {
     id:"g2571a", name:"콘10 돌로마이트 무광유", hanja:"G2571A",
+    trust:"sourced",
     c1:"#E7E2D6", c2:"#C6BCA6", texture:"matte", light:true,
     atmos:"환원", temp:"1285℃ · 콘 10", surface:"무광",
     base:[["규회석",5.5,"flux"],["장석 (커스터)",28.5,"feldspar"],["카올린 (EPK)",28,"clay"],["규석",15,"silica"],["돌로마이트",19,"flux"],["거스틀리 보레이트",4,"flux"]],
@@ -2617,6 +2648,7 @@ const RECIPES = [
   },
   {
     id:"bamboo", name:"콘10 대나무 무광유", hanja:"G2571A 변형",
+    trust:"unverified",
     c1:"#D3BC8A", c2:"#9C8150", texture:"matte", light:true,
     atmos:"환원", temp:"1285℃ · 콘 10", surface:"무광",
     base:[["규회석",5.5,"flux"],["장석 (커스터)",28.5,"feldspar"],["카올린 (EPK)",28,"clay"],["규석",15,"silica"],["돌로마이트",19,"flux"],["거스틀리 보레이트",4,"flux"]],
@@ -2626,6 +2658,7 @@ const RECIPES = [
   },
   {
     id:"g2240", name:"오트밀 무광유", hanja:"G2240",
+    trust:"sourced",
     c1:"#DACDB3", c2:"#A89372", texture:"speckle", light:true,
     atmos:"환원", temp:"1285℃ · 콘 10", surface:"무광",
     base:[["돌로마이트",25,"flux"],["장석 (커스터)",27.5,"feldspar"],["볼클레이",10,"clay"],["스포듀민",8.5,"feldspar"],["카올린",17.5,"clay"],["규석",7.5,"silica"],["지르코늄 실리케이트",4,"color"]],
@@ -2635,6 +2668,7 @@ const RECIPES = [
   },
   {
     id:"g1916q", name:"저화도 투명유", hanja:"G1916Q",
+    trust:"sourced",
     c1:"#EEECE5", c2:"#D3CEC0", texture:"", light:true,
     atmos:"산화", temp:"1063℃ · 콘 04", surface:"투명",
     base:[["프릿 3195",65,"feldspar"],["프릿 3110",10,"feldspar"],["프릿 3249",10,"feldspar"],["볼클레이 (No.5)",15,"clay"]],
@@ -2644,6 +2678,7 @@ const RECIPES = [
   },
   {
     id:"g2931k", name:"저화도 초투명유", hanja:"G2931K",
+    trust:"sourced", sourceText:"원문 합계 95를 100으로 환산",
     c1:"#EFF2F0", c2:"#D0D8D4", texture:"", light:true,
     atmos:"산화", temp:"1086℃ · 콘 03", surface:"투명",
     base:[["프릿 3195",26.32,"feldspar"],["프릿 3134",34.74,"feldspar"],["카올린 (EPK)",21.05,"clay"],["프릿 3249",10.53,"feldspar"],["프릿 3110",7.37,"feldspar"]],
