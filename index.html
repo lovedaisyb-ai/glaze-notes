@@ -1342,6 +1342,14 @@
     border-radius:4px;
   }
   .mc__item.is-now{border-color:var(--accent);}
+
+  /* ── 내 데이터 옮기기 (내보내기·가져오기) ─────── */
+  .backup{margin-top:28px;padding:16px;border:1px solid var(--line-soft);border-radius:var(--r);background:var(--surface-2);}
+  .basics .backup__t{margin:0 0 4px;font-size:14px;}
+  .basics .backup__t::after{content:none;}
+  .backup__d{margin:0 0 12px;font-size:13px;color:var(--ink-soft);}
+  .backup__btns{display:flex;gap:8px;flex-wrap:wrap;}
+  .backup__msg{display:block;margin-top:10px;font-size:13px;}
   .mc__item-name{display:block;font-size:14px;font-weight:650;color:var(--ink);word-break:keep-all;overflow-wrap:anywhere;}
   .mc__item-meta{display:block;margin-top:2px;font-size:11.5px;color:var(--ink-faint);}
   .mc__item-btns{display:flex;gap:6px;margin-top:8px;}
@@ -2299,6 +2307,17 @@
           <p class="mc__scope" id="mc-scope"></p>
           <div id="mc-list"></div>
         </aside>
+      </div>
+
+      <div class="backup">
+        <h3 class="backup__t">내 데이터 옮기기</h3>
+        <p class="backup__d">이 브라우저에 저장한 소성 메모, 자유게시판 글, 내 유약을 파일 하나로 내려받거나, 받아 둔 파일을 다시 불러옵니다. 불러오면 지금 있는 기록에 합쳐지고, 지워지는 것은 없습니다.</p>
+        <div class="backup__btns">
+          <button type="button" class="mc__ghost" id="bk-export">내보내기</button>
+          <button type="button" class="mc__ghost" id="bk-import">가져오기</button>
+          <input type="file" id="bk-file" accept="application/json,.json" hidden>
+        </div>
+        <span class="backup__msg note-err" id="bk-msg" aria-live="polite"></span>
       </div>
     </article>
     <button class="back back--bottom" data-go="">← 목록으로</button>
@@ -4032,6 +4051,113 @@ function applyBatch(){
 }
 
 /* 만들 양 칸은 레시피 상세 표 안에 있고 화면마다 새로 그려지므로 위임으로 받습니다 */
+/* ── 내 데이터 옮기기 ─────────────────────────────────────
+   소성 메모(레시피 id별), 자유게시판(__board__), 내 유약(my-recipes)을
+   JSON 파일 하나로 내보내고, 가져올 때는 지금 기록에 합칩니다.
+   같은 id는 저장 시각(at)이 늦은 쪽을 남기고, 아무것도 지우지 않습니다.
+--------------------------------------------------------- */
+const BACKUP_VERSION = 1;
+
+function backupData(){
+  const notes = {};
+  RECIPES.forEach(r => {
+    const list = Store.read(r.id);
+    if (list.length) notes[r.id] = list;
+  });
+  return {
+    app: "glaze-notes",
+    version: BACKUP_VERSION,
+    exportedAt: new Date().toISOString(),
+    notes,
+    board: boardPosts(),
+    mine: myRecipes()
+  };
+}
+
+/* 같은 id는 at이 늦은 쪽을 남깁니다. 더해진 개수를 돌려줍니다 */
+function mergeById(current, incoming, mergeItem){
+  const out = current.slice();
+  let added = 0;
+  incoming.forEach(x => {
+    if (!x || typeof x !== "object" || !x.id) return;
+    const i = out.findIndex(y => y.id === x.id);
+    if (i < 0){ out.push(x); added++; }
+    else out[i] = mergeItem ? mergeItem(out[i], x) : ((x.at || 0) > (out[i].at || 0) ? x : out[i]);
+  });
+  out.sort((a, b) => (b.at || 0) - (a.at || 0));
+  return { list: out, added };
+}
+
+const mergePost = (a, b) => {
+  const newer = (b.at || 0) > (a.at || 0) ? b : a;
+  const comments = mergeById(a.comments || [], b.comments || []).list
+    .sort((x, y) => (x.at || 0) - (y.at || 0));
+  return { ...newer, comments };
+};
+
+function bkMsg(text, ok){
+  const el = $("#bk-msg");
+  el.textContent = text;
+  el.classList.toggle("mc__msg-ok", !!ok);
+}
+
+function exportBackup(){
+  const data = backupData();
+  const d = new Date();
+  const ymd = d.getFullYear() + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0");
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `glaze-notes-backup-${ymd}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  const n = Object.values(data.notes).reduce((s, l) => s + l.length, 0);
+  bkMsg(`내보냈습니다 · 소성 메모 ${n}개, 게시글 ${data.board.length}개, 내 유약 ${data.mine.length}개`, true);
+}
+
+function importBackup(text){
+  let data;
+  try { data = JSON.parse(text); } catch (e) { data = null; }
+  if (!data || data.app !== "glaze-notes" || typeof data.version !== "number" ||
+      typeof data.notes !== "object" || !Array.isArray(data.board) || !Array.isArray(data.mine)){
+    bkMsg("유약 노트에서 내보낸 파일이 아닙니다. 아무것도 바꾸지 않았습니다.");
+    return;
+  }
+  if (data.version > BACKUP_VERSION){
+    bkMsg("더 새로운 형식의 파일입니다. 아무것도 바꾸지 않았습니다.");
+    return;
+  }
+  const ids = new Set(RECIPES.map(r => r.id));
+  const writes = [];
+  let nNotes = 0, skipped = 0;
+  Object.keys(data.notes || {}).forEach(id => {
+    if (!ids.has(id) || !Array.isArray(data.notes[id])){ skipped++; return; }
+    const m = mergeById(Store.read(id), data.notes[id]);
+    nNotes += m.added;
+    writes.push([id, m.list]);
+  });
+  const b = mergeById(boardPosts(), data.board, mergePost);
+  const mi = mergeById(myRecipes(), data.mine);
+  writes.push([BOARD_ID, b.list], [MINE_ID, mi.list]);
+  const failed = writes.filter(([id, list]) => !Store.write(id, list)).length;
+  mcRenderList();
+  renderTiles();
+  const skip = skipped ? ` · 없는 레시피의 메모 묶음 ${skipped}개는 건너뜀` : "";
+  if (failed) bkMsg(`일부를 저장하지 못했습니다. 브라우저 저장 공간을 확인해 주세요.${skip}`);
+  else bkMsg(`가져왔습니다 · 새로 더한 것: 소성 메모 ${nNotes}개, 게시글 ${b.added}개, 내 유약 ${mi.added}개${skip}`, true);
+}
+
+$("#bk-export").addEventListener("click", exportBackup);
+$("#bk-import").addEventListener("click", () => $("#bk-file").click());
+$("#bk-file").addEventListener("change", e => {
+  const file = e.target.files[0];
+  e.target.value = "";                         /* 같은 파일을 다시 골라도 동작하게 */
+  if (!file) return;
+  file.text().then(importBackup, () => bkMsg("파일을 읽지 못했습니다."));
+});
+
 const detailBox = document.getElementById("detail");
 detailBox.addEventListener("click", e => {
   if (e.target.closest("#calc")) applyBatch();
