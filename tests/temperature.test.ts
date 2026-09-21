@@ -78,6 +78,19 @@ describe("옛 사이트 35종과 같은 결과", () => {
     return m && parseInt(m[0], 10) >= 1150 ? "high" : "low";
   };
 
+  it("℃와 콘을 함께 적은 레시피는 오튼 표와 맞는다 (\"부근\"이면 가장 가까운 콘)", () => {
+    const nearestCone = (celsius: number) =>
+      CONE_CHART.reduce((best, cur) => (Math.abs(cur[1] - celsius) < Math.abs(best[1] - celsius) ? cur : best))[0];
+    for (const r of readLegacy().recipes) {
+      const m = /(\d{3,4})℃ · 콘 (\S+)( 부근)?$/.exec(r.temp);
+      if (!m) continue;
+      const celsius = parseInt(m[1], 10);
+      const expected = m[3] ? nearestCone(celsius) : m[2];
+      expect([r.id, m[2]]).toEqual([r.id, expected]);
+      if (!m[3]) expect([r.id, coneToCelsius(m[2])]).toEqual([r.id, celsius]);
+    }
+  });
+
   it("35종 모두 고화도·저화도 판정이 옛 사이트와 같다", () => {
     const { recipes } = readLegacy();
     expect(recipes).toHaveLength(35);
