@@ -1,0 +1,11 @@
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 48px 16px;
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: 32px;
+  margin: 0 0 12px;
+}

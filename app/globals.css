@@ -1,0 +1,54 @@
+/* 디자인 토큰 — 옛 사이트(public/legacy/index.html)의 :root 값 그대로.
+   색·글꼴·모서리 값을 모아 둡니다. 색을 바꿀 때는 여기만 고칩니다. */
+:root {
+  --bg: #F3F4F1;
+  --surface: #FFFFFF;
+  --surface-2: #F8F9F7;
+  --ink: #14171A;
+  --ink-soft: #5B6268;
+  --ink-faint: #8C9298;
+  --line: #D9DCDF;
+  --line-soft: #E9EBEC;
+  --grid: rgba(20, 23, 26, .055);
+  --accent: #2743D6;          /* 코발트 */
+  --accent-ink: #FFFFFF;
+  --accent-soft: #EAEEFD;
+  --warn: #B8430E;            /* 산화철 */
+  --warn-soft: #FDF0E7;
+  --bar-bg: rgba(243, 244, 241, .86);
+
+  /* 시편·도표 그림에 쓰는 도자 색 (테마와 무관) */
+  --celadon: #6E9483;
+  --celadon-deep: #33564C;
+  --iron: #8E5326;
+  --porcelain: var(--surface);
+  --bisque: var(--bg);
+
+  --cat-feldspar: #8FA6B8;
+  --cat-silica: #B7C3C7;
+  --cat-flux: #D6C49C;
+  --cat-clay: #BFA184;
+  --cat-color: #5E7A6B;
+
+  --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --mono: "JetBrains Mono", "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", Menlo, Consolas, monospace;
+  --serif: "Gowun Batang", "Nanum Myeongjo", serif;
+
+  --r: 6px;
+  --wrap: 1120px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-underline-offset: 3px; }
