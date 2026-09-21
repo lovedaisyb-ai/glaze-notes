@@ -6,3 +6,17 @@
 # 작업용 백업 사본과 화면 캡처는 저장소 밖에 둔다
 _versions/
 Claude outputs/
+
+# Next.js 앱 (1단계부터)
+/node_modules
+/.next/
+/out/
+/build
+/coverage
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+npm-debug.log*
+
+# 비밀 값은 .env.local 등에만 두고 커밋하지 않는다
+.env*
