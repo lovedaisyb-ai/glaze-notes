@@ -903,6 +903,13 @@
   }
   .tag--warn::before{content:"⚠ ";}
 
+  /* ── 신뢰 배지 (출처 있음 / 미검증) ─────────── */
+  .tag--sourced{color:var(--celadon-deep);border-color:color-mix(in srgb, var(--celadon-deep) 40%, transparent);}
+  .tag--unverified{color:var(--iron);border:1.5px solid var(--iron);background:var(--surface);font-weight:600;cursor:pointer;}
+  .tag--unverified:hover{background:color-mix(in srgb, var(--iron) 8%, var(--surface));}
+  .tag--unverified:focus-visible{outline:2px solid var(--iron);outline-offset:2px;}
+  .trust-msg{flex-basis:100%;margin:0;padding:8px 10px;border-left:3px solid var(--iron);background:color-mix(in srgb, var(--iron) 6%, var(--surface));font-size:13px;color:var(--ink);}
+
   /* ── 같은 조성 묶음 ─────────────────── */
   .siblings{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);}
   .siblings h3{font-size:14px;font-weight:700;margin:0 0 4px;}
@@ -3651,7 +3658,9 @@ function renderDetail(r){
             <span class="tag">${r.temp}</span>
             <span class="tag">${r.surface}</span>
             ${warnTags(r.id)}
+            ${trustBadge(r)}
           </div>
+          <p class="trust-msg" id="trust-msg" hidden>아직 누구도 이 조합을 구워 기록하지 않았습니다. 시편으로 먼저 확인하세요.</p>
         </div>
         ${compBar(r)}
         <table>
@@ -3670,11 +3679,21 @@ function renderDetail(r){
     ${neighborNav(r)}`;
 }
 
+/* 신뢰 배지: 출처가 있으면 "출처 있음", 없으면 누르면 안내가 열리는 "미검증" */
+function trustBadge(r){
+  if (r.trust === "sourced") return `<span class="tag tag--sourced">출처 있음</span>`;
+  return `<button type="button" class="tag tag--unverified" data-trust aria-expanded="false" aria-controls="trust-msg">미검증</button>`;
+}
+
 /* 출처가 있는 레시피만 원문 링크와 원료 안내를 붙입니다 */
 function sourceBlock(r){
-  if (!r.source) return "";
+  if (!r.source){
+    return r.sourceText
+      ? `<p class="card__src"><span class="card__src-k">SOURCE</span> ${esc(r.sourceText)}</p>`
+      : "";
+  }
   return `<p class="card__src"><span class="card__src-k">SOURCE</span>
-    <a href="${r.source.url}" target="_blank" rel="noopener">${r.source.label}</a>
+    <a href="${r.source.url}" target="_blank" rel="noopener">${r.source.label}</a>${r.sourceText ? ` · ${esc(r.sourceText)}` : ""}
     <span class="card__src-n">원문 원료 이름(EPK, 커스터 장석, Ferro 프릿 등)은 미국 제품명입니다. 국내 원료로 바꾸면 결과가 달라질 수 있으니 시편으로 확인하세요. 온도는 오튼 콘 표(시간당 60℃ 승온) 기준입니다.</span></p>`;
 }
 
@@ -4016,6 +4035,12 @@ function applyBatch(){
 const detailBox = document.getElementById("detail");
 detailBox.addEventListener("click", e => {
   if (e.target.closest("#calc")) applyBatch();
+  const badge = e.target.closest("[data-trust]");
+  if (badge){
+    const msg = document.getElementById("trust-msg");
+    msg.hidden = !msg.hidden;
+    badge.setAttribute("aria-expanded", String(!msg.hidden));
+  }
 });
 detailBox.addEventListener("input", e => {
   if (e.target.id !== "batch") return;
