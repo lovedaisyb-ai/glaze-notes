@@ -1,0 +1,1199 @@
+[
+  {
+    "recipe_id": "063867c0-c3f3-567f-b0e0-db1208bcf68d",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 40,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "063867c0-c3f3-567f-b0e0-db1208bcf68d",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "063867c0-c3f3-567f-b0e0-db1208bcf68d",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "063867c0-c3f3-567f-b0e0-db1208bcf68d",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "063867c0-c3f3-567f-b0e0-db1208bcf68d",
+    "material_id": "5f696429-44f9-55fd-a52e-1be464613a77",
+    "pct": 1.2,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "38beecb6-841b-525e-bce7-10f7932d11a5",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 40,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "38beecb6-841b-525e-bce7-10f7932d11a5",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 30,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "38beecb6-841b-525e-bce7-10f7932d11a5",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "38beecb6-841b-525e-bce7-10f7932d11a5",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "dfc4ad17-0f51-5c45-832a-35f1d7ecb653",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "dfc4ad17-0f51-5c45-832a-35f1d7ecb653",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "dfc4ad17-0f51-5c45-832a-35f1d7ecb653",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "dfc4ad17-0f51-5c45-832a-35f1d7ecb653",
+    "material_id": "5f696429-44f9-55fd-a52e-1be464613a77",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "dfc4ad17-0f51-5c45-832a-35f1d7ecb653",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 5,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "fa037dd9-5c52-58e8-8bce-48705166d4b1",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "fa037dd9-5c52-58e8-8bce-48705166d4b1",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "fa037dd9-5c52-58e8-8bce-48705166d4b1",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "fa037dd9-5c52-58e8-8bce-48705166d4b1",
+    "material_id": "6e378343-7d95-5a40-aa64-701fcfc7bc1b",
+    "pct": 12,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "fa037dd9-5c52-58e8-8bce-48705166d4b1",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 8,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "f2ec6c11-7c04-5683-98da-f9d12f07ae85",
+    "material_id": "370d1363-5f02-521a-9183-e45fda5d9300",
+    "pct": 55,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "f2ec6c11-7c04-5683-98da-f9d12f07ae85",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "f2ec6c11-7c04-5683-98da-f9d12f07ae85",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "f2ec6c11-7c04-5683-98da-f9d12f07ae85",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "430548e0-9287-5d65-bb8a-1d6edf4a177c",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "430548e0-9287-5d65-bb8a-1d6edf4a177c",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "430548e0-9287-5d65-bb8a-1d6edf4a177c",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "430548e0-9287-5d65-bb8a-1d6edf4a177c",
+    "material_id": "0d9499dd-e36c-52e3-b2b8-1eca97ec49fd",
+    "pct": 5,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "430548e0-9287-5d65-bb8a-1d6edf4a177c",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 5,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "430548e0-9287-5d65-bb8a-1d6edf4a177c",
+    "material_id": "6d537d15-b977-5d49-b5be-0f6663eecd4d",
+    "pct": 0.4,
+    "is_addition": true,
+    "sort": 5
+  },
+  {
+    "recipe_id": "430548e0-9287-5d65-bb8a-1d6edf4a177c",
+    "material_id": "49d060c9-af21-5f73-a525-013bee549c70",
+    "pct": 1.5,
+    "is_addition": true,
+    "sort": 6
+  },
+  {
+    "recipe_id": "cc366579-cbb1-521b-a8c6-c60e5812989e",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 50,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "cc366579-cbb1-521b-a8c6-c60e5812989e",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "cc366579-cbb1-521b-a8c6-c60e5812989e",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "cc366579-cbb1-521b-a8c6-c60e5812989e",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "cc366579-cbb1-521b-a8c6-c60e5812989e",
+    "material_id": "6d537d15-b977-5d49-b5be-0f6663eecd4d",
+    "pct": 4,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "c2c29b0a-acb8-52b8-a597-61dccd7e8adc",
+    "material_id": "d8ee0383-286f-5769-a5a7-1a99d53806bd",
+    "pct": 50,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "c2c29b0a-acb8-52b8-a597-61dccd7e8adc",
+    "material_id": "a36390bc-4aac-5ac3-83a4-6728fce7d50d",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "c2c29b0a-acb8-52b8-a597-61dccd7e8adc",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "c2c29b0a-acb8-52b8-a597-61dccd7e8adc",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 5,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "c2c29b0a-acb8-52b8-a597-61dccd7e8adc",
+    "material_id": "24559831-0549-53fb-ab38-d60793b0576b",
+    "pct": 3,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "c5618716-f60a-5e33-9479-b544c41301a6",
+    "material_id": "69a1f85c-7fd2-5967-86c6-b6ac93463d9d",
+    "pct": 40,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "c5618716-f60a-5e33-9479-b544c41301a6",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 30,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "c5618716-f60a-5e33-9479-b544c41301a6",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "c5618716-f60a-5e33-9479-b544c41301a6",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "113a3b5b-5e7f-59f7-a502-2bbea9cb89e1",
+    "material_id": "370d1363-5f02-521a-9183-e45fda5d9300",
+    "pct": 60,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "113a3b5b-5e7f-59f7-a502-2bbea9cb89e1",
+    "material_id": "f61265ec-a7eb-5a22-8b45-c88f31f1a6b2",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "113a3b5b-5e7f-59f7-a502-2bbea9cb89e1",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "113a3b5b-5e7f-59f7-a502-2bbea9cb89e1",
+    "material_id": "a98decdd-9ff1-5039-9b27-c656e2814759",
+    "pct": 5,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "fbcb1313-ba52-5681-a54d-fccc5828d43c",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "fbcb1313-ba52-5681-a54d-fccc5828d43c",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "fbcb1313-ba52-5681-a54d-fccc5828d43c",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 18,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "fbcb1313-ba52-5681-a54d-fccc5828d43c",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 7,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "fbcb1313-ba52-5681-a54d-fccc5828d43c",
+    "material_id": "020c86c3-5e30-5dfe-b8e6-97803697a153",
+    "pct": 5,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "fbcb1313-ba52-5681-a54d-fccc5828d43c",
+    "material_id": "5f696429-44f9-55fd-a52e-1be464613a77",
+    "pct": 1,
+    "is_addition": true,
+    "sort": 5
+  },
+  {
+    "recipe_id": "92d08c68-de2a-5de1-b9f6-1e595e40f2a2",
+    "material_id": "851a2bbf-445e-5639-948b-ed54ebb8f453",
+    "pct": 40,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "92d08c68-de2a-5de1-b9f6-1e595e40f2a2",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 40,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "92d08c68-de2a-5de1-b9f6-1e595e40f2a2",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "92d08c68-de2a-5de1-b9f6-1e595e40f2a2",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "d98ec79f-ec6b-569b-aaa6-97c4074d2b40",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 50,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "d98ec79f-ec6b-569b-aaa6-97c4074d2b40",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "d98ec79f-ec6b-569b-aaa6-97c4074d2b40",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "d98ec79f-ec6b-569b-aaa6-97c4074d2b40",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "d98ec79f-ec6b-569b-aaa6-97c4074d2b40",
+    "material_id": "dc21e9e6-4c76-5d6b-91da-f8b5ada9cb92",
+    "pct": 0.8,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "aed2e70c-e4bd-5c2e-9986-06d1110e674a",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 40,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "aed2e70c-e4bd-5c2e-9986-06d1110e674a",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "aed2e70c-e4bd-5c2e-9986-06d1110e674a",
+    "material_id": "5f696429-44f9-55fd-a52e-1be464613a77",
+    "pct": 17,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "aed2e70c-e4bd-5c2e-9986-06d1110e674a",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "aed2e70c-e4bd-5c2e-9986-06d1110e674a",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 8,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "9d833ca2-28b2-54c2-900e-958a9c758aae",
+    "material_id": "c7bd8646-da03-564a-ae7f-047bc7dea5b1",
+    "pct": 80,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "9d833ca2-28b2-54c2-900e-958a9c758aae",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "9d833ca2-28b2-54c2-900e-958a9c758aae",
+    "material_id": "6d537d15-b977-5d49-b5be-0f6663eecd4d",
+    "pct": 2,
+    "is_addition": true,
+    "sort": 2
+  },
+  {
+    "recipe_id": "8fcdace6-1c54-5824-bd2f-e8bd66891f86",
+    "material_id": "fc6e1313-6e1d-5679-8749-48eda6dc7142",
+    "pct": 65,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "8fcdace6-1c54-5824-bd2f-e8bd66891f86",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "8fcdace6-1c54-5824-bd2f-e8bd66891f86",
+    "material_id": "8013a93d-8a02-573d-ad20-c41f7906d25d",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "8fcdace6-1c54-5824-bd2f-e8bd66891f86",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "7178aaa3-f139-568c-a51c-0a77dc91419e",
+    "material_id": "69a1f85c-7fd2-5967-86c6-b6ac93463d9d",
+    "pct": 50,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "7178aaa3-f139-568c-a51c-0a77dc91419e",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 50,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "a733de8f-5c66-514f-9137-bf62db68e08d",
+    "material_id": "69a1f85c-7fd2-5967-86c6-b6ac93463d9d",
+    "pct": 50,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "a733de8f-5c66-514f-9137-bf62db68e08d",
+    "material_id": "4f1828d6-22a2-5400-8411-c8573025867c",
+    "pct": 50,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "e6690d85-96a6-5fab-ba50-f183ec8a8c91",
+    "material_id": "69a1f85c-7fd2-5967-86c6-b6ac93463d9d",
+    "pct": 40,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "e6690d85-96a6-5fab-ba50-f183ec8a8c91",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 30,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "e6690d85-96a6-5fab-ba50-f183ec8a8c91",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "e6690d85-96a6-5fab-ba50-f183ec8a8c91",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "e6690d85-96a6-5fab-ba50-f183ec8a8c91",
+    "material_id": "5f696429-44f9-55fd-a52e-1be464613a77",
+    "pct": 3,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "133f9957-b6b1-5354-a980-61005e66b910",
+    "material_id": "69a1f85c-7fd2-5967-86c6-b6ac93463d9d",
+    "pct": 55,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "133f9957-b6b1-5354-a980-61005e66b910",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "133f9957-b6b1-5354-a980-61005e66b910",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "133f9957-b6b1-5354-a980-61005e66b910",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "875fa49c-7e72-5d22-a8b9-0bc62ab1d7f4",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "875fa49c-7e72-5d22-a8b9-0bc62ab1d7f4",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "875fa49c-7e72-5d22-a8b9-0bc62ab1d7f4",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "875fa49c-7e72-5d22-a8b9-0bc62ab1d7f4",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "875fa49c-7e72-5d22-a8b9-0bc62ab1d7f4",
+    "material_id": "49d060c9-af21-5f73-a525-013bee549c70",
+    "pct": 8,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "20ebde49-7f63-5cd0-a137-8e794836c715",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "20ebde49-7f63-5cd0-a137-8e794836c715",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "20ebde49-7f63-5cd0-a137-8e794836c715",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "20ebde49-7f63-5cd0-a137-8e794836c715",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "20ebde49-7f63-5cd0-a137-8e794836c715",
+    "material_id": "b763d904-dffb-53d7-897e-e068b7d4db7c",
+    "pct": 4,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "cc312f05-0c3a-5869-8eed-dc9e54f3c3cf",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "cc312f05-0c3a-5869-8eed-dc9e54f3c3cf",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "cc312f05-0c3a-5869-8eed-dc9e54f3c3cf",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "cc312f05-0c3a-5869-8eed-dc9e54f3c3cf",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "cc312f05-0c3a-5869-8eed-dc9e54f3c3cf",
+    "material_id": "49d060c9-af21-5f73-a525-013bee549c70",
+    "pct": 8,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "cc312f05-0c3a-5869-8eed-dc9e54f3c3cf",
+    "material_id": "17601273-e6eb-5038-a4d6-44097e46d5c0",
+    "pct": 0.25,
+    "is_addition": true,
+    "sort": 5
+  },
+  {
+    "recipe_id": "debce2da-11a2-52d5-b230-c41336cff9fb",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "debce2da-11a2-52d5-b230-c41336cff9fb",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "debce2da-11a2-52d5-b230-c41336cff9fb",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "debce2da-11a2-52d5-b230-c41336cff9fb",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "debce2da-11a2-52d5-b230-c41336cff9fb",
+    "material_id": "df44d640-1456-5807-8a75-8b2e945c26f0",
+    "pct": 2,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "57588508-6cbf-59fd-a437-1fdba26c72b3",
+    "material_id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "pct": 45,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "57588508-6cbf-59fd-a437-1fdba26c72b3",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "57588508-6cbf-59fd-a437-1fdba26c72b3",
+    "material_id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "57588508-6cbf-59fd-a437-1fdba26c72b3",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "57588508-6cbf-59fd-a437-1fdba26c72b3",
+    "material_id": "03e9ee3a-c1fc-5eb5-a055-3b1c4ee086e9",
+    "pct": 6,
+    "is_addition": true,
+    "sort": 4
+  },
+  {
+    "recipe_id": "a62c3bfc-6f3b-5d34-9273-e71d854d70f0",
+    "material_id": "370d1363-5f02-521a-9183-e45fda5d9300",
+    "pct": 16.62,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "a62c3bfc-6f3b-5d34-9273-e71d854d70f0",
+    "material_id": "c7bd8646-da03-564a-ae7f-047bc7dea5b1",
+    "pct": 23.07,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "a62c3bfc-6f3b-5d34-9273-e71d854d70f0",
+    "material_id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "pct": 17.8,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "a62c3bfc-6f3b-5d34-9273-e71d854d70f0",
+    "material_id": "a05d0b05-4ead-54f2-9c70-e434b396cb07",
+    "pct": 6.27,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "a62c3bfc-6f3b-5d34-9273-e71d854d70f0",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 34.15,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "a62c3bfc-6f3b-5d34-9273-e71d854d70f0",
+    "material_id": "b73277ab-9c22-55f8-9016-3256c36cbe96",
+    "pct": 2.09,
+    "is_addition": false,
+    "sort": 5
+  },
+  {
+    "recipe_id": "4bb68f47-cf44-5cb4-9aaa-3558864ce209",
+    "material_id": "fc6e1313-6e1d-5679-8749-48eda6dc7142",
+    "pct": 17.4,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "4bb68f47-cf44-5cb4-9aaa-3558864ce209",
+    "material_id": "6e378343-7d95-5a40-aa64-701fcfc7bc1b",
+    "pct": 23.5,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "4bb68f47-cf44-5cb4-9aaa-3558864ce209",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 26.9,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "4bb68f47-cf44-5cb4-9aaa-3558864ce209",
+    "material_id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "pct": 18.3,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "4bb68f47-cf44-5cb4-9aaa-3558864ce209",
+    "material_id": "c21d7efe-db30-5c2c-8b8f-285926f3858d",
+    "pct": 13.9,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "27c3d05c-9ece-574f-9bbe-bfe642ed9535",
+    "material_id": "3809d4e2-2dc5-54f5-bb53-78d7b8cd4f89",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "27c3d05c-9ece-574f-9bbe-bfe642ed9535",
+    "material_id": "c7bd8646-da03-564a-ae7f-047bc7dea5b1",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "27c3d05c-9ece-574f-9bbe-bfe642ed9535",
+    "material_id": "a05d0b05-4ead-54f2-9c70-e434b396cb07",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "27c3d05c-9ece-574f-9bbe-bfe642ed9535",
+    "material_id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "pct": 20,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "27c3d05c-9ece-574f-9bbe-bfe642ed9535",
+    "material_id": "b73277ab-9c22-55f8-9016-3256c36cbe96",
+    "pct": 11.5,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "27c3d05c-9ece-574f-9bbe-bfe642ed9535",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 18.5,
+    "is_addition": false,
+    "sort": 5
+  },
+  {
+    "recipe_id": "099d8cba-be28-5c08-9d6b-f5d20ebe2c46",
+    "material_id": "a05d0b05-4ead-54f2-9c70-e434b396cb07",
+    "pct": 26.73,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "099d8cba-be28-5c08-9d6b-f5d20ebe2c46",
+    "material_id": "fc6e1313-6e1d-5679-8749-48eda6dc7142",
+    "pct": 35.64,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "099d8cba-be28-5c08-9d6b-f5d20ebe2c46",
+    "material_id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "pct": 19.8,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "099d8cba-be28-5c08-9d6b-f5d20ebe2c46",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 4.95,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "099d8cba-be28-5c08-9d6b-f5d20ebe2c46",
+    "material_id": "c21d7efe-db30-5c2c-8b8f-285926f3858d",
+    "pct": 12.87,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "6f39f7be-8c82-52c3-a513-e0bfc072456b",
+    "material_id": "8bbb1916-8686-5467-ad18-71a30e06455e",
+    "pct": 27,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "6f39f7be-8c82-52c3-a513-e0bfc072456b",
+    "material_id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "pct": 20.5,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "6f39f7be-8c82-52c3-a513-e0bfc072456b",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 26.5,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "6f39f7be-8c82-52c3-a513-e0bfc072456b",
+    "material_id": "a05d0b05-4ead-54f2-9c70-e434b396cb07",
+    "pct": 23.5,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "6f39f7be-8c82-52c3-a513-e0bfc072456b",
+    "material_id": "a36390bc-4aac-5ac3-83a4-6728fce7d50d",
+    "pct": 2.5,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "a9c25695-d532-56c5-844e-d5b885118bae",
+    "material_id": "a05d0b05-4ead-54f2-9c70-e434b396cb07",
+    "pct": 5.5,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "a9c25695-d532-56c5-844e-d5b885118bae",
+    "material_id": "8bbb1916-8686-5467-ad18-71a30e06455e",
+    "pct": 28.5,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "a9c25695-d532-56c5-844e-d5b885118bae",
+    "material_id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "pct": 28,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "a9c25695-d532-56c5-844e-d5b885118bae",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "a9c25695-d532-56c5-844e-d5b885118bae",
+    "material_id": "6e378343-7d95-5a40-aa64-701fcfc7bc1b",
+    "pct": 19,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "a9c25695-d532-56c5-844e-d5b885118bae",
+    "material_id": "76255045-e313-5511-8d84-ffae6b0ccde5",
+    "pct": 4,
+    "is_addition": false,
+    "sort": 5
+  },
+  {
+    "recipe_id": "f141090b-0e42-526a-8e4b-f01e4f7fd9b3",
+    "material_id": "a05d0b05-4ead-54f2-9c70-e434b396cb07",
+    "pct": 5.5,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "f141090b-0e42-526a-8e4b-f01e4f7fd9b3",
+    "material_id": "8bbb1916-8686-5467-ad18-71a30e06455e",
+    "pct": 28.5,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "f141090b-0e42-526a-8e4b-f01e4f7fd9b3",
+    "material_id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "pct": 28,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "f141090b-0e42-526a-8e4b-f01e4f7fd9b3",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "f141090b-0e42-526a-8e4b-f01e4f7fd9b3",
+    "material_id": "6e378343-7d95-5a40-aa64-701fcfc7bc1b",
+    "pct": 19,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "f141090b-0e42-526a-8e4b-f01e4f7fd9b3",
+    "material_id": "76255045-e313-5511-8d84-ffae6b0ccde5",
+    "pct": 4,
+    "is_addition": false,
+    "sort": 5
+  },
+  {
+    "recipe_id": "f141090b-0e42-526a-8e4b-f01e4f7fd9b3",
+    "material_id": "03e9ee3a-c1fc-5eb5-a055-3b1c4ee086e9",
+    "pct": 3.5,
+    "is_addition": true,
+    "sort": 6
+  },
+  {
+    "recipe_id": "f141090b-0e42-526a-8e4b-f01e4f7fd9b3",
+    "material_id": "8013a93d-8a02-573d-ad20-c41f7906d25d",
+    "pct": 10,
+    "is_addition": true,
+    "sort": 7
+  },
+  {
+    "recipe_id": "b96ba463-23ce-58a8-8448-1b5d069d0f37",
+    "material_id": "6e378343-7d95-5a40-aa64-701fcfc7bc1b",
+    "pct": 25,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "b96ba463-23ce-58a8-8448-1b5d069d0f37",
+    "material_id": "8bbb1916-8686-5467-ad18-71a30e06455e",
+    "pct": 27.5,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "b96ba463-23ce-58a8-8448-1b5d069d0f37",
+    "material_id": "f61265ec-a7eb-5a22-8b45-c88f31f1a6b2",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "b96ba463-23ce-58a8-8448-1b5d069d0f37",
+    "material_id": "7b4e18fd-906a-5bf7-8b27-afe5979c72c7",
+    "pct": 8.5,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "b96ba463-23ce-58a8-8448-1b5d069d0f37",
+    "material_id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "pct": 17.5,
+    "is_addition": false,
+    "sort": 4
+  },
+  {
+    "recipe_id": "b96ba463-23ce-58a8-8448-1b5d069d0f37",
+    "material_id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "pct": 7.5,
+    "is_addition": false,
+    "sort": 5
+  },
+  {
+    "recipe_id": "b96ba463-23ce-58a8-8448-1b5d069d0f37",
+    "material_id": "8013a93d-8a02-573d-ad20-c41f7906d25d",
+    "pct": 4,
+    "is_addition": false,
+    "sort": 6
+  },
+  {
+    "recipe_id": "d39d9eaf-fb38-522c-894f-f1b941af80b2",
+    "material_id": "146b0883-5c00-5eb4-b9ab-f17a8bef8551",
+    "pct": 65,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "d39d9eaf-fb38-522c-894f-f1b941af80b2",
+    "material_id": "d8ee0383-286f-5769-a5a7-1a99d53806bd",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "d39d9eaf-fb38-522c-894f-f1b941af80b2",
+    "material_id": "188795a8-e3d4-5602-9e49-8b26b5f63c25",
+    "pct": 10,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "d39d9eaf-fb38-522c-894f-f1b941af80b2",
+    "material_id": "55677dce-fa2c-5f8d-be6a-201b9a7e1e95",
+    "pct": 15,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "1d978e4f-57ca-5e2c-835c-d07b749a5e06",
+    "material_id": "146b0883-5c00-5eb4-b9ab-f17a8bef8551",
+    "pct": 26.32,
+    "is_addition": false,
+    "sort": 0
+  },
+  {
+    "recipe_id": "1d978e4f-57ca-5e2c-835c-d07b749a5e06",
+    "material_id": "c7bd8646-da03-564a-ae7f-047bc7dea5b1",
+    "pct": 34.74,
+    "is_addition": false,
+    "sort": 1
+  },
+  {
+    "recipe_id": "1d978e4f-57ca-5e2c-835c-d07b749a5e06",
+    "material_id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "pct": 21.05,
+    "is_addition": false,
+    "sort": 2
+  },
+  {
+    "recipe_id": "1d978e4f-57ca-5e2c-835c-d07b749a5e06",
+    "material_id": "188795a8-e3d4-5602-9e49-8b26b5f63c25",
+    "pct": 10.53,
+    "is_addition": false,
+    "sort": 3
+  },
+  {
+    "recipe_id": "1d978e4f-57ca-5e2c-835c-d07b749a5e06",
+    "material_id": "d8ee0383-286f-5769-a5a7-1a99d53806bd",
+    "pct": 7.37,
+    "is_addition": false,
+    "sort": 4
+  }
+]

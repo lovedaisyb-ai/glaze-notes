@@ -1,0 +1,66 @@
+[
+  {
+    "recipe_id": "f2ec6c11-7c04-5683-98da-f9d12f07ae85",
+    "label": "식기 부적합"
+  },
+  {
+    "recipe_id": "430548e0-9287-5d65-bb8a-1d6edf4a177c",
+    "label": "바륨 주의"
+  },
+  {
+    "recipe_id": "cc366579-cbb1-521b-a8c6-c60e5812989e",
+    "label": "식기 내면 주의"
+  },
+  {
+    "recipe_id": "c2c29b0a-acb8-52b8-a597-61dccd7e8adc",
+    "label": "받침 필수"
+  },
+  {
+    "recipe_id": "c5618716-f60a-5e33-9479-b544c41301a6",
+    "label": "알칼리 주의"
+  },
+  {
+    "recipe_id": "d98ec79f-ec6b-569b-aaa6-97c4074d2b40",
+    "label": "식기 내면 주의"
+  },
+  {
+    "recipe_id": "9d833ca2-28b2-54c2-900e-958a9c758aae",
+    "label": "화상 주의"
+  },
+  {
+    "recipe_id": "7178aaa3-f139-568c-a51c-0a77dc91419e",
+    "label": "알칼리 주의"
+  },
+  {
+    "recipe_id": "a733de8f-5c66-514f-9137-bf62db68e08d",
+    "label": "알칼리 주의"
+  },
+  {
+    "recipe_id": "e6690d85-96a6-5fab-ba50-f183ec8a8c91",
+    "label": "알칼리 주의"
+  },
+  {
+    "recipe_id": "133f9957-b6b1-5354-a980-61005e66b910",
+    "label": "알칼리 주의"
+  },
+  {
+    "recipe_id": "133f9957-b6b1-5354-a980-61005e66b910",
+    "label": "받침 필수"
+  },
+  {
+    "recipe_id": "20ebde49-7f63-5cd0-a137-8e794836c715",
+    "label": "환기 필수"
+  },
+  {
+    "recipe_id": "20ebde49-7f63-5cd0-a137-8e794836c715",
+    "label": "식기 내면 주의"
+  },
+  {
+    "recipe_id": "cc312f05-0c3a-5869-8eed-dc9e54f3c3cf",
+    "label": "식기 내면 주의"
+  },
+  {
+    "recipe_id": "debce2da-11a2-52d5-b230-c41336cff9fb",
+    "label": "식기 내면 주의"
+  }
+]

@@ -1,0 +1,230 @@
+[
+  {
+    "id": "d2dbdf34-ba81-57af-8da5-a5b7a9102715",
+    "name_ko": "장석",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "813dd3f0-fa27-5eaf-aadc-505ec1a96a4e",
+    "name_ko": "규석",
+    "aliases": [],
+    "category": "silica"
+  },
+  {
+    "id": "14d06b22-6c23-51fe-a2dd-797d88d4ff90",
+    "name_ko": "석회석",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "6a115083-641f-5d11-a101-aafe4879f213",
+    "name_ko": "카올린",
+    "aliases": [],
+    "category": "clay"
+  },
+  {
+    "id": "5f696429-44f9-55fd-a52e-1be464613a77",
+    "name_ko": "산화철",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "6e378343-7d95-5a40-aa64-701fcfc7bc1b",
+    "name_ko": "돌로마이트",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "370d1363-5f02-521a-9183-e45fda5d9300",
+    "name_ko": "네펠린 사이아나이트",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "0d9499dd-e36c-52e3-b2b8-1eca97ec49fd",
+    "name_ko": "탄산바륨",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "6d537d15-b977-5d49-b5be-0f6663eecd4d",
+    "name_ko": "산화구리",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "49d060c9-af21-5f73-a525-013bee549c70",
+    "name_ko": "산화주석",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "d8ee0383-286f-5769-a5a7-1a99d53806bd",
+    "name_ko": "프릿 3110",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "a36390bc-4aac-5ac3-83a4-6728fce7d50d",
+    "name_ko": "산화아연",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "24559831-0549-53fb-ab38-d60793b0576b",
+    "name_ko": "산화티탄",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "69a1f85c-7fd2-5967-86c6-b6ac93463d9d",
+    "name_ko": "나무재",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "f61265ec-a7eb-5a22-8b45-c88f31f1a6b2",
+    "name_ko": "볼클레이",
+    "aliases": [],
+    "category": "clay"
+  },
+  {
+    "id": "a98decdd-9ff1-5039-9b27-c656e2814759",
+    "name_ko": "탄산소다",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "020c86c3-5e30-5dfe-b8e6-97803697a153",
+    "name_ko": "골회",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "851a2bbf-445e-5639-948b-ed54ebb8f453",
+    "name_ko": "볏짚재",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "dc21e9e6-4c76-5d6b-91da-f8b5ada9cb92",
+    "name_ko": "산화코발트",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "c7bd8646-da03-564a-ae7f-047bc7dea5b1",
+    "name_ko": "프릿 3134",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "fc6e1313-6e1d-5679-8749-48eda6dc7142",
+    "name_ko": "프릿 3124",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "8013a93d-8a02-573d-ad20-c41f7906d25d",
+    "name_ko": "지르코늄 실리케이트",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "4f1828d6-22a2-5400-8411-c8573025867c",
+    "name_ko": "목절점토",
+    "aliases": [],
+    "category": "clay"
+  },
+  {
+    "id": "b763d904-dffb-53d7-897e-e068b7d4db7c",
+    "name_ko": "산화망간",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "17601273-e6eb-5038-a4d6-44097e46d5c0",
+    "name_ko": "산화크롬",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "df44d640-1456-5807-8a75-8b2e945c26f0",
+    "name_ko": "산화니켈",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "03e9ee3a-c1fc-5eb5-a055-3b1c4ee086e9",
+    "name_ko": "루틸",
+    "aliases": [],
+    "category": "color"
+  },
+  {
+    "id": "03de2698-3dc8-52d7-9a32-49b98619e16d",
+    "name_ko": "카올린 (EPK)",
+    "aliases": [],
+    "category": "clay"
+  },
+  {
+    "id": "a05d0b05-4ead-54f2-9c70-e434b396cb07",
+    "name_ko": "규회석",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "b73277ab-9c22-55f8-9016-3256c36cbe96",
+    "name_ko": "활석",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "c21d7efe-db30-5c2c-8b8f-285926f3858d",
+    "name_ko": "하소 카올린",
+    "aliases": [],
+    "category": "clay"
+  },
+  {
+    "id": "3809d4e2-2dc5-54f5-bb53-78d7b8cd4f89",
+    "name_ko": "장석 (G-200)",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "8bbb1916-8686-5467-ad18-71a30e06455e",
+    "name_ko": "장석 (커스터)",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "76255045-e313-5511-8d84-ffae6b0ccde5",
+    "name_ko": "거스틀리 보레이트",
+    "aliases": [],
+    "category": "flux"
+  },
+  {
+    "id": "7b4e18fd-906a-5bf7-8b27-afe5979c72c7",
+    "name_ko": "스포듀민",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "146b0883-5c00-5eb4-b9ab-f17a8bef8551",
+    "name_ko": "프릿 3195",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "188795a8-e3d4-5602-9e49-8b26b5f63c25",
+    "name_ko": "프릿 3249",
+    "aliases": [],
+    "category": "feldspar"
+  },
+  {
+    "id": "55677dce-fa2c-5f8d-be6a-201b9a7e1e95",
+    "name_ko": "볼클레이 (No.5)",
+    "aliases": [],
+    "category": "clay"
+  }
+]
